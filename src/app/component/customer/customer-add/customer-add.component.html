@@ -1,0 +1,22 @@
+<p-dialog *ngIf="customer" header="Add Customer" [(visible)]="visible" [style]="{ width: '25rem' }"  (onHide)="visibleChange.emit(false)">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Họ tên</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">số điện thoại</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="customer.phone" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Địa chỉ</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.address" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">CCCD</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="customer.cccd" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
+        <p-button label="Save" (onClick)="saveCustomer(customer)" />
+    </div>
+</p-dialog>

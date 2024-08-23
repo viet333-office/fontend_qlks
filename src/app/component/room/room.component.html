@@ -1,0 +1,79 @@
+<h3>Quản lý phòng</h3>
+<div class="grid">
+  <div class="col-12">
+    <p-card header="Bộ lọc tìm kiếm">
+      <div class="grid">
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-name" type="text" pInputText>
+            <label for="float-input-name">Tìm kiếm mã phòng</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-phone" type="text" pInputText>
+            <label for="float-input-phone">Tìm loại phòng</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <p-dropdown [options]="roomList" optionLabel="status" placeholder="trạng thái" />
+        </div>
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-cccd" type="text" pInputText>
+            <label for="float-input-cccd">Tìm giá</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-cccd" type="text" pInputText>
+            <label for="float-input-cccd">Tìm thời hạn</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <p-button label="Tìm kiếm" icon="pi pi-search"></p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div class="col-12 mt-3">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <h3>Danh sách phòng</h3>
+      <p-button label="Thêm mới" icon="pi pi-plus" (onClick)="openAddModal()"></p-button>
+    </div>
+
+    <p-table [value]="roomList" [paginator]="true" [rows]="6">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>STT</th>
+          <th>Mã phòng</th>
+          <th>Loại phòng</th>
+          <th>Giá tiền</th>
+          <th>Trạng thái</th>
+          <th>Thời hạn</th>
+          <th>Thao tác</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-room let-i="rowIndex">
+        <tr>
+          <td>{{i + 1}}</td>
+          <td>{{room.room}}</td>
+          <td>{{room.name}}</td>
+          <td>{{room.value | currency:'VND':'symbol':'1.0-0'}}</td>
+          <td>{{room.status}}</td>
+          <td>{{room.stay}}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
+              (onClick)="openUpdateModal(room)"></p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
+              (onClick)="deleteRooms(room.id)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<app-room-update [visible]="showUpdateModal" [room]="selectedRoom"
+(visibleChange)="handleCloseUpdate($event)"></app-room-update>
+<app-room-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-room-add>

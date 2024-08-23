@@ -1,0 +1,53 @@
+<div class="grid" style="height: 100vh; overflow: hidden;">
+    <div class="col-2 p-0 sidebar">
+        <div class="flex flex-column h-full surface-section border-right-1 surface-border">
+            <div class="flex align-items-center p-3 border-bottom-1 surface-border profile">
+                <p-avatar
+                    image="https://inkythuatso.com/uploads/thumbnails/800/2023/03/nhung-hinh-anh-ve-bac-ho-dep-nhat-4-04-11-50-04.jpg"
+                    styleClass="mr-2" size="large"></p-avatar>
+                <div>
+                    <h3 class="m-0">TRẦN VĂN VIỆT</h3>
+                    <p class="text-500 m-0">admin</p>
+                </div>
+            </div>
+            <div class="flex-grow-1 menu">
+                <ul class="list-none p-0 m-0">
+                    <li>
+                        <a pRipple class="flex align-items-center cursor-pointer p-3 menu-item" routerLink="/home"
+                            style="text-decoration: none;">
+                            <i class="pi pi-users mr-2"></i>
+                            <span>Quản lý khách hàng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a pRipple class="flex align-items-center cursor-pointer p-3 menu-item" routerLink="/room"
+                            style="text-decoration: none;">
+                            <i class="pi pi-calendar mr-2"></i>
+                            <span>Quản lý phòng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a pRipple class="flex align-items-center cursor-pointer p-3 menu-item" routerLink="/booking"
+                            style="text-decoration: none;">
+                            <i class="pi pi-home mr-2"></i>
+                            <span>Quản lý đặt phòng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a pRipple class="flex align-items-center cursor-pointer p-3 menu-item">
+                            <i class="pi pi-user mr-2"></i>
+                            <span>Quản lý user</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-3 mt-auto logout">
+                <button pButton pRipple type="button" label="Đăng xuất" icon="pi pi-sign-out"
+                    class="p-button-danger w-full"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-10 p-3" style="height: 100%; overflow-y: auto;">
+        <router-outlet></router-outlet>
+    </div>
+</div>

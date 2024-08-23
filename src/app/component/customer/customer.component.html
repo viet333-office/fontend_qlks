@@ -1,0 +1,73 @@
+<h3>Quản lý khách hàng</h3>
+<div class="grid">
+  <div class="col-12">
+    <p-card header="Bộ lọc tìm kiếm">
+      <div class="grid">
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-name" type="text" pInputText>
+            <label for="float-input-name">Tìm kiếm tên</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-phone" type="text" pInputText>
+            <label for="float-input-phone">Tìm kiếm sđt</label>
+          </span>
+        </div>
+        <div class="col-2">
+          <span class="p-float-label">
+            <input id="float-input-address" type="text" pInputText>
+            <label for="float-input-address">Tìm kiếm địa chỉ</label>
+          </span>
+        </div>
+        <div class="col-3">
+          <span class="p-float-label">
+            <input id="float-input-cccd" type="text" pInputText>
+            <label for="float-input-cccd">Tìm kiếm cccd</label>
+          </span>
+        </div>
+        <div class="col-3">
+          <p-button label="Tìm kiếm" icon="pi pi-search"></p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+  <div class="col-12 mt-3">
+    <div class="flex justify-content-between align-items-center mb-3">
+      <h3>Danh sách khách hàng</h3>
+      <p-button label="Thêm mới" icon="pi pi-plus" (click)="openAddModal()"></p-button>
+    </div>
+    <p-table [value]="customerList" [paginator]="true" [rows]="6" [totalRecords]="customerList.length">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>STT</th>
+          <th>Họ và tên</th>
+          <th>Số điện thoại</th>
+          <th>Địa chỉ</th>
+          <th>CCCD</th>
+          <th>Thao tác</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer let-i="rowIndex">
+        <tr>
+          <td>{{i + 1}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.address}}</td>
+          <td>{{customer.cccd}}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
+              (onClick)="openUpdateModal(customer)"></p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
+              (onClick)="deleteCustomer(customer.id)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"
+(visibleChange)="handleCloseUpdate($event)"></app-customer-update>
+<app-customer-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-customer-add>
