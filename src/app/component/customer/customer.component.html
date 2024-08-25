@@ -5,30 +5,30 @@
       <div class="grid">
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-name" type="text" pInputText>
+            <input id="float-input-name" type="text" pInputText [(ngModel)]="searchCustomer.name">
             <label for="float-input-name">Tìm kiếm tên</label>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-phone" type="text" pInputText>
+            <input id="float-input-phone" type="text" pInputText [(ngModel)]="searchCustomer.phone">
             <label for="float-input-phone">Tìm kiếm sđt</label>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-address" type="text" pInputText>
+            <input id="float-input-address" type="text" pInputText [(ngModel)]="searchCustomer.address">
             <label for="float-input-address">Tìm kiếm địa chỉ</label>
           </span>
         </div>
         <div class="col-3">
           <span class="p-float-label">
-            <input id="float-input-cccd" type="text" pInputText>
+            <input id="float-input-cccd" type="text" pInputText [(ngModel)]="searchCustomer.cccd">
             <label for="float-input-cccd">Tìm kiếm cccd</label>
           </span>
         </div>
         <div class="col-3">
-          <p-button label="Tìm kiếm" icon="pi pi-search"></p-button>
+          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
     </p-card>
@@ -38,7 +38,7 @@
       <h3>Danh sách khách hàng</h3>
       <p-button label="Thêm mới" icon="pi pi-plus" (click)="openAddModal()"></p-button>
     </div>
-    <p-table [value]="customerList" [paginator]="true" [rows]="6" [totalRecords]="customerList.length">
+    <p-table [value]="customerList" [paginator]="true" [rows]="searchCustomer.size"  >
       <ng-template pTemplate="header">
         <tr>
           <th>STT</th>
@@ -51,7 +51,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-customer let-i="rowIndex">
         <tr>
-          <td>{{i + 1}}</td>
+          <td>{{i + 1 + searchCustomer.page * searchCustomer.size}}</td>
           <td>{{customer.name}}</td>
           <td>{{customer.phone}}</td>
           <td>{{customer.address}}</td>

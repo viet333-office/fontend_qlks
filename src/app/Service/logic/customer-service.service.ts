@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Customer } from '../../Interface/customer';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Customer, CustomerSearch } from '../../Interface/customer';
 
 export interface ResponseApi {
   status: boolean;
@@ -34,5 +34,18 @@ export class CustomerServiceService {
 
   deleteCustomer(id: number): Observable<ResponseApi> {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/delete/${id}`)
+  }
+
+  filterCustomer(searchCustomer:CustomerSearch): Observable<ResponseApi> {
+    console.log(searchCustomer,"LOG");
+    const params = new HttpParams()
+    .set('name', searchCustomer.name)
+    .set('phone', searchCustomer.phone)
+    .set('address', searchCustomer.address)
+    .set('cccd', searchCustomer.cccd)
+    .set('page', searchCustomer.page.toString())
+    .set('size', searchCustomer.size.toString());
+    console.log({params},"LOG");
+    return this.http.post<ResponseApi>(`${this.apiUrl}/filter`,{params})
   }
 }

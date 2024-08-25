@@ -36,7 +36,6 @@ export class RoomUpdateComponent {
   }
 
   updateRooms(room: Room) {
-    console.log("loggggggggggggg",this.room);
     this.roomrService.putRoom(room).subscribe(() => {
       this.visibleChange.emit(false);
       })

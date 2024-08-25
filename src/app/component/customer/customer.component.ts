@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
-import { Customer } from '../../Interface/customer';
+import { Customer, CustomerSearch } from '../../Interface/customer';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -13,7 +13,20 @@ export class CustomerComponent implements OnInit {
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedCustomer!: Customer;
-
+  searchCustomer: CustomerSearch = {
+    name: '',
+    phone: '',
+    address: '',
+    cccd: '',
+    page: 0,
+    size: 8
+  }
+  clearInput(){
+    this.searchCustomer.name = '';
+    this.searchCustomer.phone = '';
+    this.searchCustomer.address = '';
+    this.searchCustomer.cccd = '';
+  }
   constructor(private customerService: CustomerServiceService) { }
 
   ngOnInit(): void {
@@ -51,5 +64,10 @@ export class CustomerComponent implements OnInit {
     });
   }
 
+  search(){
+    this.customerService.filterCustomer(this.searchCustomer).subscribe(()=>{
+      this.clearInput();
+    })
+  }
 }
 

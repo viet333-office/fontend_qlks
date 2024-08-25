@@ -18,12 +18,12 @@
 
         <div class="col-2">
           <span class="p-float-label">
-            <p-calendar placeholder="Từ ngày" [showIcon]="true"></p-calendar>
+            <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="yy/mm/dd"></p-calendar>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <p-calendar placeholder="Đến ngày" [showIcon]="true"></p-calendar>
+            <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="yy/mm/dd"></p-calendar>
           </span>
         </div>
         <div class="col-2">
@@ -51,8 +51,8 @@
       <ng-template pTemplate="body" let-booking let-i="rowIndex">
         <tr>
           <td>{{i + 1}}</td>
-          <td>{{booking.customer}}</td>
-          <td>{{booking.room}}</td>
+          <td>{{booking.id_customer}}</td>
+          <td>{{booking.id_room}}</td>
           <td>{{booking.start}}</td>
           <td>{{booking.end}}</td>
           
