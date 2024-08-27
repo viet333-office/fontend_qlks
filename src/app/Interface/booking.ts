@@ -1,10 +1,9 @@
-import { Customer } from "./customer";
-import { Room } from "./room";
+
 
 export interface Booking {
     id?: number;
-    start: Date;
-    end: Date;
-    customer: Customer
-    room: Room
+    start: any | null;
+    end: any | null;
+    id_customer: number;
+    id_room: number
 }

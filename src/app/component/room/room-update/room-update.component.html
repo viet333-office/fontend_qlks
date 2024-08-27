@@ -1,4 +1,4 @@
-<p-dialog *ngIf="room" header="Add Customer" [(visible)]="visible" [style]="{ width: '30rem' ,height:'auto'}"  (onHide)="visibleChange.emit(false)">
+<p-dialog *ngIf="room" header="Update Room" [(visible)]="visible" [style]="{ width: '30rem' ,height:'auto'}"  (onHide)="visibleChange.emit(false)">
     <div class="flex align-items-center gap-3 mb-3">
         <label for="username" class="font-semibold w-6rem">Tên phòng</label>
         <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name" />

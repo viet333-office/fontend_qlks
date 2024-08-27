@@ -13,25 +13,20 @@ export class BookingComponent {
   showUpdateModal: boolean = false;
   selectedBooking!: Booking;
 
-  constructor(private customerService: BookingServiceService) { }
+  constructor(private bookingService: BookingServiceService) { }
 
   ngOnInit(): void {
     this.getBooking();
   }
 
-  getBooking(): void {
-    console.log(this.bookingList,"log");
+  getBooking(): void { 
     
-    this.customerService.getBooking().subscribe((data: any) => {
-      console.log(data,"log data");
+    this.bookingService.getBooking().subscribe((data: any) => {
       this.bookingList = data as Booking[];
-      console.log(this.bookingList,"log data2");
     });
   }
-
-
-
   openAddModal() {
+    this.showUpdateModal = false;
     this.showAddModal = true;
   }
 
@@ -46,12 +41,13 @@ export class BookingComponent {
   }
 
   openUpdateModal(booking: Booking) {
+    this.showAddModal = false;
     this.selectedBooking = { ...booking };
     this.showUpdateModal = true;
   }
 
-  deleteCustomer(id: number): void {
-    this.customerService.deleteBooking(id).subscribe(() => {
+  deleteBooking(id: number): void {
+    this.bookingService.deleteBooking(id).subscribe(() => {
       this.getBooking();
     });
   }

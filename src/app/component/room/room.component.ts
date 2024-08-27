@@ -26,9 +26,11 @@ export class RoomComponent {
   }
 
   openAddModal() {
+    this.showUpdateModal = false;
     this.showAddModal = true;
   }
   openUpdateModal(room: Room) {
+    this.showAddModal = false;
     this.selectedRoom = { ...room };
     this.showUpdateModal = true;
   }

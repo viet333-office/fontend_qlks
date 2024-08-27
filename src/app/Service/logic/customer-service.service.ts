@@ -7,6 +7,8 @@ export interface ResponseApi {
   status: boolean;
   message: string;
   content: Customer[]; 
+   totalPages:number;
+   totalItems:number;
 }
 
 @Injectable({
@@ -39,13 +41,14 @@ export class CustomerServiceService {
   filterCustomer(searchCustomer:CustomerSearch): Observable<ResponseApi> {
     console.log(searchCustomer,"LOG");
     const params = new HttpParams()
-    .set('name', searchCustomer.name)
-    .set('phone', searchCustomer.phone)
-    .set('address', searchCustomer.address)
-    .set('cccd', searchCustomer.cccd)
+    .set('name', searchCustomer.name || '')
+    .set('phone', searchCustomer.phone || '')
+    .set('address', searchCustomer.address || '')
+    .set('cccd', searchCustomer.cccd || '')
     .set('page', searchCustomer.page.toString())
-    .set('size', searchCustomer.size.toString());
+    .set('size', searchCustomer.size.toString())
+    .set('sortType', searchCustomer.sortType || 'asc');
     console.log({params},"LOG");
-    return this.http.post<ResponseApi>(`${this.apiUrl}/filter`,{params})
+    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`,{params})
   }
 }

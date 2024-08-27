@@ -55,13 +55,11 @@
           <td>{{booking.id_room}}</td>
           <td>{{booking.start}}</td>
           <td>{{booking.end}}</td>
-          
           <td>
-
             <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
               (onClick)="openUpdateModal(booking)"></p-button>
             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
-              (onClick)="deleteCustomer(booking.id)"></p-button>
+              (onClick)="deleteBooking(booking.id)"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -71,5 +69,6 @@
 </div>
 
 
-<app-booking-add></app-booking-add>
-<app-booking-update></app-booking-update>
+<app-booking-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-booking-add>
+<app-booking-update [visible]="showUpdateModal" [booking]="selectedBooking"
+(visibleChange)="handleCloseUpdate($event)"></app-booking-update>

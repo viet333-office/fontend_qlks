@@ -23,7 +23,7 @@ import { CalendarModule } from 'primeng/calendar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {ComponenttComponent} from './component/componentt.component'
+import { ComponenttComponent } from './component/componentt.component'
 import { CustomerComponent } from './component/customer/customer.component';
 import { RoomComponent } from './component/room/room.component';
 import { BookingComponent } from './component/booking/booking.component';
@@ -33,7 +33,7 @@ import { RoomAddComponent } from './component/room/room-add/room-add.component';
 import { RoomUpdateComponent } from './component/room/room-update/room-update.component';
 import { BookingAddComponent } from './component/booking/booking-add/booking-add.component';
 import { BookingUpdateComponent } from './component/booking/booking-update/booking-update.component';
-
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -50,7 +50,7 @@ import { BookingUpdateComponent } from './component/booking/booking-update/booki
     RoomUpdateComponent,
     BookingAddComponent,
     BookingUpdateComponent
-   
+
   ],
   imports: [
     BrowserModule,
@@ -74,7 +74,9 @@ import { BookingUpdateComponent } from './component/booking/booking-update/booki
     MenuModule,
     DropdownModule,
     CalendarModule,
-    ToolbarModule
+    ToolbarModule,
+    PaginatorModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

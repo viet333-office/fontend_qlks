@@ -12,4 +12,5 @@ export interface CustomerSearch {
     phone: string;
     page: number,
     size: number
+    sortType:string
 }

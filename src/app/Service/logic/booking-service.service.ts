@@ -23,6 +23,7 @@ export class BookingServiceService {
   }
 
   createBooking(booking: Booking): Observable<ResponseApi> {
+    console.log(booking,"booking")
     return this.http.post<ResponseApi>(`${this.apiUrl}/postBooking`, booking);
   }
 
@@ -32,6 +33,6 @@ export class BookingServiceService {
   }
 
   deleteBooking(id: number): Observable<ResponseApi> {
-    return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteBooking/${id}`)
+    return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteBooking?id=${id}`)
   }
 }

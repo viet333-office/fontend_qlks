@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerServiceService } from '../../Service/logic/customer-service.service'
+import { CustomerServiceService, ResponseApi } from '../../Service/logic/customer-service.service'
 import { Customer, CustomerSearch } from '../../Interface/customer';
 @Component({
   selector: 'app-customer',
@@ -9,17 +9,21 @@ import { Customer, CustomerSearch } from '../../Interface/customer';
 export class CustomerComponent implements OnInit {
   sidebarVisible: boolean = true;
 
-  customerList: Customer[] = [];
+
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedCustomer!: Customer;
+  customerList: Customer[] = [];
+  totalPages: number = 0;
+  totalItems: number = 0;
   searchCustomer: CustomerSearch = {
     name: '',
     phone: '',
     address: '',
     cccd: '',
-    page: 0,
-    size: 8
+    page: 1,
+    size: 4,
+    sortType: 'asc'  
   }
   clearInput(){
     this.searchCustomer.name = '';
@@ -30,16 +34,18 @@ export class CustomerComponent implements OnInit {
   constructor(private customerService: CustomerServiceService) { }
 
   ngOnInit(): void {
-    this.getCustomers();
+    // this.getCustomers();
+    this.search();
   }
 
   getCustomers(): void {
     this.customerService.getCustomers().subscribe((data: Customer[]) => {
       this.customerList = data as Customer[];
-    });
+  });
   }
 
   openAddModal() {
+    this.showUpdateModal = false;
     this.showAddModal = true;
   }
 
@@ -54,6 +60,7 @@ export class CustomerComponent implements OnInit {
   }
 
   openUpdateModal(customer: Customer) {
+    this.showAddModal = false;
     this.selectedCustomer = { ...customer };
     this.showUpdateModal = true;
   }
@@ -65,9 +72,18 @@ export class CustomerComponent implements OnInit {
   }
 
   search(){
-    this.customerService.filterCustomer(this.searchCustomer).subscribe(()=>{
-      this.clearInput();
-    })
+    this.customerService.filterCustomer(this.searchCustomer).subscribe((data: ResponseApi) => {
+        this.customerList = data.content as Customer[];
+        this.totalPages = data.totalPages;
+        this.totalItems = data.totalItems;
+        this.clearInput();
+    });
+  }
+  onPageChange(event: any): void {
+    console.log("event : ",event);
+    this.searchCustomer.page = event.page;
+    // this.searchCustomer.page = Math.floor(event.first / this.searchCustomer.size) + 1;
+    this.search(); // Tìm kiếm với trang mới
   }
 }
 
