@@ -8,6 +8,23 @@ export interface Room {
 }
 
 export interface IStatus{
-    // key:string,
     name:string    
 }
+export interface RoomSearch {
+    name: string;
+    room:string;
+    value: number;
+    status:string;
+    stay:string
+    page: number,
+    size: number
+    arrange:string
+}
+
+export interface ResponseApi {
+    status: boolean;
+    message: string;
+    content: Room[];
+    totalPages: number;
+    totalItems: number;
+  }

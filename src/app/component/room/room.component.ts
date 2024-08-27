@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Room } from '../../Interface/room';
+import { ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
 
 
@@ -14,6 +14,25 @@ export class RoomComponent {
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedRoom!: Room;
+  totalPages: number = 0;
+  totalItems: number = 0;
+  searchRoom: RoomSearch = {
+    name: '',
+    room: '',
+    value: 0,
+    status: '',
+    stay:'',
+    page: 1,
+    size: 4,
+    arrange: 'asc'  
+  }
+  clearInput(){
+    this.searchRoom.name = '';
+    this.searchRoom.room = '';
+    this.searchRoom.value = 0;
+    this.searchRoom.status = '';
+    this.searchRoom.stay = '';
+  }
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
     this.getRooms();
@@ -47,5 +66,19 @@ export class RoomComponent {
     this.roomrService.deleteRoom(id).subscribe(() => {
       this.getRooms();
     });
+  }
+
+  search(){
+    this.roomrService.filterRoom(this.searchRoom).subscribe((data: ResponseApi) => {
+        this.roomList = data.content as Room[];
+        this.totalPages = data.totalPages;
+        this.totalItems = data.totalItems;
+        this.clearInput();
+    });
+  }
+  onPageChange(event: any): void {
+    console.log("event : ",event);
+    this.searchRoom.page = event.page;
+    this.search(); 
   }
 }

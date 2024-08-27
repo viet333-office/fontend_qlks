@@ -17,7 +17,6 @@ export class RoomAddComponent {
     value:0,
     status:'',
     stay:''
-
   };
   resetRoom() {
     this.room = {

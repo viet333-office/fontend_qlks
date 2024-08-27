@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomerServiceService, ResponseApi } from '../../Service/logic/customer-service.service'
-import { Customer, CustomerSearch } from '../../Interface/customer';
+import { CustomerServiceService } from '../../Service/logic/customer-service.service'
+import { Customer, CustomerSearch, ResponseApi } from '../../Interface/customer';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',

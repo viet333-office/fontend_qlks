@@ -1,14 +1,15 @@
 <p-dialog *ngIf="room" header="Add Room" [(visible)]="visible" [style]="{ width: '25rem' }"  (onHide)="visibleChange.emit(false)">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Tên phòng</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name" />
-    </div>
+  
     <div class="flex align-items-center gap-3 mb-5">
         <label for="email" class="font-semibold w-6rem">Mã phòng</label>
         <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="room.room" />
     </div>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Loại phòng</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name" />
+    </div>
     <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Gía phòng</label>
+        <label for="email" class="font-semibold w-6rem">Giá phòng</label>
         <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="room.value" />
     </div>
     <div class="flex align-items-center gap-3 mb-5">

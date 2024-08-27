@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Room } from '../../Interface/room';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ResponseApi, Room, RoomSearch } from '../../Interface/room';
 
-export interface ResponseApi {
-  status: boolean;
-  message: string;
-  content: Room[];
-}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,4 +33,18 @@ export class RoomServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteRoom/${id}`)
   }
 
+  filterRoom(searchRoom:RoomSearch): Observable<ResponseApi> {
+    console.log(searchRoom,"LOG");
+    const params = new HttpParams()
+    .set('name', searchRoom.name || '')
+    .set('room', searchRoom.room || '')
+    .set('value', searchRoom.value || 0)
+    .set('status', searchRoom.status || '')
+    .set('stay', searchRoom.stay || '')
+    .set('page', searchRoom.page.toString())
+    .set('size', searchRoom.size.toString())
+    .set('arrange', searchRoom.arrange || 'asc');
+    console.log({params},"LOG");
+    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`,{params})
+  }
 }

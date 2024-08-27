@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Customer, CustomerSearch } from '../../Interface/customer';
+import { Customer, CustomerSearch, ResponseApi } from '../../Interface/customer';
 
-export interface ResponseApi {
-  status: boolean;
-  message: string;
-  content: Customer[]; 
-   totalPages:number;
-   totalItems:number;
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,17 +32,17 @@ export class CustomerServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/delete/${id}`)
   }
 
-  filterCustomer(searchCustomer:CustomerSearch): Observable<ResponseApi> {
-    console.log(searchCustomer,"LOG");
+  filterCustomer(searchCustomer: CustomerSearch): Observable<ResponseApi> {
+    console.log(searchCustomer, "LOG");
     const params = new HttpParams()
-    .set('name', searchCustomer.name || '')
-    .set('phone', searchCustomer.phone || '')
-    .set('address', searchCustomer.address || '')
-    .set('cccd', searchCustomer.cccd || '')
-    .set('page', searchCustomer.page.toString())
-    .set('size', searchCustomer.size.toString())
-    .set('sortType', searchCustomer.sortType || 'asc');
-    console.log({params},"LOG");
-    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`,{params})
+      .set('name', searchCustomer.name || '')
+      .set('phone', searchCustomer.phone || '')
+      .set('address', searchCustomer.address || '')
+      .set('cccd', searchCustomer.cccd || '')
+      .set('page', searchCustomer.page.toString())
+      .set('size', searchCustomer.size.toString())
+      .set('sortType', searchCustomer.sortType || 'asc');
+    console.log({ params }, "LOG");
+    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

@@ -14,3 +14,11 @@ export interface CustomerSearch {
     size: number
     sortType:string
 }
+
+export interface ResponseApi {
+    status: boolean;
+    message: string;
+    content: Customer[];
+    totalPages: number;
+    totalItems: number;
+  }
