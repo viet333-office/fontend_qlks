@@ -5,28 +5,29 @@
       <div class="grid">
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-name" type="text" pInputText>
+            <input id="float-input-name" type="text" pInputText [(ngModel)]="searchRoom.room">
             <label for="float-input-name">Tìm kiếm mã phòng</label>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-phone" type="text" pInputText>
+            <input id="float-input-phone" type="text" pInputText [(ngModel)]="searchRoom.name">
             <label for="float-input-phone">Tìm loại phòng</label>
           </span>
         </div>
         <div class="col-2">
-          <p-dropdown [options]="roomList" optionLabel="status" placeholder="trạng thái" />
+          <p-dropdown (onChange)="onStatusChange($event)" [options]="roomList" optionLabel="status"
+            placeholder="trạng thái" [(ngModel)]="searchRoom.status" />
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-cccd" type="text" pInputText>
+            <input id="float-input-cccd" type="text" pInputText [(ngModel)]="searchRoom.value">
             <label for="float-input-cccd">Tìm giá</label>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="float-input-cccd" type="text" pInputText>
+            <input id="float-input-cccd" type="text" pInputText [(ngModel)]="searchRoom.stay">
             <label for="float-input-cccd">Tìm thời hạn</label>
           </span>
         </div>
@@ -42,7 +43,7 @@
       <p-button label="Thêm mới" icon="pi pi-plus" (onClick)="openAddModal()"></p-button>
     </div>
 
-    <p-table [value]="roomList" >
+    <p-table [value]="roomList">
       <ng-template pTemplate="header">
         <tr>
           <th>STT</th>
@@ -71,13 +72,10 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator 
-    (onPageChange)="onPageChange($event)" 
-      [rows]="searchRoom.size" 
-    [totalRecords]="totalItems" />
+    <p-paginator (onPageChange)="onPageChange($event)" [rows]="searchRoom.size" [totalRecords]="totalItems"  [showFirstLastIcon] ="false"/>
   </div>
 </div>
 
 <app-room-update [visible]="showUpdateModal" [room]="selectedRoom"
-(visibleChange)="handleCloseUpdate($event)"></app-room-update>
+  (visibleChange)="handleCloseUpdate($event)"></app-room-update>
 <app-room-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-room-add>

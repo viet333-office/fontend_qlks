@@ -25,7 +25,7 @@ export class RoomServiceService {
   }
 
   putRoom(room: Room): Observable<ResponseApi> {
-    console.log("putRoom service",room);
+    console.log("putRoom service", room);
     return this.http.put<ResponseApi>(`${this.apiUrl}/putRoom?id=${room.id}`, room);
   }
 
@@ -33,18 +33,18 @@ export class RoomServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteRoom/${id}`)
   }
 
-  filterRoom(searchRoom:RoomSearch): Observable<ResponseApi> {
-    console.log(searchRoom,"LOG");
+  filterRoom(searchRoom: RoomSearch): Observable<ResponseApi> {
+    console.log(searchRoom, "searchRoom");
     const params = new HttpParams()
-    .set('name', searchRoom.name || '')
-    .set('room', searchRoom.room || '')
-    .set('value', searchRoom.value || 0)
-    .set('status', searchRoom.status || '')
-    .set('stay', searchRoom.stay || '')
-    .set('page', searchRoom.page.toString())
-    .set('size', searchRoom.size.toString())
-    .set('arrange', searchRoom.arrange || 'asc');
-    console.log({params},"LOG");
-    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`,{params})
+      .set('name', searchRoom.name)
+      .set('room', searchRoom.room)
+      .set('value', searchRoom.value.toString())
+      .set('status', searchRoom.status)
+      .set('stay', searchRoom.stay)
+      .set('page', searchRoom.page.toString())
+      .set('size', searchRoom.size.toString())
+      .set('arrange', searchRoom.arrange || 'asc');
+    console.log(params, "LOG param");
+    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

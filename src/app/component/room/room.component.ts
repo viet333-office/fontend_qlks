@@ -21,12 +21,12 @@ export class RoomComponent {
     room: '',
     value: 0,
     status: '',
-    stay:'',
-    page: 1,
+    stay: '',
+    page: 0,
     size: 4,
-    arrange: 'asc'  
+    arrange: 'asc'
   }
-  clearInput(){
+  clearInput() {
     this.searchRoom.name = '';
     this.searchRoom.room = '';
     this.searchRoom.value = 0;
@@ -36,6 +36,7 @@ export class RoomComponent {
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
     this.getRooms();
+    // this.search();
   }
 
   getRooms(): void {
@@ -68,17 +69,23 @@ export class RoomComponent {
     });
   }
 
-  search(){
+  search() {
+    console.log(this.searchRoom,"this.searchRoom");
+    
     this.roomrService.filterRoom(this.searchRoom).subscribe((data: ResponseApi) => {
-        this.roomList = data.content as Room[];
-        this.totalPages = data.totalPages;
-        this.totalItems = data.totalItems;
-        this.clearInput();
+      this.roomList = data.content as Room[];
+      this.totalPages = data.totalPages;
+      this.totalItems = data.totalItems;
+      this.clearInput();
     });
   }
   onPageChange(event: any): void {
-    console.log("event : ",event);
+    console.log("event : ", event);
     this.searchRoom.page = event.page;
-    this.search(); 
+    this.search();
+  }
+  onStatusChange(event: any) {
+    const selectedStatus = event.value ? event.value.status : '';
+    this.searchRoom.status = selectedStatus;
   }
 }

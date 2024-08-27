@@ -21,11 +21,11 @@ export class CustomerComponent implements OnInit {
     phone: '',
     address: '',
     cccd: '',
-    page: 1,
+    page: 0,
     size: 4,
-    sortType: 'asc'  
+    sortType: 'asc'
   }
-  clearInput(){
+  clearInput() {
     this.searchCustomer.name = '';
     this.searchCustomer.phone = '';
     this.searchCustomer.address = '';
@@ -41,7 +41,7 @@ export class CustomerComponent implements OnInit {
   getCustomers(): void {
     this.customerService.getCustomers().subscribe((data: Customer[]) => {
       this.customerList = data as Customer[];
-  });
+    });
   }
 
   openAddModal() {
@@ -71,19 +71,18 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  search(){
+  search() {
     this.customerService.filterCustomer(this.searchCustomer).subscribe((data: ResponseApi) => {
-        this.customerList = data.content as Customer[];
-        this.totalPages = data.totalPages;
-        this.totalItems = data.totalItems;
-        this.clearInput();
+      this.customerList = data.content as Customer[];
+      this.totalPages = data.totalPages;
+      this.totalItems = data.totalItems;
+      this.clearInput();
     });
   }
   onPageChange(event: any): void {
-    console.log("event : ",event);
+    console.log("event : ", event);
     this.searchCustomer.page = event.page;
-    // this.searchCustomer.page = Math.floor(event.first / this.searchCustomer.size) + 1;
-    this.search(); // Tìm kiếm với trang mới
+    this.search();
   }
 }
 

@@ -38,7 +38,7 @@
       <h3>Danh sách khách hàng</h3>
       <p-button label="Thêm mới" icon="pi pi-plus" (click)="openAddModal()"></p-button>
     </div>
-    <p-table  [value]="customerList" >
+    <p-table [value]="customerList">
       <ng-template pTemplate="header">
         <tr>
           <th>STT</th>
@@ -65,13 +65,10 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator 
-    (onPageChange)="onPageChange($event)" 
-      [rows]="searchCustomer.size" 
-    [totalRecords]="totalItems" />
+    <p-paginator (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size" [totalRecords]="totalItems" [showFirstLastIcon] ="false"/>
   </div>
 </div>
 
 <app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"
-(visibleChange)="handleCloseUpdate($event)"></app-customer-update>
+  (visibleChange)="handleCloseUpdate($event)"></app-customer-update>
 <app-customer-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-customer-add>

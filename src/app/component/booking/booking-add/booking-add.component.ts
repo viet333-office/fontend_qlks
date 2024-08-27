@@ -16,15 +16,15 @@ export class BookingAddComponent {
   booking: Booking = {
     start: null,
     end: null,
-    id_customer: 0,
-    id_room: 0,
+    id_customer: '',
+    id_room: '',
   };
   resetBooking() {
     this.booking = {
       start: null,
       end: null,
-      id_customer: 0,
-      id_room: 0,
+      id_customer: '',
+      id_room: '',
     };
   }
   constructor(private bookingService: BookingServiceService, private datePipe: DatePipe) { }
@@ -39,8 +39,11 @@ export class BookingAddComponent {
     console.log("log booking", booking);
     const formattedStartDate = this.datePipe.transform(this.booking.start, 'yyyy-MM-dd');
     const formattedEndDate = this.datePipe.transform(this.booking.end, 'yyyy-MM-dd');
-    this.booking.start = formattedStartDate
-    this.booking.end = formattedEndDate
+    console.log(formattedStartDate ,"formattedStartDate");
+    console.log(this.booking.start ,"this.booking.start");
+    
+    // this.booking.start = formattedStartDate
+    // this.booking.end = formattedEndDate
     this.bookingService.createBooking(booking).subscribe(() => {
       this.hideDialog();
     })

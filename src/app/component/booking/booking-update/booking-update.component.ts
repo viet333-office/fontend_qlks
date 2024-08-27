@@ -12,8 +12,8 @@ export class BookingUpdateComponent {
   @Input() booking: Booking = {
    start:null,
    end:null,
-   id_customer:0,
-   id_room:0
+   id_customer:'',
+   id_room:''
   };
   @Output() visibleChange = new EventEmitter<boolean>();
 

@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Booking } from '../../Interface/booking';
-export interface ResponseApi {
-  status: boolean;
-  message: string;
-  content: Booking[]; 
-}
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Booking, BookingSearch, ResponseApi } from '../../Interface/booking';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,5 +30,17 @@ export class BookingServiceService {
 
   deleteBooking(id: number): Observable<ResponseApi> {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteBooking?id=${id}`)
+  }
+
+  filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
+    const params = new HttpParams()
+      .set('start', searchBooking.start.toString())
+      .set('end', searchBooking.end.toString())
+      .set('id_customer', searchBooking.id_customer)
+      .set('id_room', searchBooking.id_room)
+      .set('page', searchBooking.page.toString())
+      .set('size', searchBooking.size.toString())
+      .set('arrange', searchBooking.arrange || 'asc');
+    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }
