@@ -13,13 +13,6 @@ export class RoomServiceService {
   private apiUrl = 'http://localhost:8080/api/room';
   constructor(private http: HttpClient) { }
 
-
-  getRoom(): Observable<Room[]> {
-    return this.http.get<ResponseApi>(`${this.apiUrl}/getRoom`).pipe(
-      map(response => response.content as Room[])
-    );
-  }
-
   createRoom(room: Room): Observable<ResponseApi> {
     return this.http.post<ResponseApi>(`${this.apiUrl}/postRoom`, room);
   }
@@ -38,7 +31,7 @@ export class RoomServiceService {
     const params = new HttpParams()
       .set('name', searchRoom.name)
       .set('room', searchRoom.room)
-      .set('value', searchRoom.value.toString())
+      .set('value', searchRoom.value)
       .set('status', searchRoom.status)
       .set('stay', searchRoom.stay)
       .set('page', searchRoom.page.toString())

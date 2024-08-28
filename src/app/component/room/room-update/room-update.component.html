@@ -1,26 +1,96 @@
-<p-dialog *ngIf="room" header="Update Room" [(visible)]="visible" [style]="{ width: '30rem' ,height:'auto'}"  (onHide)="visibleChange.emit(false)">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Tên phòng</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Mã phòng</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="room.room" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="status" class="font-semibold w-6rem">Trạng thái</label>
-        <p-dropdown (onChange)="onChangeStatus(statusOption)" [options]="roomList"  optionLabel="name" [(ngModel)]="statusOption"  [style]="{ width: '20rem' ,height:'auto'}"> </p-dropdown>
-      </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Gía phòng</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="room.value" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Thời hạn</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="room.stay" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary"  (onClick)="visibleChange.emit(false)"  />
-        <p-button label="Update" (onClick)="updateRooms(room)" />
-    </div>
+
+
+<p-dialog *ngIf="room" header="Update Room" [(visible)]="visible" [style]="{ width: '30rem' }" (onHide)="hideDialog()">
+    <form [formGroup]="roomForm" (ngSubmit)="updateRooms(room)">
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="username" class="font-semibold w-10rem">Loại phòng</label>
+                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name"
+                    formControlName="name" />
+            </div>
+            <small class="p-error block"
+                *ngIf="roomForm.get('name')?.errors?.['required'] && roomForm.get('name')?.dirty">không được để
+                trống</small>
+            <small class="p-error block" *ngIf="nameError"> {{ nameError }} </small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('name')?.errors?.['minlength'] && roomForm.get('name')?.dirty"> Độ dài tối
+                thiểu là 3 ký tự </small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('name')?.errors?.['maxlength'] && roomForm.get('name')?.dirty"> Độ dài tối
+                đa là 20 ký tự </small>
+        </div>
+
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="room" class="font-semibold w-10rem">Mã phòng</label>
+                <input pInputText id="room" class="flex-auto" autocomplete="off" [(ngModel)]="room.room"
+                    formControlName="room" />
+            </div>
+            <small class="p-error block"
+                *ngIf="roomForm.get('room')?.errors?.['required'] && roomForm.get('room')?.dirty">không được
+                để trống</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('room')?.errors?.['pattern'] && roomForm.get('room')?.dirty">chỉ được điền giá trị
+                là number</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('room')?.errors?.['minlength'] && roomForm.get('room')?.dirty">độ dài tối thiểu là
+                3</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('room')?.errors?.['maxlength'] && roomForm.get('room')?.dirty">độ dài tối đa là
+                20</small>
+
+        </div>
+
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="value" class="font-semibold w-10rem">Giá phòng</label>
+                <input pInputText id="value" class="flex-auto" autocomplete="off" [(ngModel)]="room.value"
+                    formControlName="value" />
+            </div>
+            <small class="p-error block"
+                *ngIf="roomForm.get('value')?.errors?.['required'] && roomForm.get('value')?.dirty">không
+                được để trống</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('value')?.errors?.['min'] && roomForm.get('value')?.dirty">Giá trị tối thiểu là
+                1</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('value')?.errors?.['max'] && roomForm.get('value')?.dirty">Giá trị tối đa là
+                9999999999</small>
+        </div>
+
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="status" class="font-semibold w-10rem">Trạng thái</label>
+                <p-dropdown (onChange)="onChangeStatus(statusOption)" [options]="roomList" optionLabel="name"
+                    [(ngModel)]="statusOption" [style]="{ width: '19rem' ,height:'auto'}"> </p-dropdown>
+            </div>
+
+        </div>
+
+        <div class="flex flex-column mb-5">
+            <div class="flex align-items-center gap-3">
+                <label for="stay" class="font-semibold w-10rem">Thời hạn (day)</label>
+                <input pInputText id="stay" class="flex-auto" autocomplete="off" [(ngModel)]="room.stay"
+                    formControlName="stay" />
+            </div>
+            <small class="p-error block"
+                *ngIf="roomForm.get('stay')?.errors?.['required'] && roomForm.get('stay')?.dirty">không được để
+                trống</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('stay')?.errors?.['pattern'] && roomForm.get('stay')?.dirty">chỉ được điền giá trị
+                là number</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('stay')?.errors?.['minlength'] && roomForm.get('stay')?.dirty">độ dài tối thiểu là
+                1</small>
+            <small class="p-error block"
+                *ngIf="roomForm.get('stay')?.errors?.['maxlength'] && roomForm.get('stay')?.dirty">độ dài tối đa là
+                100</small>
+
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
+            <p-button label="Update" (onClick)="updateRooms(room)" />
+        </div>
+    </form>
 </p-dialog>

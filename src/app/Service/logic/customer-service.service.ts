@@ -13,13 +13,6 @@ export class CustomerServiceService {
   private apiUrl = 'http://localhost:8080/api/customer';
   constructor(private http: HttpClient) { }
 
-
-  getCustomers(): Observable<Customer[]> {
-    return this.http.get<ResponseApi>(`${this.apiUrl}/get`).pipe(
-      map(response => response.content as Customer[])
-    );
-  }
-
   createCustomer(customer: Customer): Observable<ResponseApi> {
     return this.http.post<ResponseApi>(`${this.apiUrl}/post`, customer);
   }

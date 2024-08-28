@@ -36,22 +36,9 @@ export class RoomComponent {
   }
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
-    this.getRooms();
-    // this.search();
+    this.search();
   }
 
-  getRooms(): void {
-    this.isLoading = true;
-    this.roomrService.getRoom().subscribe(
-      (data) => {
-        this.isLoading = false;
-        this.roomList = data as Room[];
-      }, (err) => {
-        this.isLoading = false;
-        console.log(err, "bug");
-      }
-    );
-  }
 
   openAddModal() {
     this.showUpdateModal = false;
@@ -66,11 +53,11 @@ export class RoomComponent {
   }
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    this.getRooms();
+    this.search();
   }
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
-    this.getRooms();
+    this.search();
   }
 
   deleteRooms(id: number): void {
@@ -79,7 +66,7 @@ export class RoomComponent {
       this.roomrService.deleteRoom(id).subscribe(
         () => {
           this.isLoading = false;
-          this.getRooms();
+          this.search();
         }, (err) => {
           this.isLoading = false;
           console.log(err, "bug");
