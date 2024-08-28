@@ -76,5 +76,7 @@
 </div>
 
 <app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"
-  (visibleChange)="handleCloseUpdate($event)"></app-customer-update>
-<app-customer-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-customer-add>
+  (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
+  (loadingChange)="isLoading = $event"></app-customer-update>
+<app-customer-add [visible]="showAddModal"  (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
+(loadingChange)="isLoading = $event"></app-customer-add>

@@ -14,6 +14,7 @@ export class RoomComponent {
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedRoom!: Room;
+  isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
   searchRoom: RoomSearch = {
@@ -40,9 +41,16 @@ export class RoomComponent {
   }
 
   getRooms(): void {
-    this.roomrService.getRoom().subscribe((data: Room[]) => {
-      this.roomList = data as Room[];
-    });
+    this.isLoading = true;
+    this.roomrService.getRoom().subscribe(
+      (data) => {
+        this.isLoading = true;
+        this.roomList = data as Room[];
+      }, (err) => {
+        this.isLoading = false;
+        console.log(err, "bug");
+      }
+    );
   }
 
   openAddModal() {
@@ -64,23 +72,37 @@ export class RoomComponent {
   }
 
   deleteRooms(id: number): void {
-    this.roomrService.deleteRoom(id).subscribe(() => {
-      this.getRooms();
-    });
+    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa phòng này?');
+    if (confirmed) {
+      this.roomrService.deleteRoom(id).subscribe(
+        () => {
+          this.isLoading = false;
+          this.getRooms();
+        }, (err) => {
+          this.isLoading = false;
+          console.log(err, "bug");
+        }
+      );
+    }
   }
 
   search() {
-    console.log(this.searchRoom,"this.searchRoom");
-    
-    this.roomrService.filterRoom(this.searchRoom).subscribe((data: ResponseApi) => {
-      this.roomList = data.content as Room[];
-      this.totalPages = data.totalPages;
-      this.totalItems = data.totalItems;
-      this.clearInput();
-    });
+    console.log(this.searchRoom, "this.searchRoom");
+    this.isLoading = true;
+    this.roomrService.filterRoom(this.searchRoom).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.roomList = data.content as Room[];
+        this.totalPages = data.totalPages;
+        this.totalItems = data.totalItems;
+        this.clearInput();
+      }, (err) => {
+        this.isLoading = false;
+        console.error('Error occurred:', err);
+      }
+    );
   }
   onPageChange(event: any): void {
-    console.log("event : ", event);
     this.searchRoom.page = event.page;
     this.search();
   }

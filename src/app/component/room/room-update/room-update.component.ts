@@ -8,10 +8,8 @@ import { RoomServiceService } from '../../../Service/logic/room-service.service'
   styleUrl: './room-update.component.css'
 })
 export class RoomUpdateComponent {
-  roomList :IStatus[] = [];
-  selectedStatus: string = '';
-  statusOption :IStatus = {name: ''}
   @Input() visible: boolean = false;
+  @Input() isLoading: boolean = false;
   @Input() room: Room = {
     name:'',
     room:'',
@@ -20,9 +18,13 @@ export class RoomUpdateComponent {
     stay:''
   };
   @Output() visibleChange = new EventEmitter<boolean>();
-
+  @Output() loadingChange = new EventEmitter<boolean>();
+  roomList :IStatus[] = [];
+  selectedStatus: string = '';
+  statusOption :IStatus = {name: ''}
 
   constructor(private roomrService: RoomServiceService) { }
+
   ngOnInit(): void {
     this.roomList = [
       { name:"open"},
@@ -36,8 +38,15 @@ export class RoomUpdateComponent {
   }
 
   updateRooms(room: Room) {
-    this.roomrService.putRoom(room).subscribe(() => {
+    this.loadingChange.emit(true);
+    this.roomrService.putRoom(room).subscribe(
+      () => {
+      this.loadingChange.emit(false);
       this.visibleChange.emit(false);
-      })
+      }, (error) => {
+        this.loadingChange.emit(false);
+        console.error('Error occurred:', error);
+      }
+    )
   }
 }

@@ -14,6 +14,7 @@ export class BookingComponent {
   selectedBooking!: Booking;
   totalPages: number = 0;
   totalItems: number = 0;
+  isLoading: boolean = false;
   searchBooking: BookingSearch = {
     id_customer: '',
     id_room: '',
@@ -36,10 +37,16 @@ export class BookingComponent {
   }
 
   getBooking(): void { 
-    
-    this.bookingService.getBooking().subscribe((data: any) => {
+    this.isLoading = true;
+    this.bookingService.getBooking().subscribe(
+      (data) => {
+      this.isLoading = false;
       this.bookingList = data as Booking[];
-    });
+    }, (err) => {
+      this.isLoading = false;
+      console.log(err, "bug");
+    }
+  );
   }
   openAddModal() {
     this.showUpdateModal = false;
@@ -63,9 +70,18 @@ export class BookingComponent {
   }
 
   deleteBooking(id: number): void {
-    this.bookingService.deleteBooking(id).subscribe(() => {
-      this.getBooking();
-    });
+    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa lịch đặt phòng này?');
+    if (confirmed) {
+      this.bookingService.deleteBooking(id).subscribe(
+        () => {
+          this.isLoading = false;
+          this.getBooking();
+        }, (err) => {
+          this.isLoading = false;
+          console.log(err, "bug");
+        }
+      );
+    }
   }
   
   search() {

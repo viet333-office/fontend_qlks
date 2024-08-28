@@ -11,8 +11,9 @@ import { DatePipe } from '@angular/common';
 })
 export class BookingAddComponent {
   @Input() visible: boolean = false;
+  @Input() isLoading: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
-
+  @Output() loadingChange = new EventEmitter<boolean>();
   booking: Booking = {
     start: null,
     end: null,
@@ -39,14 +40,21 @@ export class BookingAddComponent {
     console.log("log booking", booking);
     const formattedStartDate = this.datePipe.transform(this.booking.start, 'yyyy-MM-dd');
     const formattedEndDate = this.datePipe.transform(this.booking.end, 'yyyy-MM-dd');
-    console.log(formattedStartDate ,"formattedStartDate");
-    console.log(this.booking.start ,"this.booking.start");
-    
+    console.log(formattedStartDate, "formattedStartDate");
+    console.log(this.booking.start, "this.booking.start");
+
     // this.booking.start = formattedStartDate
     // this.booking.end = formattedEndDate
-    this.bookingService.createBooking(booking).subscribe(() => {
-      this.hideDialog();
-    })
+    this.loadingChange.emit(true);
+    this.bookingService.createBooking(booking).subscribe(
+      () => {
+        this.loadingChange.emit(false);
+        this.hideDialog();
+      }, (error) => {
+        this.loadingChange.emit(false);
+        console.error('Error occurred:', error);
+      }
+    )
   }
-  
+
 }

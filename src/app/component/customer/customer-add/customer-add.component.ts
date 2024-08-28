@@ -9,8 +9,9 @@ import { CustomerServiceService } from '../../../Service/logic/customer-service.
 })
 export class CustomerAddComponent {
   @Input() visible: boolean = false;
+  @Input() isLoading: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
-
+  @Output() loadingChange = new EventEmitter<boolean>();
   customer: Customer = {
     name: '',
     phone: '',
@@ -26,7 +27,7 @@ export class CustomerAddComponent {
     };
   }
   constructor(private customerService: CustomerServiceService) { }
-  isValid : boolean = false;
+  isValid: boolean = false;
   errors: { [key: string]: string } = {};
   hideDialog() {
     this.errors = {};
@@ -37,28 +38,15 @@ export class CustomerAddComponent {
 
   saveCustomer(customer: Customer) {
 
-  if (!/^[a-zA-Z\s]+$/.test(customer.name)) {
-    this.errors['name'] = 'Name chỉ được chứa chữ cái';
-    this.isValid = false;
-  }
-
-  if (!/^\d+$/.test(customer.phone)) {
-    this.errors['phone'] = 'Phone phải là chuỗi số';
-    this.isValid = false;
-  }
-
-  if (!/^\d+$/.test(customer.cccd)) {
-    this.errors['cccd'] = 'CCCD phải là chuỗi số';
-    this.isValid = false;
-  }
-
-  
-  if (!this.isValid) {
-    this.visible = true; 
-    return; 
-  }
-    this.customerService.createCustomer(customer).subscribe(() => {
-      this.hideDialog();
-    })
+    this.loadingChange.emit(true);
+    this.customerService.createCustomer(customer).subscribe(
+      () => {
+        this.hideDialog();
+        this.loadingChange.emit(false);
+      }
+      , (error) => {
+        this.loadingChange.emit(false);
+        console.error('Error occurred:', error);
+      })
   }
 }

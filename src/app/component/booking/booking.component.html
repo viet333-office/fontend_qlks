@@ -34,6 +34,9 @@
       </div>
     </p-card>
   </div>
+  <div class="spinner-overlay" *ngIf="isLoading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+  </div>
   <div class="col-12 mt-3">
     <div class="flex justify-content-between align-items-center mb-3">
       <h3>Danh sách khách hàng</h3>
@@ -71,6 +74,8 @@
 </div>
 
 
-<app-booking-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-booking-add>
+<app-booking-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
+(loadingChange)="isLoading = $event"></app-booking-add>
 <app-booking-update [visible]="showUpdateModal" [booking]="selectedBooking"
-  (visibleChange)="handleCloseUpdate($event)"></app-booking-update>
+  (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
+  (loadingChange)="isLoading = $event"></app-booking-update>

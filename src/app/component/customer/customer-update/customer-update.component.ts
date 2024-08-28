@@ -9,6 +9,7 @@ import { CustomerServiceService } from '../../../Service/logic/customer-service.
 })
 export class CustomerUpdateComponent {
   @Input() visible: boolean = false;
+  @Input() isLoading: boolean = false;
   @Input() customer: Customer = {
     name: '',
     phone: '',
@@ -16,12 +17,19 @@ export class CustomerUpdateComponent {
     cccd: ''
   };
   @Output() visibleChange = new EventEmitter<boolean>();
-
+  @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private customerService: CustomerServiceService) { }
   updateCustomer(customer: Customer) {
-    this.customerService.putCustomer(customer).subscribe(() => {
+    this.loadingChange.emit(true);
+    this.customerService.putCustomer(customer).subscribe(
+      () => {
+        this.loadingChange.emit(false);
       this.visibleChange.emit(false);
-      })
+      },(err) =>{
+        this.loadingChange.emit(false);
+        console.error('Error occurred:', err);
+      }
+    )
   }
 }

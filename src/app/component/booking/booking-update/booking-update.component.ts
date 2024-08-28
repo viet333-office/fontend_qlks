@@ -9,23 +9,26 @@ import { BookingServiceService } from '../../../Service/logic/booking-service.se
 })
 export class BookingUpdateComponent {
   @Input() visible: boolean = false;
+  @Input() isLoading: boolean = false;
   @Input() booking: Booking = {
-   start:null,
-   end:null,
-   id_customer:'',
-   id_room:''
+    start: null,
+    end: null,
+    id_customer: '',
+    id_room: ''
   };
   @Output() visibleChange = new EventEmitter<boolean>();
-
+  @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private bookingService: BookingServiceService) { }
   updateBooking(booking: Booking) {
-    console.log(booking,"log");
-    
+    this.loadingChange.emit(true);
     this.bookingService.putBooking(booking).subscribe(() => {
-      console.log("put ok");
-      
+      this.loadingChange.emit(true);
       this.visibleChange.emit(false);
-      })
+    }, (error) => {
+      this.loadingChange.emit(false);
+      console.error('Error occurred:', error);
+    }
+    )
   }
 }

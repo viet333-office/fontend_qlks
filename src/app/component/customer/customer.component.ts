@@ -62,10 +62,15 @@ export class CustomerComponent implements OnInit {
   deleteCustomer(id: number): void {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa khách hàng này?');
     if (confirmed) {
-      this.customerService.deleteCustomer(id).subscribe(() => {
+      this.customerService.deleteCustomer(id).subscribe(
+        () => {
         this.isLoading = false;
         this.search();
-      });
+      },(error) =>{
+        this.isLoading = false;
+        console.error('Error occurred:', error);
+      }
+    );
     }
   }
 

@@ -37,6 +37,9 @@
       </div>
     </p-card>
   </div>
+  <div class="spinner-overlay" *ngIf="isLoading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+  </div>
   <div class="col-12 mt-3">
     <div class="flex justify-content-between align-items-center mb-3">
       <h3>Danh sách phòng</h3>
@@ -77,5 +80,7 @@
 </div>
 
 <app-room-update [visible]="showUpdateModal" [room]="selectedRoom"
-  (visibleChange)="handleCloseUpdate($event)"></app-room-update>
-<app-room-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)"></app-room-add>
+  (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
+  (loadingChange)="isLoading = $event"></app-room-update>
+<app-room-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
+(loadingChange)="isLoading = $event"></app-room-add>
