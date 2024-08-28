@@ -14,6 +14,7 @@ export class CustomerComponent implements OnInit {
   showUpdateModal: boolean = false;
   selectedCustomer!: Customer;
   customerList: Customer[] = [];
+  isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
   searchCustomer: CustomerSearch = {
@@ -34,14 +35,7 @@ export class CustomerComponent implements OnInit {
   constructor(private customerService: CustomerServiceService) { }
 
   ngOnInit(): void {
-    // this.getCustomers();
     this.search();
-  }
-
-  getCustomers(): void {
-    this.customerService.getCustomers().subscribe((data: Customer[]) => {
-      this.customerList = data as Customer[];
-    });
   }
 
   openAddModal() {
@@ -51,12 +45,12 @@ export class CustomerComponent implements OnInit {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    this.getCustomers();
+    this.search();
   }
 
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
-    this.getCustomers();
+    this.search();
   }
 
   openUpdateModal(customer: Customer) {
@@ -66,18 +60,30 @@ export class CustomerComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void {
-    this.customerService.deleteCustomer(id).subscribe(() => {
-      this.getCustomers();
-    });
+    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa khách hàng này?');
+    if (confirmed) {
+      this.customerService.deleteCustomer(id).subscribe(() => {
+        this.isLoading = false;
+        this.search();
+      });
+    }
   }
 
   search() {
-    this.customerService.filterCustomer(this.searchCustomer).subscribe((data: ResponseApi) => {
+    this.isLoading = true;
+    this.customerService.filterCustomer(this.searchCustomer).subscribe(
+      (data) => {
+      this.isLoading = false;
       this.customerList = data.content as Customer[];
       this.totalPages = data.totalPages;
       this.totalItems = data.totalItems;
       this.clearInput();
-    });
+    },(error) =>{
+      this.isLoading = false;
+      console.error('Error occurred:', error);
+    }
+    
+  );
   }
   onPageChange(event: any): void {
     console.log("event : ", event);

@@ -1,20 +1,35 @@
-<p-dialog *ngIf="customer" header="Add Customer" [(visible)]="visible" [style]="{ width: '25rem' }"  (onHide)="visibleChange.emit(false)">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Họ tên</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name" />
+<p-dialog *ngIf="customer" header="Add Customer" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="visibleChange.emit(false)">
+    <div class="flex flex-column mb-3">
+        <div class="flex align-items-center gap-3">
+            <label for="username" class="font-semibold w-6rem">Họ tên</label>
+            <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name" required/>
+        </div>
+        <div *ngIf="errors['name']" class="error-message">{{ errors['name'] }}</div>
     </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">số điện thoại</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="customer.phone" />
+    
+    <div class="flex flex-column mb-5">
+        <div class="flex align-items-center gap-3">
+            <label for="phone" class="font-semibold w-6rem">Số điện thoại</label>
+            <input pInputText id="phone" class="flex-auto" autocomplete="off" [(ngModel)]="customer.phone" required/>
+        </div>
+        <div *ngIf="errors['phone']" class="error-message">{{ errors['phone'] }}</div>
     </div>
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Địa chỉ</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.address" />
+
+    <div class="flex flex-column mb-3">
+        <div class="flex align-items-center gap-3">
+            <label for="address" class="font-semibold w-6rem">Địa chỉ</label>
+            <input pInputText id="address" class="flex-auto" autocomplete="off" [(ngModel)]="customer.address" required/>
+        </div>
     </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">CCCD</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="customer.cccd" />
+
+    <div class="flex flex-column mb-5">
+        <div class="flex align-items-center gap-3">
+            <label for="cccd" class="font-semibold w-6rem">CCCD</label>
+            <input pInputText id="cccd" class="flex-auto" autocomplete="off" [(ngModel)]="customer.cccd" required/>
+        </div>
+        <div *ngIf="errors['cccd']" class="error-message">{{ errors['cccd'] }}</div>
     </div>
+
     <div class="flex justify-content-end gap-2">
         <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
         <p-button label="Save" (onClick)="saveCustomer(customer)" />

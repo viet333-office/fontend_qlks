@@ -71,6 +71,7 @@ export class BookingComponent {
   search() {
     console.log(this.searchBooking,"this.searchRoom");
     this.bookingService.filterBooking(this.searchBooking).subscribe((data: ResponseApi) => {
+      console.log(data ,"data");
       this.bookingList = data.content as Booking[];
       this.totalPages = data.totalPages;
       this.totalItems = data.totalItems;

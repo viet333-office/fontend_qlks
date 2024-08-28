@@ -33,6 +33,8 @@ export class BookingServiceService {
   }
 
   filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
+    console.log(searchBooking,"searchBooking");
+    
     const params = new HttpParams()
       .set('start', searchBooking.start.toString())
       .set('end', searchBooking.end.toString())
@@ -41,6 +43,8 @@ export class BookingServiceService {
       .set('page', searchBooking.page.toString())
       .set('size', searchBooking.size.toString())
       .set('arrange', searchBooking.arrange || 'asc');
+      console.log(params,"params");
+      
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

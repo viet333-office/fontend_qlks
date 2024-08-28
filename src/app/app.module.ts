@@ -20,6 +20,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { MenuModule } from 'primeng/menu';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +36,7 @@ import { RoomAddComponent } from './component/room/room-add/room-add.component';
 import { RoomUpdateComponent } from './component/room/room-update/room-update.component';
 import { BookingAddComponent } from './component/booking/booking-add/booking-add.component';
 import { BookingUpdateComponent } from './component/booking/booking-update/booking-update.component';
-import { PaginatorModule } from 'primeng/paginator';
+
 
 
 
@@ -76,7 +79,9 @@ import { PaginatorModule } from 'primeng/paginator';
     CalendarModule,
     ToolbarModule,
     PaginatorModule,
-
+    ProgressSpinnerModule,
+    ConfirmDialogModule,
+  
   ],
   providers: [],
   bootstrap: [AppComponent]

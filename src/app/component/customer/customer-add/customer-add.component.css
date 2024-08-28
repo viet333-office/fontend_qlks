@@ -1,0 +1,15 @@
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+  }
+  .flex-column {
+    flex-direction: column;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25rem; 
+    margin-left: calc(6rem + 1.5rem); 
+}
