@@ -23,6 +23,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -81,6 +82,7 @@ import { BookingUpdateComponent } from './component/booking/booking-update/booki
     PaginatorModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
+    ReactiveFormsModule
   
   ],
   providers: [],

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output  } from '@angular/core';
 import { Customer } from '../../../Interface/customer';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service'
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-update',
@@ -19,7 +20,7 @@ export class CustomerUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private customerService: CustomerServiceService) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerServiceService) { }
   updateCustomer(customer: Customer) {
     this.loadingChange.emit(true);
     this.customerService.putCustomer(customer).subscribe(

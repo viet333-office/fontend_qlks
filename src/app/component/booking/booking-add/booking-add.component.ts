@@ -3,6 +3,7 @@ import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service';
 import { DatePipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-booking-add',
   templateUrl: './booking-add.component.html',
@@ -36,15 +37,11 @@ export class BookingAddComponent {
     this.resetBooking();
   }
 
-  saveBooking(booking: Booking) {
-    console.log("log booking", booking);
-    const formattedStartDate = this.datePipe.transform(this.booking.start, 'yyyy-MM-dd');
-    const formattedEndDate = this.datePipe.transform(this.booking.end, 'yyyy-MM-dd');
-    console.log(formattedStartDate, "formattedStartDate");
-    console.log(this.booking.start, "this.booking.start");
 
-    // this.booking.start = formattedStartDate
-    // this.booking.end = formattedEndDate
+  saveBooking(booking: Booking) {
+     console.log("log booking", booking);
+   
+  
     this.loadingChange.emit(true);
     this.bookingService.createBooking(booking).subscribe(
       () => {

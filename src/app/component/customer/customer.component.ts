@@ -40,6 +40,7 @@ export class CustomerComponent implements OnInit {
 
   openAddModal() {
     this.showUpdateModal = false;
+    this.clearInput();
     this.showAddModal = true;
   }
 
@@ -55,6 +56,7 @@ export class CustomerComponent implements OnInit {
 
   openUpdateModal(customer: Customer) {
     this.showAddModal = false;
+    this.clearInput();
     this.selectedCustomer = { ...customer };
     this.showUpdateModal = true;
   }
@@ -64,13 +66,13 @@ export class CustomerComponent implements OnInit {
     if (confirmed) {
       this.customerService.deleteCustomer(id).subscribe(
         () => {
-        this.isLoading = false;
-        this.search();
-      },(error) =>{
-        this.isLoading = false;
-        console.error('Error occurred:', error);
-      }
-    );
+          this.isLoading = false;
+          this.search();
+        }, (error) => {
+          this.isLoading = false;
+          console.error('Error occurred:', error);
+        }
+      );
     }
   }
 
@@ -78,17 +80,17 @@ export class CustomerComponent implements OnInit {
     this.isLoading = true;
     this.customerService.filterCustomer(this.searchCustomer).subscribe(
       (data) => {
-      this.isLoading = false;
-      this.customerList = data.content as Customer[];
-      this.totalPages = data.totalPages;
-      this.totalItems = data.totalItems;
-      this.clearInput();
-    },(error) =>{
-      this.isLoading = false;
-      console.error('Error occurred:', error);
-    }
-    
-  );
+        this.isLoading = false;
+        this.customerList = data.content as Customer[];
+        this.totalPages = data.totalPages;
+        this.totalItems = data.totalItems;
+        this.clearInput();
+      }, (error) => {
+        this.isLoading = false;
+        console.error('Error occurred:', error);
+      }
+
+    );
   }
   onPageChange(event: any): void {
     console.log("event : ", event);

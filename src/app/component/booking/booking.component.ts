@@ -50,6 +50,7 @@ export class BookingComponent {
   }
   openAddModal() {
     this.showUpdateModal = false;
+    this.clearInput();
     this.showAddModal = true;
   }
 
@@ -65,6 +66,7 @@ export class BookingComponent {
 
   openUpdateModal(booking: Booking) {
     this.showAddModal = false;
+    this.clearInput();
     this.selectedBooking = { ...booking };
     this.showUpdateModal = true;
   }

@@ -44,7 +44,7 @@ export class RoomComponent {
     this.isLoading = true;
     this.roomrService.getRoom().subscribe(
       (data) => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.roomList = data as Room[];
       }, (err) => {
         this.isLoading = false;
@@ -55,10 +55,12 @@ export class RoomComponent {
 
   openAddModal() {
     this.showUpdateModal = false;
+    this.clearInput();
     this.showAddModal = true;
   }
   openUpdateModal(room: Room) {
     this.showAddModal = false;
+    this.clearInput();
     this.selectedRoom = { ...room };
     this.showUpdateModal = true;
   }
