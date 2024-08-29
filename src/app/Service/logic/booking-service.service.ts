@@ -32,19 +32,16 @@ export class BookingServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteBooking?id=${id}`)
   }
 
-  filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
-    console.log(searchBooking,"searchBooking");
-    
+  filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {  
     const params = new HttpParams()
-      .set('start', searchBooking.start.toString())
-      .set('end', searchBooking.end.toString())
+      // .set('start', searchBooking.start? searchBooking.start.toString():'')
+      // .set('end', searchBooking.end?  searchBooking.end.toString():'')
       .set('id_customer', searchBooking.id_customer)
       .set('id_room', searchBooking.id_room)
       .set('page', searchBooking.page.toString())
       .set('size', searchBooking.size.toString())
       .set('arrange', searchBooking.arrange || 'asc');
       console.log(params,"params");
-      
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

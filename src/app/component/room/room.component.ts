@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResponseApi, Room, RoomSearch } from '../../Interface/room';
+import { IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
 
 
@@ -11,6 +11,7 @@ import { RoomServiceService } from '../../Service/logic/room-service.service';
 export class RoomComponent {
   sidebarVisible: boolean = true;
   roomList: Room[] = [];
+  roomIStatus: IStatus[] = [];
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedRoom!: Room;
@@ -34,11 +35,12 @@ export class RoomComponent {
     this.searchRoom.status = '';
     this.searchRoom.stay = '';
   }
+  
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
     this.search();
   }
-
+ uniqueData  = [...new Set(this.searchRoom.status)]
 
   openAddModal() {
     this.showUpdateModal = false;

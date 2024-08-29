@@ -1,5 +1,5 @@
 <p-dialog *ngIf="booking" header="Add Booking" [(visible)]="visible" [style]="{ width: '26rem' }"
-    (onHide)="visibleChange.emit(false)">
+    (onHide)="hideDialog()">
     <div class="flex align-items-center gap-3 mb-3">
         <label for="username" class="font-semibold w-7rem">mã khách hàng</label>
         <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_customer" />

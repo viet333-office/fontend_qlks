@@ -16,7 +16,7 @@
           </span>
         </div>
         <div class="col-2">
-          <p-dropdown (onChange)="onStatusChange($event)" [options]="roomList" optionLabel="status"
+          <p-dropdown (onChange)="onStatusChange($event)" [options]="uniqueData" optionLabel="status"
             placeholder="trạng thái" [(ngModel)]="searchRoom.status" />
         </div>
         <div class="col-2">

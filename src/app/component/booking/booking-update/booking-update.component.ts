@@ -20,6 +20,12 @@ export class BookingUpdateComponent {
   @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private bookingService: BookingServiceService) { }
+
+  hideDialog() {
+    this.visible = false;
+    this.visibleChange.emit(this.visible);
+  }
+
   updateBooking(booking: Booking) {
     this.loadingChange.emit(true);
     this.bookingService.putBooking(booking).subscribe(() => {

@@ -8,8 +8,8 @@ export interface Booking {
     id_room: string;
 }
 export interface BookingSearch {
-    start: Date;
-    end:Date;
+    start: Date | null;
+    end:Date | null;
     id_customer: string;
     id_room:string;
     page: number,

@@ -18,22 +18,23 @@ export class BookingComponent {
   searchBooking: BookingSearch = {
     id_customer: '',
     id_room: '',
-    start: new Date,
-    end:new Date,
+    start: null,
+    end: null,
     page: 0,
     size: 4,
     arrange: 'asc'
   }
   clearInput() {
-    this.searchBooking.start =  new Date;
-    this.searchBooking.end =  new Date;
+    this.searchBooking.start =  null;
+    this.searchBooking.end =  null;
     this.searchBooking.id_customer = '';
     this.searchBooking.id_room = '';
   }
   constructor(private bookingService: BookingServiceService) { }
 
   ngOnInit(): void {
-    this.getBooking();
+      this.search();
+    //  this.getBooking();
   }
 
   getBooking(): void { 
@@ -56,12 +57,14 @@ export class BookingComponent {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    this.getBooking();
+    // this.getBooking();
+    this.search();
   }
 
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
-    this.getBooking();
+    // this.getBooking();
+    this.search();
   }
 
   openUpdateModal(booking: Booking) {
@@ -77,7 +80,8 @@ export class BookingComponent {
       this.bookingService.deleteBooking(id).subscribe(
         () => {
           this.isLoading = false;
-          this.getBooking();
+          // this.getBooking();
+          this.search();
         }, (err) => {
           this.isLoading = false;
           console.log(err, "bug");
@@ -87,8 +91,9 @@ export class BookingComponent {
   }
   
   search() {
-    console.log(this.searchBooking,"this.searchRoom");
-    this.bookingService.filterBooking(this.searchBooking).subscribe((data: ResponseApi) => {
+    console.log(this.searchBooking ," get all booking");
+    
+    this.bookingService.filterBooking(this.searchBooking).subscribe((data) => {
       console.log(data ,"data");
       this.bookingList = data.content as Booking[];
       this.totalPages = data.totalPages;

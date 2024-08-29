@@ -58,8 +58,8 @@
           <td>{{(searchBooking.page) * searchBooking.size + i + 1}}</td>
           <td>{{booking.id_customer}}</td>
           <td>{{booking.id_room}}</td>
-          <td>{{booking.start}}</td>
-          <td>{{booking.end}}</td>
+          <td>{{booking.start | date:'yyyy-MM-dd'}}</td>
+          <td>{{booking.end | date:'yyyy-MM-dd'}}</td>
           <td>
             <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
               (onClick)="openUpdateModal(booking)"></p-button>
