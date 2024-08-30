@@ -2,11 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Customer } from '../../../Interface/customer';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service'
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-customer-add',
   templateUrl: './customer-add.component.html',
-  styleUrl: './customer-add.component.css'
+  styleUrl: './customer-add.component.css',
+  providers: [MessageService],
 })
 export class CustomerAddComponent {
   @Input() visible: boolean = false;
@@ -27,7 +30,7 @@ export class CustomerAddComponent {
       cccd: ''
     };
   }
-  constructor(private fb: FormBuilder, private customerService: CustomerServiceService) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerServiceService ,  private messageService: MessageService) { }
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
@@ -74,14 +77,16 @@ export class CustomerAddComponent {
 
   saveCustomer(customer: Customer) {
     this.loadingChange.emit(true);
-    this.customerService.createCustomer(customer).subscribe(() => {
+    this.customerService.createCustomer(customer).subscribe((data) => {
+      if(!data.content){
+        this.messageService.add({severity:'error', summary:'error', detail:data.message});
+        this.loadingChange.emit(false);
+      }else{
       this.customerForm.reset();
       this.hideDialog();
       this.loadingChange.emit(false);
-    }, (error) => {
-      this.loadingChange.emit(false);
-      console.error('Error occurred:', error);
+      this.messageService.add({severity:'success', summary:'Success', detail:'Thêm khách hàng thành công'});
     }
-    )
+  })
   }
 }

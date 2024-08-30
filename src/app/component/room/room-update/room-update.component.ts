@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IStatus, Room } from '../../../Interface/room';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-room-update',
   templateUrl: './room-update.component.html',
-  styleUrl: './room-update.component.css'
+  styleUrl: './room-update.component.css',
+  providers: [MessageService]
 })
 export class RoomUpdateComponent {
   @Input() visible: boolean = false;
@@ -24,7 +26,7 @@ export class RoomUpdateComponent {
   selectedStatus: string = '';
   statusOption: IStatus = { name: '' }
 
-  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService) { }
+  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService ,private messageService: MessageService) { }
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
@@ -66,15 +68,16 @@ export class RoomUpdateComponent {
   updateRooms(room: Room) {
     this.loadingChange.emit(true);
     this.roomrService.putRoom(room).subscribe(
-      () => {
-        this.visibleChange.emit(false);
-        this.roomForm.reset();
-        this.loadingChange.emit(false);
-
-      }, (error) => {
-        this.loadingChange.emit(false);
-        console.error('Error occurred:', error);
-      }
-    )
+      (data) => {
+        if (!data.content) {
+          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+          this.loadingChange.emit(false);
+        } else {
+          this.visibleChange.emit(false);
+          this.roomForm.reset();
+          this.loadingChange.emit(false);
+          this.messageService.add({severity:'success', summary:'Success', detail:'Sửa phòng thành công'});
+        }
+      })
   }
 }

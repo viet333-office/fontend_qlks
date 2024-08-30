@@ -35,12 +35,12 @@ export class RoomComponent {
     this.searchRoom.status = '';
     this.searchRoom.stay = '';
   }
-  
+
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
     this.search();
   }
- uniqueData  = [...new Set(this.searchRoom.status)]
+  uniqueData = [...new Set(this.searchRoom.status)]
 
   openAddModal() {
     this.showUpdateModal = false;
@@ -66,14 +66,15 @@ export class RoomComponent {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa phòng này?');
     if (confirmed) {
       this.roomrService.deleteRoom(id).subscribe(
-        () => {
-          this.isLoading = false;
-          this.search();
-        }, (err) => {
-          this.isLoading = false;
-          console.log(err, "bug");
-        }
-      );
+        (data) => {
+          if (!data.content) {
+            data.message;
+            this.isLoading = false;
+          } else {
+            this.isLoading = false;
+            this.search();
+          }
+        });
     }
   }
 

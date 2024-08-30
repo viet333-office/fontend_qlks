@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Room } from '../../../Interface/room';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-room-add',
   templateUrl: './room-add.component.html',
-  styleUrl: './room-add.component.css'
+  styleUrl: './room-add.component.css',
+  providers: [MessageService]
 })
 export class RoomAddComponent {
   @Input() visible: boolean = false;
@@ -30,11 +32,11 @@ export class RoomAddComponent {
       stay: ''
     };
   }
-  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService) { }
+  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService ,private messageService: MessageService) { }
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
-    value: [0, [Validators.required,  Validators.min(1), Validators.max(9999999999)]],
+    value: [0, [Validators.required, Validators.min(1), Validators.max(9999999999)]],
     stay: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(1), Validators.maxLength(100)]]
   });
 
@@ -67,14 +69,16 @@ export class RoomAddComponent {
     this.loadingChange.emit(true);
     room.status = 'open';
     this.roomrService.createRoom(room).subscribe(
-      () => {
-        this.loadingChange.emit(false);
-        this.roomForm.reset();
-        this.hideDialog();
-      }, (error) => {
-        this.loadingChange.emit(false);
-        console.error('Error occurred:', error);
-      }
-    )
+      (data) => {
+        if (!data.content) {
+          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+          this.loadingChange.emit(false);
+        } else {
+          this.loadingChange.emit(false);
+          this.roomForm.reset();
+          this.hideDialog();
+          this.messageService.add({severity:'success', summary:'Success', detail:'Thêm phòng thành công'});
+        }
+      })
   }
 }

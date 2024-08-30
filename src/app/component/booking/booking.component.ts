@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { BookingServiceService } from '../../Service/logic/booking-service.service'
-import { Booking, BookingSearch, ResponseApi } from '../../Interface/booking';
+import { Booking, BookingSearch } from '../../Interface/booking';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
-  styleUrl: './booking.component.css'
+  styleUrl: './booking.component.css',
+  providers: [DatePipe]
 })
 export class BookingComponent {
   sidebarVisible: boolean = true;
@@ -25,30 +27,17 @@ export class BookingComponent {
     arrange: 'asc'
   }
   clearInput() {
-    this.searchBooking.start =  null;
-    this.searchBooking.end =  null;
+    this.searchBooking.start = null;
+    this.searchBooking.end = null;
     this.searchBooking.id_customer = '';
     this.searchBooking.id_room = '';
   }
-  constructor(private bookingService: BookingServiceService) { }
+  constructor(private datePipe: DatePipe, private bookingService: BookingServiceService) { }
 
   ngOnInit(): void {
-      this.search();
-    //  this.getBooking();
+    this.search();
   }
 
-  getBooking(): void { 
-    this.isLoading = true;
-    this.bookingService.getBooking().subscribe(
-      (data) => {
-      this.isLoading = false;
-      this.bookingList = data as Booking[];
-    }, (err) => {
-      this.isLoading = false;
-      console.log(err, "bug");
-    }
-  );
-  }
   openAddModal() {
     this.showUpdateModal = false;
     this.clearInput();
@@ -57,13 +46,11 @@ export class BookingComponent {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    // this.getBooking();
     this.search();
   }
 
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
-    // this.getBooking();
     this.search();
   }
 
@@ -78,23 +65,31 @@ export class BookingComponent {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa lịch đặt phòng này?');
     if (confirmed) {
       this.bookingService.deleteBooking(id).subscribe(
-        () => {
-          this.isLoading = false;
-          // this.getBooking();
-          this.search();
-        }, (err) => {
-          this.isLoading = false;
-          console.log(err, "bug");
-        }
-      );
+        (data) => {
+          if (!data.content) {
+            data.message;
+            this.isLoading = false;
+          } else {
+            this.isLoading = false;
+            this.search();
+          }
+        });
     }
   }
-  
+
   search() {
-    console.log(this.searchBooking ," get all booking");
-    
+    const formattedStart = this.datePipe.transform(this.searchBooking.start, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
+    const formattedEnd = this.datePipe.transform(this.searchBooking.end, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
+
+    // Cập nhật dữ liệu đã định dạng vào đối tượng tìm kiếm
+    const searchData = {
+      ...this.searchBooking,
+      start: formattedStart,
+      end: formattedEnd
+    };
+    console.log(this.searchBooking, " get all booking");
     this.bookingService.filterBooking(this.searchBooking).subscribe((data) => {
-      console.log(data ,"data");
+      console.log(data, "data");
       this.bookingList = data.content as Booking[];
       this.totalPages = data.totalPages;
       this.totalItems = data.totalItems;
@@ -106,4 +101,14 @@ export class BookingComponent {
     this.search();
   }
 
+
+  // Hàm xử lý khi người dùng chọn ngày bắt đầu
+  onStartDateChange(date: Date) {
+    this.searchBooking.start = date; // Gán ngày bắt đầu đã chọn vào searchBooking.start
+  }
+
+  // Hàm xử lý khi người dùng chọn ngày kết thúc
+  onEndDateChange(date: Date) {
+    this.searchBooking.end = date; // Gán ngày kết thúc đã chọn vào searchBooking.end
+  }
 }

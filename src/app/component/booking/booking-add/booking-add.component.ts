@@ -2,13 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-booking-add',
   templateUrl: './booking-add.component.html',
   styleUrl: './booking-add.component.css',
-  providers: [DatePipe]
+  providers: [DatePipe,MessageService]  
 })
 export class BookingAddComponent {
   @Input() visible: boolean = false;
@@ -29,7 +30,7 @@ export class BookingAddComponent {
       id_room: '',
     };
   }
-  constructor(private bookingService: BookingServiceService, private datePipe: DatePipe) { }
+  constructor(private bookingService: BookingServiceService, private datePipe: DatePipe,private messageService: MessageService) { }
 
   hideDialog() {
     this.visible = false;
@@ -39,19 +40,18 @@ export class BookingAddComponent {
 
 
   saveBooking(booking: Booking) {
-     console.log("log booking", booking);
-   
-  
     this.loadingChange.emit(true);
     this.bookingService.createBooking(booking).subscribe(
-      () => {
-        this.loadingChange.emit(false);
-        this.hideDialog();
-      }, (error) => {
-        this.loadingChange.emit(false);
-        console.error('Error occurred:', error);
-      }
-    )
+      (data) => {
+        if (!data.content) {
+          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+          this.loadingChange.emit(false);
+        } else {
+          this.loadingChange.emit(false);
+          this.hideDialog();
+          this.messageService.add({severity:'success', summary:'Success', detail:'Thêm lịch đặt phòng thành công'});
+        }
+      })
   }
 
 }

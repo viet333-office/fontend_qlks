@@ -24,6 +24,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,9 @@ import { RoomAddComponent } from './component/room/room-add/room-add.component';
 import { RoomUpdateComponent } from './component/room/room-update/room-update.component';
 import { BookingAddComponent } from './component/booking/booking-add/booking-add.component';
 import { BookingUpdateComponent } from './component/booking/booking-update/booking-update.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
 
 
 
@@ -82,10 +86,12 @@ import { BookingUpdateComponent } from './component/booking/booking-update/booki
     PaginatorModule,
     ProgressSpinnerModule,
     ConfirmDialogModule,
-    ReactiveFormsModule
-  
+    ReactiveFormsModule,
+    ToastModule,
+    DatePipe,
+
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

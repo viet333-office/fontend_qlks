@@ -12,12 +12,6 @@ export class BookingServiceService {
   constructor(private http: HttpClient) { }
 
 
-  getBooking(): Observable<Booking[]> {
-    return this.http.get<ResponseApi>(`${this.apiUrl}/getBooking`).pipe(
-      map(response => response.content as Booking[])
-    );
-  }
-
   createBooking(booking: Booking): Observable<ResponseApi> {
     console.log(booking,"booking")
     return this.http.post<ResponseApi>(`${this.apiUrl}/postBooking`, booking);
@@ -33,9 +27,12 @@ export class BookingServiceService {
   }
 
   filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {  
+    console.log(searchBooking.start,"searchBooking.start");
+    console.log(searchBooking.end,"searchBooking.end");
+    
     const params = new HttpParams()
-      // .set('start', searchBooking.start? searchBooking.start.toString():'')
-      // .set('end', searchBooking.end?  searchBooking.end.toString():'')
+      .set('start', searchBooking.start?searchBooking.start.toString():'')
+      .set('end', searchBooking.end?  searchBooking.end.toString():'')
       .set('id_customer', searchBooking.id_customer)
       .set('id_room', searchBooking.id_room)
       .set('page', searchBooking.page.toString())

@@ -2,11 +2,13 @@ import { Component, EventEmitter, Input, Output  } from '@angular/core';
 import { Customer } from '../../../Interface/customer';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service'
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-customer-update',
   templateUrl: './customer-update.component.html',
-  styleUrl: './customer-update.component.css'
+  styleUrl: './customer-update.component.css',
+  providers: [MessageService]
 })
 export class CustomerUpdateComponent {
   @Input() visible: boolean = false;
@@ -20,7 +22,7 @@ export class CustomerUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private customerService: CustomerServiceService) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerServiceService ,private messageService: MessageService) { }
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
@@ -66,12 +68,16 @@ export class CustomerUpdateComponent {
     
     this.loadingChange.emit(true);
     this.customerService.putCustomer(customer).subscribe(
-      () => {
-        this.loadingChange.emit(false);
-      this.visibleChange.emit(false);
-      },(err) =>{
-        this.loadingChange.emit(false);
-        console.error('Error occurred:', err);
+      (data) => {
+        if(!data.content){
+          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+          this.loadingChange.emit(false);
+        }else{
+          this.loadingChange.emit(false);
+          this.visibleChange.emit(false);
+          this.messageService.add({severity:'success', summary:'Success', detail:'Sửa khách hàng thành công'});
+        }
+      
       }
     )
   }

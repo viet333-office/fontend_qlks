@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
-import { Customer, CustomerSearch, ResponseApi } from '../../Interface/customer';
+import { Customer, CustomerSearch } from '../../Interface/customer';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -66,13 +67,9 @@ export class CustomerComponent implements OnInit {
     if (confirmed) {
       this.customerService.deleteCustomer(id).subscribe(
         () => {
-          this.isLoading = false;
-          this.search();
-        }, (error) => {
-          this.isLoading = false;
-          console.error('Error occurred:', error);
-        }
-      );
+            this.isLoading = false;
+            this.search();
+        });
     }
   }
 
