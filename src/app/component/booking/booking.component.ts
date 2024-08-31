@@ -65,14 +65,9 @@ export class BookingComponent {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa lịch đặt phòng này?');
     if (confirmed) {
       this.bookingService.deleteBooking(id).subscribe(
-        (data) => {
-          if (!data.content) {
-            data.message;
-            this.isLoading = false;
-          } else {
+        () => {
             this.isLoading = false;
             this.search();
-          }
         });
     }
   }
@@ -81,7 +76,6 @@ export class BookingComponent {
     const formattedStart = this.datePipe.transform(this.searchBooking.start, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
     const formattedEnd = this.datePipe.transform(this.searchBooking.end, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
 
-    // Cập nhật dữ liệu đã định dạng vào đối tượng tìm kiếm
     const searchData = {
       ...this.searchBooking,
       start: formattedStart,

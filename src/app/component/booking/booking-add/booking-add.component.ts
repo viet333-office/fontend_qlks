@@ -51,7 +51,11 @@ export class BookingAddComponent {
           this.hideDialog();
           this.messageService.add({severity:'success', summary:'Success', detail:'Thêm lịch đặt phòng thành công'});
         }
-      })
+      },error => {
+        this.loadingChange.emit(false);
+    this.messageService.add({severity:'error', summary:'Error', detail:'Có lỗi xảy ra, vui lòng thử lại.'});
+      }
+    )
   }
 
 }

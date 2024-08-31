@@ -66,15 +66,13 @@ export class RoomComponent {
     const confirmed = window.confirm('Bạn có chắc chắn muốn xóa phòng này?');
     if (confirmed) {
       this.roomrService.deleteRoom(id).subscribe(
-        (data) => {
-          if (!data.content) {
-            data.message;
-            this.isLoading = false;
-          } else {
+        () => {
             this.isLoading = false;
             this.search();
-          }
-        });
+        },error => {
+          this.isLoading = false;
+        }
+      );
     }
   }
 
