@@ -1,4 +1,4 @@
- <!-- <p-dialog *ngIf="customer" header="Update Customer" [(visible)]="visible" [style]="{ width: '25rem' }"  (onHide)="hideDialog()">
+<!-- <p-dialog *ngIf="customer" header="Update Customer" [(visible)]="visible" [style]="{ width: '25rem' }"  (onHide)="hideDialog()">
     
     <div class="flex align-items-center gap-3 mb-3">
         <label for="username" class="font-semibold w-6rem">Họ tên</label>
@@ -24,52 +24,77 @@
 </p-dialog>
  -->
 
-<p-dialog *ngIf="customer" header="update Customer" [(visible)]="visible" [style]="{ width: '30rem' }" (onHide)="hideDialog()">
+<p-dialog *ngIf="customer" header="update Customer" [(visible)]="visible" [style]="{ width: '30rem' }"
+    (onHide)="hideDialog()">
     <form [formGroup]="customerForm" (ngSubmit)="updateCustomer(customer)">
-    <div class="flex flex-column mb-3">
-        <div class="flex align-items-center gap-3">
-            <label for="username" class="font-semibold w-9rem">Họ tên</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name" formControlName="name" />
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="username" class="font-semibold w-9rem">Họ tên</label>
+                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name"
+                    formControlName="name" />
+            </div>
+            <small class="p-error block"
+                *ngIf="customerForm.get('name')?.errors?.['required'] && customerForm.get('name')?.dirty">không được để
+                trống</small>
+            <small class="p-error block" *ngIf="nameError"> {{ nameError }} </small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('name')?.errors?.['minlength'] && customerForm.get('name')?.dirty"> Độ dài tối
+                thiểu là 3 ký tự </small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('name')?.errors?.['maxlength'] && customerForm.get('name')?.dirty"> Độ dài tối
+                đa là 20 ký tự </small>
         </div>
-        <small class="p-error block" *ngIf="customerForm.get('name')?.errors?.['required'] && customerForm.get('name')?.dirty">không được để trống</small>
-        <small class="p-error block" *ngIf="nameError"> {{ nameError }} </small>
-        <small class="p-error block" *ngIf="customerForm.get('name')?.errors?.['minlength'] && customerForm.get('name')?.dirty">  Độ dài tối thiểu là 3 ký tự  </small>
-        <small class="p-error block" *ngIf="customerForm.get('name')?.errors?.['maxlength'] && customerForm.get('name')?.dirty">  Độ dài tối đa là 20 ký tự </small>
-    </div>
-    
-    <div class="flex flex-column mb-5">
-        <div class="flex align-items-center gap-3">
-            <label for="phone" class="font-semibold w-9rem">Số điện thoại</label>
-            <input pInputText id="phone" class="flex-auto" autocomplete="off" [(ngModel)]="customer.phone" formControlName="phone"/>
-        </div>
-        <small class="p-error block" *ngIf="customerForm.get('phone')?.errors?.['required'] && customerForm.get('phone')?.dirty">không được để trống</small>
-        <small class="p-error block" *ngIf="customerForm.get('phone')?.errors?.['pattern'] && customerForm.get('phone')?.dirty">Số điện thoại phải bắt đầu bằng 03, 09, hoặc 02 và có đúng 10 chữ số</small>
-    </div>
 
-    <div class="flex flex-column mb-3">
-        <div class="flex align-items-center gap-3">
-            <label for="address" class="font-semibold w-9rem">Địa chỉ</label>
-            <input pInputText id="address" class="flex-auto" autocomplete="off" [(ngModel)]="customer.address" formControlName="address"/>
+        <div class="flex flex-column mb-5">
+            <div class="flex align-items-center gap-3">
+                <label for="phone" class="font-semibold w-9rem">Số điện thoại</label>
+                <input pInputText id="phone" class="flex-auto" autocomplete="off" [(ngModel)]="customer.phone"
+                    formControlName="phone" />
+            </div>
+            <small class="p-error block"
+                *ngIf="customerForm.get('phone')?.errors?.['required'] && customerForm.get('phone')?.dirty">không được
+                để trống</small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('phone')?.errors?.['pattern'] && customerForm.get('phone')?.dirty">Số điện thoại
+                phải bắt đầu bằng 03, 09, hoặc 02 và có đúng 10 chữ số</small>
         </div>
-        <small class="p-error block" *ngIf="customerForm.get('address')?.errors?.['required'] && customerForm.get('address')?.dirty">không được để trống</small>
-        <small class="p-error block" *ngIf="addressError"> {{ addressError }} </small>
-        <small class="p-error block" *ngIf="customerForm.get('address')?.errors?.['minlength'] && customerForm.get('address')?.dirty">  Độ dài tối thiểu là 5 ký tự  </small>
-        <small class="p-error block" *ngIf="customerForm.get('address')?.errors?.['maxlength'] && customerForm.get('address')?.dirty">  Độ dài tối đa là 50 ký tự </small>
-    </div>
 
-    <div class="flex flex-column mb-5">
-        <div class="flex align-items-center gap-3">
-            <label for="cccd" class="font-semibold w-9rem">CCCD</label>
-            <input pInputText id="cccd" class="flex-auto" autocomplete="off" [(ngModel)]="customer.cccd" formControlName="cccd"/>
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="address" class="font-semibold w-9rem">Địa chỉ</label>
+                <input pInputText id="address" class="flex-auto" autocomplete="off" [(ngModel)]="customer.address"
+                    formControlName="address" />
+            </div>
+            <small class="p-error block"
+                *ngIf="customerForm.get('address')?.errors?.['required'] && customerForm.get('address')?.dirty">không
+                được để trống</small>
+            <small class="p-error block" *ngIf="addressError"> {{ addressError }} </small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('address')?.errors?.['minlength'] && customerForm.get('address')?.dirty"> Độ dài
+                tối thiểu là 5 ký tự </small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('address')?.errors?.['maxlength'] && customerForm.get('address')?.dirty"> Độ dài
+                tối đa là 50 ký tự </small>
         </div>
-        <small class="p-error block" *ngIf="customerForm.get('cccd')?.errors?.['required'] && customerForm.get('cccd')?.dirty">không được để trống</small>
-        <small class="p-error block" *ngIf="customerForm.get('cccd')?.errors?.['pattern'] && customerForm.get('cccd')?.dirty">phải là số và có độ dài là 12</small>
-    </div>
 
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
-        <p-button label="Update" (onClick)="updateCustomer(customer)" />
-    </div>
+        <div class="flex flex-column mb-5">
+            <div class="flex align-items-center gap-3">
+                <label for="cccd" class="font-semibold w-9rem">CCCD</label>
+                <input pInputText id="cccd" class="flex-auto" autocomplete="off" [(ngModel)]="customer.cccd"
+                    formControlName="cccd" />
+            </div>
+            <small class="p-error block"
+                *ngIf="customerForm.get('cccd')?.errors?.['required'] && customerForm.get('cccd')?.dirty">không được để
+                trống</small>
+            <small class="p-error block"
+                *ngIf="customerForm.get('cccd')?.errors?.['pattern'] && customerForm.get('cccd')?.dirty">phải là số và
+                có độ dài là 12</small>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
+            <p-button label="Update" (onClick)="updateCustomer(customer)" />
+        </div>
     </form>
 </p-dialog>
-<p-toast></p-toast> 
+<p-toast></p-toast>

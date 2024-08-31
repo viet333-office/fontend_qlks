@@ -3,6 +3,7 @@ import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -30,10 +31,18 @@ export class BookingAddComponent {
       id_room: '',
     };
   }
-  constructor(private bookingService: BookingServiceService, private datePipe: DatePipe,private messageService: MessageService) { }
+  constructor(private fbb: FormBuilder,private bookingService: BookingServiceService, private datePipe: DatePipe,private messageService: MessageService) { }
+  bookingForm = this.fbb.group({
+    id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+    id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
+    // start: ['', [Validators.required]],
+    // end: ['', [Validators.required]]
+  });
 
+  
   hideDialog() {
     this.visible = false;
+    this.bookingForm.reset();
     this.visibleChange.emit(this.visible);
     this.resetBooking();
   }
@@ -48,6 +57,7 @@ export class BookingAddComponent {
           this.loadingChange.emit(false);
         } else {
           this.loadingChange.emit(false);
+          this.bookingForm.reset();
           this.hideDialog();
           this.messageService.add({severity:'success', summary:'Success', detail:'Thêm lịch đặt phòng thành công'});
         }

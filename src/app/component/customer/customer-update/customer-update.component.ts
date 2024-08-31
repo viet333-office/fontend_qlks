@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output  } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Customer } from '../../../Interface/customer';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service'
 import { FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +22,7 @@ export class CustomerUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private customerService: CustomerServiceService ,private messageService: MessageService) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
@@ -64,22 +64,20 @@ export class CustomerUpdateComponent {
   }
 
   updateCustomer(customer: Customer) {
-    console.log(customer,"log");
-    
     this.loadingChange.emit(true);
     this.customerService.putCustomer(customer).subscribe(
       (data) => {
-        if(!data.content){
-          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+        if (!data.content) {
+          this.messageService.add({ severity: 'error', summary: 'error', detail: data.message });
           this.loadingChange.emit(false);
-        }else{
+        } else {
           this.loadingChange.emit(false);
           this.visibleChange.emit(false);
-          this.messageService.add({severity:'success', summary:'Success', detail:'Sửa khách hàng thành công'});
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa khách hàng thành công' });
         }
-      },error => {
+      }, error => {
         this.loadingChange.emit(false);
-    this.messageService.add({severity:'error', summary:'Error', detail:'Có lỗi xảy ra, vui lòng thử lại.'});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
       }
     )
   }

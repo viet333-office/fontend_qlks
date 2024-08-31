@@ -30,7 +30,7 @@ export class CustomerAddComponent {
       cccd: ''
     };
   }
-  constructor(private fb: FormBuilder, private customerService: CustomerServiceService ,  private messageService: MessageService) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
@@ -78,19 +78,19 @@ export class CustomerAddComponent {
   saveCustomer(customer: Customer) {
     this.loadingChange.emit(true);
     this.customerService.createCustomer(customer).subscribe((data) => {
-      if(!data.content){
-        this.messageService.add({severity:'error', summary:'error', detail:data.message});
+      if (!data.content) {
+        this.messageService.add({ severity: 'error', summary: 'error', detail: data.message });
         this.loadingChange.emit(false);
-      }else{
-      this.customerForm.reset();
-      this.hideDialog();
+      } else {
+        this.customerForm.reset();
+        this.hideDialog();
+        this.loadingChange.emit(false);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Thêm khách hàng thành công' });
+      }
+    }, error => {
       this.loadingChange.emit(false);
-      this.messageService.add({severity:'success', summary:'Success', detail:'Thêm khách hàng thành công'});
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
     }
-  },error => {
-    this.loadingChange.emit(false);
-this.messageService.add({severity:'error', summary:'Error', detail:'Có lỗi xảy ra, vui lòng thử lại.'});
-  }
-)
+    )
   }
 }

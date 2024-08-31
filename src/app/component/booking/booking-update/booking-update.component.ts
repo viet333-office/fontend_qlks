@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service'
-import { MessageService } from 'primeng/api';  providers: [MessageService]
+import { MessageService } from 'primeng/api';import { FormBuilder, Validators } from '@angular/forms';
+  providers: [MessageService]
 
 @Component({
   selector: 'app-booking-update',
@@ -21,8 +22,14 @@ export class BookingUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private bookingService: BookingServiceService ,private messageService: MessageService) { }
-
+  constructor(private fbb: FormBuilder,private bookingService: BookingServiceService ,private messageService: MessageService) { }
+  bookingForm = this.fbb.group({
+    id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+    id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
+    // start: ['', [Validators.required]],
+    // end: ['', [Validators.required]]
+  });
+  
   hideDialog() {
     this.visible = false;
     this.visibleChange.emit(this.visible);

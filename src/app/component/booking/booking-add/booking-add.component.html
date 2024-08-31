@@ -1,26 +1,54 @@
 <p-dialog *ngIf="booking" header="Add Booking" [(visible)]="visible" [style]="{ width: '26rem' }"
     (onHide)="hideDialog()">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-7rem">mã khách hàng</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_customer" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-7rem">mã phòng</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_room" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="username" class="font-semibold w-7rem">day start</label>
-        <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
-            [inputStyle]="{'width':'100%'}" appendTo="body"></p-calendar>
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="username" class="font-semibold w-7rem">day end</label>
-        <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
-            [inputStyle]="{'width':'100%'}" appendTo="body"></p-calendar>
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
-        <p-button label="Save" (onClick)="saveBooking(booking)"/>
-    </div>
+    <form [formGroup]="bookingForm" (ngSubmit)="saveBooking(booking)">
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="id_customer" class="font-semibold w-7rem">mã khách </label>
+                <input pInputText id="id_customer" class="flex-auto" autocomplete="off"
+                    [(ngModel)]="booking.id_customer" formControlName="id_customer" />
+            </div>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_customer')?.errors?.['required'] && bookingForm.get('id_customer')?.dirty">không
+                được để trống</small>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">
+                chỉ được nhập ký tự là number và cccd phải tồn tại trong table customer </small>
+        </div>
+
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
+                <input pInputText id="id_room" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_room"
+                    formControlName="id_room" />
+            </div>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được
+                để trống</small>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_room')?.errors?.['pattern'] && bookingForm.get('id_room')?.dirty"> chỉ được
+                nhập ký tự là number và mã phòng phải tồn tại trong table room</small>
+        </div>
+
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="start" class="font-semibold w-7rem">day start</label>
+                <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="yy/mm/dd"
+                    [style]="{'width':'100%'}" appendTo="body"></p-calendar>
+            </div>
+        </div>
+
+        <div class="flex flex-column mb-5">
+            <div class="flex align-items-center gap-3">
+                <label for="end" class="font-semibold w-7rem">day end</label>
+                <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
+                    appendTo="body"></p-calendar>
+            </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
+            <p-button label="Save" (onClick)="saveBooking(booking)" />
+        </div>
+    </form>
 </p-dialog>
-<p-toast></p-toast> 
+<p-toast></p-toast>
