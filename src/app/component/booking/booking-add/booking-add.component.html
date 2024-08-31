@@ -33,16 +33,22 @@
             <div class="flex align-items-center gap-3">
                 <label for="start" class="font-semibold w-7rem">day start</label>
                 <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="yy/mm/dd"
-                    [style]="{'width':'100%'}" appendTo="body"></p-calendar>
+                   [style]="{'width':'100%'}" appendTo="body" formControlName="start"> </p-calendar>
             </div>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('start')?.errors?.['required'] && bookingForm.get('start')?.dirty">không
+                được để trống</small>
         </div>
 
         <div class="flex flex-column mb-5">
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
-                    appendTo="body"></p-calendar>
+                 appendTo="body" formControlName="end"></p-calendar>
             </div>
+            <small class="p-error block"
+            *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không
+            được để trống</small>
         </div>
 
         <div class="flex justify-content-end gap-2">

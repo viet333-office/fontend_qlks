@@ -26,8 +26,8 @@ export class BookingUpdateComponent {
   bookingForm = this.fbb.group({
     id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
     id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
-    // start: ['', [Validators.required]],
-    // end: ['', [Validators.required]]
+    start: [null, Validators.required],
+    end: [null, Validators.required]
   });
   
   hideDialog() {
