@@ -4,8 +4,8 @@
     <form [formGroup]="roomForm" (ngSubmit)="updateRooms(room)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="username" class="font-semibold w-10rem">Loại phòng</label>
-                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="room.name"
+                <label for="name" class="font-semibold w-10rem">Loại phòng</label>
+                <input pInputText id="name" class="flex-auto" autocomplete="off" [(ngModel)]="room.name"
                     formControlName="name" />
             </div>
             <small class="p-error block"

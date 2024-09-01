@@ -12,7 +12,7 @@
                 được để trống</small>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">
-                chỉ được nhập ký tự là number và cccd phải tồn tại trong table customer </small>
+                Cần cung cấp đúng cccd của khách hàng (12 chữ số) </small>
         </div>
 
         <div class="flex flex-column mb-3">
@@ -25,15 +25,15 @@
                 *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được
                 để trống</small>
             <small class="p-error block"
-                *ngIf="bookingForm.get('id_room')?.errors?.['pattern'] && bookingForm.get('id_room')?.dirty"> chỉ được
-                nhập ký tự là number và mã phòng phải tồn tại trong table room</small>
+                *ngIf="bookingForm.get('id_room')?.errors?.['pattern'] && bookingForm.get('id_room')?.dirty"> Cần cung
+                cấp đúng mã phòng (từ 3 đến 20 chữ số)</small>
         </div>
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="start" class="font-semibold w-7rem">day start</label>
                 <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="yy/mm/dd"
-                   [style]="{'width':'100%'}" appendTo="body" formControlName="start"> </p-calendar>
+                    [style]="{'width':'100%'}" appendTo="body" formControlName="start"> </p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('start')?.errors?.['required'] && bookingForm.get('start')?.dirty">không
@@ -44,11 +44,11 @@
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
-                 appendTo="body" formControlName="end"></p-calendar>
+                    appendTo="body" formControlName="end"></p-calendar>
             </div>
             <small class="p-error block"
-            *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không
-            được để trống</small>
+                *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không
+                được để trống</small>
         </div>
 
         <div class="flex justify-content-end gap-2">

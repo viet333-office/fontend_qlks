@@ -29,8 +29,8 @@
     <form [formGroup]="customerForm" (ngSubmit)="updateCustomer(customer)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="username" class="font-semibold w-9rem">Họ tên</label>
-                <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name"
+                <label for="name" class="font-semibold w-9rem">Họ tên</label>
+                <input pInputText id="name" class="flex-auto" autocomplete="off" [(ngModel)]="customer.name"
                     formControlName="name" />
             </div>
             <small class="p-error block"

@@ -5,27 +5,27 @@
       <div class="grid">
         <div class="col-3">
           <span class="p-float-label">
-            <input id="float-input-name" type="text" pInputText [(ngModel)]="searchBooking.id_customer">
-            <label for="float-input-name">Tìm khách hàng</label>
+            <input id="id_customer" type="text" pInputText [(ngModel)]="searchBooking.id_customer">
+            <label for="id_customer">Tìm khách hàng</label>
           </span>
         </div>
         <div class="col-3">
           <span class="p-float-label">
-            <input id="float-input-phone" type="text" pInputText [(ngModel)]="searchBooking.id_room">
-            <label for="float-input-phone">Tìm mã phòng</label>
+            <input id="id_room" type="text" pInputText [(ngModel)]="searchBooking.id_room">
+            <label for="id_room">Tìm mã phòng</label>
           </span>
         </div>
 
         <div class="col-2">
           <span class="p-float-label">
             <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="yy/mm/dd"
-              [ngModel]="searchBooking.start" (ngModelChange)="onStartDateChange($event)" ></p-calendar>
+              [ngModel]="searchBooking.start"  ></p-calendar>
           </span>
         </div>
         <div class="col-2">
           <span class="p-float-label">
             <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="yy/mm/dd"
-              [ngModel]="searchBooking.end" (ngModelChange)="onEndDateChange($event)"></p-calendar>
+              [ngModel]="searchBooking.end" ></p-calendar>
           </span>
         </div>
         <div class="col-2">

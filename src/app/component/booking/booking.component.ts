@@ -96,13 +96,4 @@ export class BookingComponent {
   }
 
 
-  // Hàm xử lý khi người dùng chọn ngày bắt đầu
-  onStartDateChange(date: Date) {
-    this.searchBooking.start = date; // Gán ngày bắt đầu đã chọn vào searchBooking.start
-  }
-
-  // Hàm xử lý khi người dùng chọn ngày kết thúc
-  onEndDateChange(date: Date) {
-    this.searchBooking.end = date; // Gán ngày kết thúc đã chọn vào searchBooking.end
-  }
 }
