@@ -13,12 +13,12 @@ export class BookingServiceService {
 
 
   createBooking(booking: Booking): Observable<ResponseApi> {
-    console.log(booking,"booking")
+    console.log(booking, "booking")
     return this.http.post<ResponseApi>(`${this.apiUrl}/postBooking`, booking);
   }
 
   putBooking(booking: Booking): Observable<ResponseApi> {
-    console.log("putRoom service",booking);
+    console.log("putRoom service", booking);
     return this.http.put<ResponseApi>(`${this.apiUrl}/putBooking?id=${booking.id}`, booking);
   }
 
@@ -26,19 +26,19 @@ export class BookingServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/deleteBooking?id=${id}`)
   }
 
-  filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {  
-    console.log(searchBooking.start,"searchBooking.start");
-    console.log(searchBooking.end,"searchBooking.end");
-    
+  filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
+    console.log(searchBooking.start, "searchBooking.start");
+    console.log(searchBooking.end, "searchBooking.end");
+
     const params = new HttpParams()
-      .set('start', searchBooking.start?searchBooking.start.toString():'')
-      .set('end', searchBooking.end?  searchBooking.end.toString():'')
+      .set('start', searchBooking.start ? searchBooking.start.toISOString() : '')
+      .set('end', searchBooking.end ? searchBooking.end.toISOString() : '')
       .set('id_customer', searchBooking.id_customer)
       .set('id_room', searchBooking.id_room)
       .set('page', searchBooking.page.toString())
       .set('size', searchBooking.size.toString())
       .set('arrange', searchBooking.arrange || 'asc');
-      console.log(params,"params");
+    console.log(params, "params");
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

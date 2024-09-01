@@ -73,14 +73,6 @@ export class BookingComponent {
   }
 
   search() {
-    const formattedStart = this.datePipe.transform(this.searchBooking.start, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
-    const formattedEnd = this.datePipe.transform(this.searchBooking.end, 'yyyy-MM-dd\'T\'HH:mm:ss', 'Asia/Ho_Chi_Minh');
-
-    const searchData = {
-      ...this.searchBooking,
-      start: formattedStart,
-      end: formattedEnd
-    };
     console.log(this.searchBooking, " get all booking");
     this.bookingService.filterBooking(this.searchBooking).subscribe((data) => {
       console.log(data, "data");
