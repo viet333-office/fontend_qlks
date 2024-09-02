@@ -86,7 +86,6 @@ export class CustomerComponent implements OnInit {
         this.isLoading = false;
         console.error('Error occurred:', error);
       }
-
     );
   }
   onPageChange(event: any): void {

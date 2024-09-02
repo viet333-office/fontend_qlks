@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BookingServiceService } from '../../Service/logic/booking-service.service'
 import { Booking, BookingSearch } from '../../Interface/booking';
 import { DatePipe } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
@@ -72,15 +73,21 @@ export class BookingComponent {
     }
   }
 
+
   search() {
-    console.log(this.searchBooking, " get all booking");
-    this.bookingService.filterBooking(this.searchBooking).subscribe((data) => {
-      console.log(data, "data");
-      this.bookingList = data.content as Booking[];
-      this.totalPages = data.totalPages;
-      this.totalItems = data.totalItems;
-      this.clearInput();
-    });
+    this.isLoading = true;
+    this.bookingService.filterBooking(this.searchBooking).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.bookingList = data.content as Booking[];
+        this.totalPages = data.totalPages;
+        this.totalItems = data.totalItems;
+        this.clearInput();
+      }, (error) => {
+        this.isLoading = false;
+        console.error('Error occurred:', error);
+      }
+    );
   }
   onPageChange(event: any): void {
     this.searchBooking.page = event.page;

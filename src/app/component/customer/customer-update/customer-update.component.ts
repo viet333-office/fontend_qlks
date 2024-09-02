@@ -68,7 +68,7 @@ export class CustomerUpdateComponent {
     this.customerService.putCustomer(customer).subscribe(
       (data) => {
         if (!data.content) {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: data.message });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
           this.loadingChange.emit(false);
         } else {
           this.loadingChange.emit(false);

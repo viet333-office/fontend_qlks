@@ -35,8 +35,6 @@ export class CustomerServiceService {
       .set('page', searchCustomer.page.toString())
       .set('size', searchCustomer.size.toString())
       .set('sortType', searchCustomer.sortType || 'asc');
-      // console.log("params : ", params);
-      
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
 }

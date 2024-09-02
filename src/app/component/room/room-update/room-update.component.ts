@@ -26,7 +26,7 @@ export class RoomUpdateComponent {
   selectedStatus: string = '';
   statusOption: IStatus = { name: '' }
 
-  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService ,private messageService: MessageService) { }
+  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService, private messageService: MessageService) { }
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
@@ -56,8 +56,8 @@ export class RoomUpdateComponent {
     ];
   }
 
-  onChangeStatus(status: IStatus) {
-    this.room.status = status.name;
+  onChangeStatus(selectedStatus: IStatus) {
+    this.room.status = selectedStatus.name;
   }
   hideDialog() {
     this.visible = false;
@@ -70,17 +70,17 @@ export class RoomUpdateComponent {
     this.roomrService.putRoom(room).subscribe(
       (data) => {
         if (!data.content) {
-          this.messageService.add({severity:'error', summary:'error', detail:data.message});
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
           this.loadingChange.emit(false);
         } else {
+          console.log("run true");
           this.visibleChange.emit(false);
-          this.roomForm.reset();
           this.loadingChange.emit(false);
-          this.messageService.add({severity:'success', summary:'Success', detail:'Sửa phòng thành công'});
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa phòng thành công' });
         }
-      },error => {
+      }, error => {
         this.loadingChange.emit(false);
-    this.messageService.add({severity:'error', summary:'Error', detail:'Có lỗi xảy ra, vui lòng thử lại.'});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
       }
     )
   }
