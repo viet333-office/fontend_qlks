@@ -38,7 +38,7 @@ export class BookingAddComponent {
     start: [null, Validators.required],
     end: [null, Validators.required],
     id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-    phone_booking:['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
+    phone_booking:['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
     id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]]    
   });
 

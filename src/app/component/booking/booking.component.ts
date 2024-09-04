@@ -18,6 +18,11 @@ export class BookingComponent {
   totalPages: number = 0;
   totalItems: number = 0;
   isLoading: boolean = false;
+  id_customerError: boolean = false;
+  phone_bookingError: boolean = false;
+  id_roomError: boolean = false;
+  noData: boolean = false;
+
   searchBooking: BookingSearch = {
     start: null,
     end: null,
@@ -78,27 +83,42 @@ export class BookingComponent {
 
   search() {
     this.isLoading = true;
+    this.id_customerError= false;
+    this.phone_bookingError = false;
+    this.id_roomError= false;
     this.bookingService.filterBooking(this.searchBooking).subscribe(
       (data) => {
         this.isLoading = false;
         this.bookingList = data.content as Booking[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
-        
+        this.noData = this.bookingList.length === 0;
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);
-      }
-    );
+      });
   }
+
   reset(){
     this.clearInput();
     this.search();
   }
+
   onPageChange(event: any): void {
     this.searchBooking.page = event.page;
     this.search();
   }
 
+  validateId_customer() {
+    this.id_customerError = !/^\d+$/.test(this.searchBooking.id_customer);
+  }
+
+  validatePhone_booking() {
+    this.phone_bookingError = !/^\d+$/.test(this.searchBooking.phone_booking);
+  }
+
+  validateId_room() {
+    this.id_roomError = !/^\d+$/.test(this.searchBooking.id_room);
+  }
 
 }
