@@ -100,13 +100,15 @@ export class RoomComponent {
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
         this.noData = this.roomList.length === 0;
-        this.clearInput();
       }, (err) => {
         this.isLoading = false;
         console.error('Error occurred:', err);
         this.clearInput();
-      }
-    );
+      });
+  }
+  reset(){
+    this.clearInput();
+    this.search();
   }
   onPageChange(event: any): void {
     this.searchRoom.page = event.page;

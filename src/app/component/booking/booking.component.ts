@@ -19,10 +19,11 @@ export class BookingComponent {
   totalItems: number = 0;
   isLoading: boolean = false;
   searchBooking: BookingSearch = {
-    id_customer: '',
-    id_room: '',
     start: null,
     end: null,
+    id_customer: '',
+    phone_booking:'',
+    id_room: '',
     page: 0,
     size: 4,
     arrange: 'asc'
@@ -31,6 +32,7 @@ export class BookingComponent {
     this.searchBooking.start = null;
     this.searchBooking.end = null;
     this.searchBooking.id_customer = '';
+    this.searchBooking.phone_booking = '';
     this.searchBooking.id_room = '';
   }
   constructor(private datePipe: DatePipe, private bookingService: BookingServiceService) { }
@@ -82,12 +84,16 @@ export class BookingComponent {
         this.bookingList = data.content as Booking[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
-        this.clearInput();
+        
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);
       }
     );
+  }
+  reset(){
+    this.clearInput();
+    this.search();
   }
   onPageChange(event: any): void {
     this.searchBooking.page = event.page;

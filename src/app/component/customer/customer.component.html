@@ -30,7 +30,8 @@
           </span>
           <div *ngIf="cccdError" class="error-message">Phải nhập số</div>
         </div>
-        <div class="col-2">
+        <div class="col-4 flex gap-2">
+          <p-button  icon="pi  pi-sync" (onClick)="reset()"></p-button>
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>

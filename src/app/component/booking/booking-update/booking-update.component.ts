@@ -17,6 +17,7 @@ export class BookingUpdateComponent {
     start: null,
     end: null,
     id_customer: '',
+    phone_booking:'',
     id_room: ''
   };
   @Output() visibleChange = new EventEmitter<boolean>();
@@ -24,10 +25,12 @@ export class BookingUpdateComponent {
 
   constructor(private fbb: FormBuilder,private bookingService: BookingServiceService ,private messageService: MessageService) { }
   bookingForm = this.fbb.group({
-    id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-    id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
     start: [null, Validators.required],
-    end: [null, Validators.required]
+    end: [null, Validators.required],
+    id_customer: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+    phone_booking:['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
+    id_room: ['', [Validators.required,  Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]]
+  
   });
   
   hideDialog() {

@@ -86,13 +86,14 @@ export class CustomerComponent implements OnInit {
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
         this.noData = this.customerList.length === 0;
-        this.clearInput();
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);
-      
-      }
-    );
+      });
+    }
+  reset(){
+    this.clearInput();
+    this.search();
   }
   onPageChange(event: any): void {
     console.log("event : ", event);

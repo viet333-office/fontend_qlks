@@ -14,7 +14,19 @@
                 *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">
                 chỉ được nhập ký tự là number và cccd phải tồn tại trong table customer </small>
         </div>
-
+        <div class="flex flex-column mb-3">
+            <div class="flex align-items-center gap-3">
+                <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
+                <input pInputText id="phone_booking" class="flex-auto" autocomplete="off"
+                    [(ngModel)]="booking.phone_booking" formControlName="phone_booking" />
+            </div>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('phone_booking')?.errors?.['required'] && bookingForm.get('phone_booking')?.dirty">không
+                được để trống</small>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('phone_booking')?.errors?.['pattern'] && bookingForm.get('phone_booking')?.dirty">
+                Cần cung cấp đúng số điện thoại của khách hàng </small>
+        </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
