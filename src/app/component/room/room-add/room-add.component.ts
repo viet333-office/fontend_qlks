@@ -34,7 +34,7 @@ export class RoomAddComponent {
   }
   constructor(private fbd: FormBuilder, private roomrService: RoomServiceService, private messageService: MessageService) { }
   roomForm = this.fbd.group({
-    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
+    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
     value: [0, [Validators.required, Validators.min(1), Validators.max(9999999999)]],
     stay: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(1), Validators.maxLength(100)]]
@@ -48,8 +48,6 @@ export class RoomAddComponent {
         return 'Không được chứa số';
       } else if (/[^a-zA-Z0-9\s]/.test(value)) {
         return 'Không được chứa ký tự đặc biệt';
-      } else if (/^\s*$/.test(value)) {
-        return 'phải nhập kí tự không được để khoảng trắng';
       }
     }
     return null;

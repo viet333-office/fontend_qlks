@@ -42,7 +42,9 @@
             <small class="p-error block"
                 *ngIf="customerForm.get('address')?.errors?.['required'] && customerForm.get('address')?.dirty">không
                 được để trống</small>
-            <small class="p-error block" *ngIf="addressError"> {{ addressError }} </small>
+                <small class="p-error block"
+                *ngIf="customerForm.get('address')?.errors?.['pattern'] && customerForm.get('address')?.dirty">không
+                được điền ký tự đặc biệt</small>
             <small class="p-error block"
                 *ngIf="customerForm.get('address')?.errors?.['minlength'] && customerForm.get('address')?.dirty"> Độ dài
                 tối thiểu là 5 ký tự </small>

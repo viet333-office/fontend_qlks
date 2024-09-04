@@ -32,9 +32,9 @@ export class CustomerAddComponent {
   }
   constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
   customerForm = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.pattern(/^\s*$/), Validators.minLength(3), Validators.maxLength(20)]],
+    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
-    address: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^\s*$/), Validators.minLength(5), Validators.maxLength(50)]],
+    address: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.minLength(5), Validators.maxLength(50)]],
     cccd: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]]
   });
 
@@ -47,25 +47,12 @@ export class CustomerAddComponent {
         return 'Không được chứa số';
       } else if (/[^a-zA-Z0-9\s]/.test(value)) {
         return 'Không được chứa ký tự đặc biệt';
-      } else if (/^\s*$/.test(value)) {
-        return 'phải nhập kí tự không được để khoảng trắng';
       }
     }
     return null;
   }
 
-  get addressError() {
-    const addressControl = this.customerForm.get('address');
-    if (addressControl?.errors && addressControl.dirty) {
-      const value = (addressControl.value || '');
-      if (/^\s*$/.test(value)) {
-        return 'phải nhập kí tự không được để khoảng trắng ';
-      } else if (/[^a-zA-Z0-9\s]/.test(value)) {
-        return 'Không được chứa ký tự đặc biệt';
-      }
-    }
-    return null;
-  }
+
 
   hideDialog() {
     this.visible = false;
