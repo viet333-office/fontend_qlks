@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
 import { Customer, CustomerSearch } from '../../Interface/customer';
-import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -18,6 +17,9 @@ export class CustomerComponent implements OnInit {
   isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
+  cccdError: boolean = false;
+  phoneError: boolean = false;
+  noData: boolean = false;
   searchCustomer: CustomerSearch = {
     name: '',
     phone: '',
@@ -67,24 +69,28 @@ export class CustomerComponent implements OnInit {
     if (confirmed) {
       this.customerService.deleteCustomer(id).subscribe(
         () => {
-            this.isLoading = false;
-            this.search();
+          this.isLoading = false;
+          this.search();
         });
     }
   }
 
   search() {
     this.isLoading = true;
+    this.phoneError = false;
+    this.cccdError = false;
     this.customerService.filterCustomer(this.searchCustomer).subscribe(
       (data) => {
         this.isLoading = false;
         this.customerList = data.content as Customer[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
+        this.noData = this.customerList.length === 0;
         this.clearInput();
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);
+      
       }
     );
   }
@@ -92,6 +98,14 @@ export class CustomerComponent implements OnInit {
     console.log("event : ", event);
     this.searchCustomer.page = event.page;
     this.search();
+  }
+
+  validatePhone() {
+    this.phoneError = !/^\d+$/.test(this.searchCustomer.phone);
+  }
+
+  validateCCCD() {
+    this.cccdError = !/^\d+$/.test(this.searchCustomer.cccd);
   }
 }
 

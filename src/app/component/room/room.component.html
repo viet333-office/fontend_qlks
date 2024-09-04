@@ -5,9 +5,10 @@
       <div class="grid" >
         <div class="col-2">
           <span class="p-float-label">
-            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room">
+            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room" (ngModelChange)="validateRoom()">
             <label for="room">Tìm kiếm mã phòng</label>
           </span>
+          <div *ngIf="roomError" class="error-message">Phải nhập số </div>
         </div>
         <div class="col-2">
           <span class="p-float-label">
@@ -21,15 +22,17 @@
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value">
+            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value" (ngModelChange)="validateValue()">
             <label for="value">Tìm giá</label>
           </span>
+          <div *ngIf="valueError" class="error-message">Phải nhập số giá trị > 0</div>
         </div>
         <div class="col-2">
           <span class="p-float-label">
-            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay">
+            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay" (ngModelChange)="validateStay()">
             <label for="stay">Tìm thời hạn</label>
           </span>
+          <div *ngIf="stayError" class="error-message">Phải nhập số</div>
         </div>
         <div class="col-2">
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
@@ -45,8 +48,8 @@
       <h3>Danh sách phòng</h3>
       <p-button label="Thêm mới" icon="pi pi-plus" (onClick)="openAddModal()"></p-button>
     </div>
-
-    <p-table [value]="roomList">
+    <div *ngIf="noData && !isLoading" class="no-data-message">Không có dữ liệu</div>
+    <p-table  *ngIf="!noData && !isLoading" [value]="roomList">
       <ng-template pTemplate="header">
         <tr>
           <th>STT</th>
@@ -75,7 +78,7 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator (onPageChange)="onPageChange($event)" [rows]="searchRoom.size" [totalRecords]="totalItems"  [showFirstLastIcon] ="false"/>
+    <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchRoom.size" [totalRecords]="totalItems"  [showFirstLastIcon] ="false"/>
   </div>
 </div>
 

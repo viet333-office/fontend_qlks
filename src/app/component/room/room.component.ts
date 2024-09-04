@@ -18,6 +18,10 @@ export class RoomComponent {
   isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
+  roomError: boolean = false;
+  valueError: boolean = false;
+  stayError: boolean = false;
+  noData: boolean = false;
   searchRoom: RoomSearch = {
     name: '',
     room: '',
@@ -86,16 +90,21 @@ export class RoomComponent {
   search() {
     console.log(this.searchRoom, "this.searchRoom");
     this.isLoading = true;
+    this.roomError = false;
+    this.valueError= false;
+    this.stayError = false;
     this.roomrService.filterRoom(this.searchRoom).subscribe(
       (data) => {
         this.isLoading = false;
         this.roomList = data.content as Room[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
+        this.noData = this.roomList.length === 0;
         this.clearInput();
       }, (err) => {
         this.isLoading = false;
         console.error('Error occurred:', err);
+        this.clearInput();
       }
     );
   }
@@ -106,5 +115,14 @@ export class RoomComponent {
   onStatusChange(event: DropdownEvent) {
     const selectedStatus = event.value ? event.value.name : ''; 
     this.searchRoom.status = selectedStatus; 
+  }
+  validateRoom() {
+    this.roomError = !/^\d+$/.test(this.searchRoom.room);
+  }
+  validateValue() {
+    this.valueError = this.searchRoom.value < 0 || isNaN(this.searchRoom.value);
+  }
+  validateStay() {
+    this.stayError = !/^\d+$/.test(this.searchRoom.stay);
   }
 }
