@@ -27,18 +27,6 @@ export class BookingServiceService {
   }
 
   filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
-    console.log(searchBooking.start, "searchBooking.start");
-    console.log(searchBooking.end, "searchBooking.end");
-
-    const params = new HttpParams()
-      .set('start', searchBooking.start ? searchBooking.start.toISOString() : '')
-      .set('end', searchBooking.end ? searchBooking.end.toISOString() : '')
-      .set('id_customer', searchBooking.id_customer)
-      .set('id_room', searchBooking.id_room)
-      .set('page', searchBooking.page.toString())
-      .set('size', searchBooking.size.toString())
-      .set('arrange', searchBooking.arrange || 'asc');
-    console.log(params, "params");
-    return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
+    return this.http.post<ResponseApi>(`${this.apiUrl}/filter`, searchBooking)
   }
 }

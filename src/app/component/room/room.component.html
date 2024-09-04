@@ -15,7 +15,7 @@
             <label for="name">Tìm loại phòng</label>
           </span>
         </div>
-        <div class="col-2">
+        <div class="col-1">
           <p-dropdown (onChange)="onStatusChange($event)" [options]="uniqueData" optionLabel="status"
             placeholder="trạng thái" [(ngModel)]="searchRoom.status" />
         </div>

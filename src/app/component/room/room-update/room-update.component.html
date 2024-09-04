@@ -2,7 +2,7 @@
     <form [formGroup]="roomForm" (ngSubmit)="updateRooms(room)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="name" class="font-semibold w-10rem">Loại phòng</label>
+                <label for="name" class="font-semibold w-7rem">Loại phòng</label>
                 <input pInputText id="name" class="flex-auto" autocomplete="off" [(ngModel)]="room.name"
                     formControlName="name" />
             </div>
@@ -20,7 +20,7 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="room" class="font-semibold w-10rem">Mã phòng</label>
+                <label for="room" class="font-semibold w-7rem">Mã phòng</label>
                 <input pInputText id="room" class="flex-auto" autocomplete="off" [(ngModel)]="room.room"
                     formControlName="room" />
             </div>
@@ -41,7 +41,7 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="value" class="font-semibold w-10rem">Giá phòng</label>
+                <label for="value" class="font-semibold w-7rem">Giá phòng</label>
                 <input pInputText id="value" class="flex-auto" autocomplete="off" [(ngModel)]="room.value"
                     formControlName="value" />
             </div>
@@ -58,16 +58,16 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="status" class="font-semibold w-10rem">Trạng thái</label>
+                <label for="status" class="font-semibold w-7rem">Trạng thái</label>
                 <p-dropdown (onChange)="onChangeStatus(statusOption)" [options]="roomList" optionLabel="name"
-                    [(ngModel)]="statusOption" [ngModelOptions]="{standalone: true}" [style]="{ width: '16rem' ,height:'auto'}"> </p-dropdown>
+                    [(ngModel)]="statusOption" [ngModelOptions]="{standalone: true}" [style]="{ width: '19rem' ,height:'auto'}"> </p-dropdown>
             </div>
 
         </div>
 
         <div class="flex flex-column mb-5">
             <div class="flex align-items-center gap-3">
-                <label for="stay" class="font-semibold w-10rem">Thời hạn (day)</label>
+                <label for="stay" class="font-semibold w-7rem">Thời hạn (day)</label>
                 <input pInputText id="stay" class="flex-auto" autocomplete="off" [(ngModel)]="room.stay"
                     formControlName="stay" />
             </div>
