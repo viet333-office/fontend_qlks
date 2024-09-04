@@ -2,7 +2,7 @@
 <div class="grid">
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
-      <div class="grid" gap>
+      <div class="grid" >
         <div class="col-2">
           <span class="p-float-label">
             <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room">
@@ -16,7 +16,7 @@
           </span>
         </div>
         <div class="col-1">
-          <p-dropdown (onChange)="onStatusChange($event)" [options]="uniqueData" optionLabel="status"
+          <p-dropdown (onChange)="onStatusChange($event)" [options]="roomIStatus" optionLabel="name"
             placeholder="trạng thái" [(ngModel)]="searchRoom.status" />
         </div>
         <div class="col-2">

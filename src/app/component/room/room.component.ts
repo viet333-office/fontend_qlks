@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
+import { DropdownEvent, IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
 
 
@@ -39,8 +39,15 @@ export class RoomComponent {
   constructor(private roomrService: RoomServiceService) { }
   ngOnInit(): void {
     this.search();
+    this.loadStatuses();
   }
-  uniqueData = [...new Set(this.searchRoom.status)]
+  loadStatuses() {
+    this.roomIStatus = [
+      { name: 'open' },
+      { name: 'close' },
+      { name: 'using' }
+    ];
+  }
 
   openAddModal() {
     this.showUpdateModal = false;
@@ -96,8 +103,8 @@ export class RoomComponent {
     this.searchRoom.page = event.page;
     this.search();
   }
-  onStatusChange(event: any) {
-    const selectedStatus = event.value ? event.value.status : '';
-    this.searchRoom.status = selectedStatus;
+  onStatusChange(event: DropdownEvent) {
+    const selectedStatus = event.value ? event.value.name : ''; 
+    this.searchRoom.status = selectedStatus; 
   }
 }
