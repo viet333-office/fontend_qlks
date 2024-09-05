@@ -17,6 +17,7 @@ export class BookingAddComponent {
   @Input() isLoading: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
+  
   booking: Booking = {
     start: null,
     end: null,
@@ -24,6 +25,7 @@ export class BookingAddComponent {
     phone_booking:'',
     id_room: '',
   };
+
   resetBooking() {
     this.booking = {
       start: null,
@@ -34,6 +36,7 @@ export class BookingAddComponent {
     };
   }
   constructor(private fbb: FormBuilder,private bookingService: BookingServiceService, private datePipe: DatePipe,private messageService: MessageService) { }
+
   bookingForm = this.fbb.group({
     start: [null, Validators.required],
     end: [null, Validators.required],

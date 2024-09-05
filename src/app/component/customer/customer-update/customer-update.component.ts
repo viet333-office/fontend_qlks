@@ -23,6 +23,7 @@ export class CustomerUpdateComponent {
   @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
+  
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],

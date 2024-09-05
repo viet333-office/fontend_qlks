@@ -20,6 +20,7 @@ export class CustomerComponent implements OnInit {
   cccdError: boolean = false;
   phoneError: boolean = false;
   noData: boolean = false;
+  
   searchCustomer: CustomerSearch = {
     name: '',
     phone: '',
@@ -29,12 +30,14 @@ export class CustomerComponent implements OnInit {
     size: 4,
     sortType: 'asc'
   }
+
   clearInput() {
     this.searchCustomer.name = '';
     this.searchCustomer.phone = '';
     this.searchCustomer.address = '';
     this.searchCustomer.cccd = '';
   }
+
   constructor(private customerService: CustomerServiceService) { }
 
   ngOnInit(): void {
@@ -91,10 +94,12 @@ export class CustomerComponent implements OnInit {
         console.error('Error occurred:', error);
       });
     }
+
   reset(){
     this.clearInput();
     this.search();
   }
+
   onPageChange(event: any): void {
     console.log("event : ", event);
     this.searchCustomer.page = event.page;
@@ -108,5 +113,6 @@ export class CustomerComponent implements OnInit {
   validateCCCD() {
     this.cccdError = !/^\d+$/.test(this.searchCustomer.cccd);
   }
+
 }
 

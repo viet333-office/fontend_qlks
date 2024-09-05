@@ -10,6 +10,7 @@ export interface Room {
 export interface IStatus {
     name: string
 }
+
 export interface RoomSearch {
     name: string;
     room: string;

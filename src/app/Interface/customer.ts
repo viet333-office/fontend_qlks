@@ -5,6 +5,7 @@ export interface Customer {
     address: string;
     phone: string;
 }
+
 export interface CustomerSearch {
     name: string;
     cccd: string;
@@ -22,10 +23,3 @@ export interface ResponseApi {
     totalPages: number;
     totalItems: number;
   }
-
-//   export interface PageEvent {
-//     first: number | undefined;
-//     page: number;
-//     rows: number;
-//     pageCount: number;
-// }

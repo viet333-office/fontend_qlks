@@ -32,6 +32,7 @@ export class BookingComponent {
     size: 4,
     arrange: 'asc'
   }
+
   clearInput() {
     this.searchBooking.start = null;
     this.searchBooking.end = null;
@@ -39,6 +40,7 @@ export class BookingComponent {
     this.searchBooking.phone_booking = '';
     this.searchBooking.id_room = '';
   }
+  
   constructor(private datePipe: DatePipe, private bookingService: BookingServiceService) { }
 
   ngOnInit(): void {

@@ -22,6 +22,7 @@ export class RoomComponent {
   valueError: boolean = false;
   stayError: boolean = false;
   noData: boolean = false;
+  
   searchRoom: RoomSearch = {
     name: '',
     room: '',
@@ -32,6 +33,7 @@ export class RoomComponent {
     size: 4,
     arrange: 'asc'
   }
+
   clearInput() {
     this.searchRoom.name = '';
     this.searchRoom.room = '';
@@ -41,10 +43,12 @@ export class RoomComponent {
   }
 
   constructor(private roomrService: RoomServiceService) { }
+
   ngOnInit(): void {
     this.search();
     this.loadStatuses();
   }
+
   loadStatuses() {
     this.roomIStatus = [
       { name: 'open' },
@@ -58,16 +62,19 @@ export class RoomComponent {
     this.clearInput();
     this.showAddModal = true;
   }
+
   openUpdateModal(room: Room) {
     this.showAddModal = false;
     this.clearInput();
     this.selectedRoom = { ...room };
     this.showUpdateModal = true;
   }
+
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
     this.search();
   }
+
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
     this.search();
@@ -106,24 +113,30 @@ export class RoomComponent {
         this.clearInput();
       });
   }
+
   reset(){
     this.clearInput();
     this.search();
   }
+
   onPageChange(event: any): void {
     this.searchRoom.page = event.page;
     this.search();
   }
+
   onStatusChange(event: DropdownEvent) {
     const selectedStatus = event.value ? event.value.name : ''; 
     this.searchRoom.status = selectedStatus; 
   }
+
   validateRoom() {
     this.roomError = !/^\d+$/.test(this.searchRoom.room);
   }
+
   validateValue() {
     this.valueError = this.searchRoom.value < 0 || isNaN(this.searchRoom.value);
   }
+
   validateStay() {
     this.stayError = !/^\d+$/.test(this.searchRoom.stay);
   }

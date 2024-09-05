@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {  Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Booking, BookingSearch, ResponseApi } from '../../Interface/booking';
 
 @Injectable({
@@ -10,7 +10,6 @@ export class BookingServiceService {
 
   private apiUrl = 'http://localhost:8080/api/booking';
   constructor(private http: HttpClient) { }
-
 
   createBooking(booking: Booking): Observable<ResponseApi> {
     console.log(booking, "booking")
@@ -29,4 +28,5 @@ export class BookingServiceService {
   filterBooking(searchBooking: BookingSearch): Observable<ResponseApi> {
     return this.http.post<ResponseApi>(`${this.apiUrl}/filter`, searchBooking)
   }
+
 }

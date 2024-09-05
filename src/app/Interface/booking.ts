@@ -1,5 +1,3 @@
-
-
 export interface Booking {
     id?: number;
     start: Date | null;
@@ -8,6 +6,7 @@ export interface Booking {
     phone_booking:string;
     id_room: string;
 }
+
 export interface BookingSearch {
     start: Date | null ;
     end:Date | null;

@@ -27,6 +27,7 @@ export class RoomUpdateComponent {
   statusOption: IStatus = { name: '' }
 
   constructor(private fbd: FormBuilder, private roomrService: RoomServiceService, private messageService: MessageService) { }
+  
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
@@ -46,6 +47,7 @@ export class RoomUpdateComponent {
     }
     return null;
   }
+
   ngOnInit(): void {
     this.roomList = [
       { name: "open" },
@@ -57,6 +59,7 @@ export class RoomUpdateComponent {
   onChangeStatus(selectedStatus: IStatus) {
     this.room.status = selectedStatus.name;
   }
+
   hideDialog() {
     this.visible = false;
     this.roomForm.reset();
@@ -85,4 +88,5 @@ export class RoomUpdateComponent {
       )
     }
   }
+
 }

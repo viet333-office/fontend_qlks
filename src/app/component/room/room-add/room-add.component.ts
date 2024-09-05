@@ -23,6 +23,7 @@ export class RoomAddComponent {
     status: '',
     stay: ''
   };
+  
   resetRoom() {
     this.room = {
       name: '',
@@ -32,7 +33,9 @@ export class RoomAddComponent {
       stay: ''
     };
   }
+
   constructor(private fbd: FormBuilder, private roomrService: RoomServiceService, private messageService: MessageService) { }
+
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
@@ -52,9 +55,6 @@ export class RoomAddComponent {
     }
     return null;
   }
-
-
-
 
   hideDialog() {
     this.visible = false;
@@ -83,4 +83,5 @@ export class RoomAddComponent {
       }
     )
   }
+
 }

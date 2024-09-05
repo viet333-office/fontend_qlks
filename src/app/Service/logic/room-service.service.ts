@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ResponseApi, Room, RoomSearch } from '../../Interface/room';
 
@@ -9,7 +9,7 @@ import { ResponseApi, Room, RoomSearch } from '../../Interface/room';
 })
 
 export class RoomServiceService {
-  // public message$: BehaviorSubject<string> = new BehaviorSubject('');
+
   private apiUrl = 'http://localhost:8080/api/room';
   constructor(private http: HttpClient) { }
 
@@ -40,4 +40,5 @@ export class RoomServiceService {
     console.log(params, "LOG param");
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
+  
 }

@@ -16,12 +16,14 @@ export class CustomerAddComponent {
   @Input() isLoading: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
+  
   customer: Customer = {
     name: '',
     phone: '',
     address: '',
     cccd: ''
   };
+
   resetCustomer() {
     this.customer = {
       name: '',
@@ -30,14 +32,15 @@ export class CustomerAddComponent {
       cccd: ''
     };
   }
+
   constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
+
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
     address: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.minLength(5), Validators.maxLength(50)]],
     cccd: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]]
   });
-
 
   get nameError() {
     const nameControl = this.customerForm.get('name');
@@ -52,15 +55,12 @@ export class CustomerAddComponent {
     return null;
   }
 
-
-
   hideDialog() {
     this.visible = false;
     this.customerForm.reset();
     this.visibleChange.emit(this.visible);
     this.resetCustomer();
   }
-
 
   saveCustomer(customer: Customer) {
     this.loadingChange.emit(true);
@@ -80,4 +80,5 @@ export class CustomerAddComponent {
     }
     )
   }
+
 }

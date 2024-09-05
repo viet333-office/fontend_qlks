@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Customer, CustomerSearch, ResponseApi } from '../../Interface/customer';
 
@@ -9,7 +9,7 @@ import { Customer, CustomerSearch, ResponseApi } from '../../Interface/customer'
   providedIn: 'root'
 })
 export class CustomerServiceService {
-  // public message$: BehaviorSubject<string> = new BehaviorSubject('');
+
   private apiUrl = 'http://localhost:8080/api/customer';
   constructor(private http: HttpClient) { }
 
@@ -25,7 +25,6 @@ export class CustomerServiceService {
     return this.http.delete<ResponseApi>(`${this.apiUrl}/delete/${id}`)
   }
 
-
   filterCustomer(searchCustomer: CustomerSearch): Observable<ResponseApi> {
     const params = new HttpParams()
       .set('name', searchCustomer.name || '')
@@ -37,4 +36,5 @@ export class CustomerServiceService {
       .set('sortType', searchCustomer.sortType || 'asc');
     return this.http.get<ResponseApi>(`${this.apiUrl}/filter`, { params })
   }
+
 }

@@ -24,6 +24,7 @@ export class BookingUpdateComponent {
   @Output() loadingChange = new EventEmitter<boolean>();
 
   constructor(private fbb: FormBuilder, private bookingService: BookingServiceService, private messageService: MessageService) { }
+  
   bookingForm = this.fbb.group({
     start: [null, Validators.required],
     end: [null, Validators.required],
@@ -57,4 +58,5 @@ export class BookingUpdateComponent {
       })
     }
   }
+
 }
