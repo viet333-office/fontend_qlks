@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { BookingServiceService } from '../../Service/logic/booking-service.service'
 import { Booking, BookingSearch } from '../../Interface/booking';
 import { DatePipe } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',

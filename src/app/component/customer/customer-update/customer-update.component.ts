@@ -43,7 +43,7 @@ export class CustomerUpdateComponent {
     return null;
   }
 
- 
+
   hideDialog() {
     this.visible = false;
     this.customerForm.reset();
@@ -51,21 +51,24 @@ export class CustomerUpdateComponent {
   }
 
   updateCustomer(customer: Customer) {
-    this.loadingChange.emit(true);
-    this.customerService.putCustomer(customer).subscribe(
-      (data) => {
-        if (!data.content) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
+    const confirmed = window.confirm('Bạn có chắc chắn muốn sửa thông tin khách hàng này?');
+    if (confirmed) {
+      this.loadingChange.emit(true);
+      this.customerService.putCustomer(customer).subscribe(
+        (data) => {
+          if (!data.content) {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
+            this.loadingChange.emit(false);
+          } else {
+            this.loadingChange.emit(false);
+            this.visibleChange.emit(false);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa khách hàng thành công' });
+          }
+        }, error => {
           this.loadingChange.emit(false);
-        } else {
-          this.loadingChange.emit(false);
-          this.visibleChange.emit(false);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa khách hàng thành công' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
         }
-      }, error => {
-        this.loadingChange.emit(false);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-      }
-    )
+      )
+    }
   }
 }

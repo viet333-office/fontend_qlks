@@ -64,22 +64,25 @@ export class RoomUpdateComponent {
   }
 
   updateRooms(room: Room) {
-    this.loadingChange.emit(true);
-    this.roomrService.putRoom(room).subscribe(
-      (data) => {
-        if (!data.content) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
+    const confirmed = window.confirm('Bạn có chắc chắn muốn sửa thông tin khách hàng này?');
+    if (confirmed) {
+      this.loadingChange.emit(true);
+      this.roomrService.putRoom(room).subscribe(
+        (data) => {
+          if (!data.content) {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
+            this.loadingChange.emit(false);
+          } else {
+            console.log("run true");
+            this.visibleChange.emit(false);
+            this.loadingChange.emit(false);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa phòng thành công' });
+          }
+        }, error => {
           this.loadingChange.emit(false);
-        } else {
-          console.log("run true");
-          this.visibleChange.emit(false);
-          this.loadingChange.emit(false);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa phòng thành công' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
         }
-      }, error => {
-        this.loadingChange.emit(false);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-      }
-    )
+      )
+    }
   }
 }
