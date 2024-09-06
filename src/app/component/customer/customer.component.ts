@@ -72,7 +72,7 @@ export class CustomerComponent implements OnInit {
   deleteCustomer(id: number): void {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa khách hàng này?',
-      header: 'Modole xóa khách hàng',
+      header: 'Xác nhận xóa khách hàng',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.isLoading = true;
@@ -102,7 +102,7 @@ export class CustomerComponent implements OnInit {
         this.customerList = data.content as Customer[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
-        this.noData = this.customerList.length === 0;
+        this.noData = this.totalItems === 0;
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);

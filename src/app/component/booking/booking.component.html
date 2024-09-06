@@ -3,7 +3,7 @@
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
       <div class="grid ">
-        <div class="col-4 ">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="id_customer" type="text" pInputText [(ngModel)]="searchBooking.id_customer"
               (ngModelChange)="validateId_customer()">
@@ -11,7 +11,7 @@
           </span>
           <div *ngIf="id_customerError" class="error-message">Phải nhập số</div>
         </div>
-        <div class="col-4 ">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="phone_booking" type="text" pInputText [(ngModel)]="searchBooking.phone_booking"
               (ngModelChange)="validatePhone_booking()">
@@ -19,7 +19,7 @@
           </span>
           <div *ngIf="phone_bookingError" class="error-message">Phải nhập số</div>
         </div>
-        <div class="col-4 ">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="id_room" type="text" pInputText [(ngModel)]="searchBooking.id_room"
               (ngModelChange)="validateId_room()">
@@ -28,23 +28,24 @@
           <div *ngIf="id_roomError" class="error-message">Phải nhập số</div>
         </div>
 
-        <div class="col-3 i">
+        <div class="col-2 i">
           <span class="p-float-label">
             <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="dd/mm/yy"
               [(ngModel)]="searchBooking.start"></p-calendar>
           </span>
         </div>
-        <div class="col-3 ">
+        <div class="col-2 i">
           <span class="p-float-label">
             <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="dd/mm/yy"
               [(ngModel)]="searchBooking.end"></p-calendar>
           </span>
         </div>
-        <div class="col-4 flex gap-4 ">
+        <div class="col-4 flex gap-4 b" >
           <p-button icon="pi  pi-sync" (onClick)="reset()"></p-button>
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
+     
       
     </p-card>
   </div>
@@ -92,7 +93,7 @@
   </div>
 </div>
 
-
+<p-confirmDialog></p-confirmDialog>
 <app-booking-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-booking-add>
 <app-booking-update [visible]="showUpdateModal" [booking]="selectedBooking" (visibleChange)="handleCloseUpdate($event)"

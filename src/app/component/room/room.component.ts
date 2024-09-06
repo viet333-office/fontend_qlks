@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { DropdownEvent, IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
-
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrl: './room.component.css'
+  styleUrl: './room.component.css',
+  providers: [ConfirmationService]
 })
 export class RoomComponent {
   sidebarVisible: boolean = true;
@@ -42,7 +43,7 @@ export class RoomComponent {
     this.searchRoom.stay = '';
   }
 
-  constructor(private roomrService: RoomServiceService) { }
+  constructor(private roomrService: RoomServiceService,  private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.search();
@@ -81,17 +82,24 @@ export class RoomComponent {
   }
 
   deleteRooms(id: number): void {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa phòng này?');
-    if (confirmed) {
-      this.roomrService.deleteRoom(id).subscribe(
-        () => {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa phòng này?',
+      header: 'Xác nhận xóa phòng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.isLoading = true;
+        this.roomrService.deleteRoom(id).subscribe(
+          () => {
+              this.isLoading = false;
+              this.search();
+          },error => {
             this.isLoading = false;
-            this.search();
-        },error => {
-          this.isLoading = false;
-        }
-      );
-    }
+          });
+      },
+      reject: () => {
+        console.log('Xóa khách hàng đã bị hủy');
+      }
+    });
   }
 
   search() {
@@ -106,7 +114,7 @@ export class RoomComponent {
         this.roomList = data.content as Room[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
-        this.noData = this.roomList.length === 0;
+        this.noData = this.totalItems === 0;
       }, (err) => {
         this.isLoading = false;
         console.error('Error occurred:', err);

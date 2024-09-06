@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Customer } from '../../../Interface/customer';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service'
 import { FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-customer-update',
   templateUrl: './customer-update.component.html',
   styleUrl: './customer-update.component.css',
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class CustomerUpdateComponent {
   @Input() visible: boolean = false;
@@ -22,8 +22,12 @@ export class CustomerUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private customerService: CustomerServiceService, private messageService: MessageService) { }
-  
+  constructor
+    (private fb: FormBuilder,
+      private customerService: CustomerServiceService,
+      private confirmationService: ConfirmationService,
+      private messageService: MessageService) { }
+
   customerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     phone: ['', [Validators.required, Validators.pattern(/^(03|09|02)\d{8}$/)]],
@@ -52,24 +56,30 @@ export class CustomerUpdateComponent {
   }
 
   updateCustomer(customer: Customer) {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn sửa thông tin khách hàng này?');
-    if (confirmed) {
-      this.loadingChange.emit(true);
-      this.customerService.putCustomer(customer).subscribe(
-        (data) => {
-          if (!data.content) {
-            this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn sửa khách hàng này?',
+      header: 'Xác nhận sửa khách hàng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.loadingChange.emit(true);
+        this.customerService.putCustomer(customer).subscribe(
+          (data) => {
+            if (!data.content) {
+              this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
+              this.loadingChange.emit(false);
+            } else {
+              this.loadingChange.emit(false);
+              this.visibleChange.emit(false);
+              this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa khách hàng thành công' });
+            }
+          }, error => {
             this.loadingChange.emit(false);
-          } else {
-            this.loadingChange.emit(false);
-            this.visibleChange.emit(false);
-            this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa khách hàng thành công' });
-          }
-        }, error => {
-          this.loadingChange.emit(false);
-          this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-        }
-      )
-    }
+            this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+          });
+      },
+      reject: () => {
+        console.log('Sửa thông tin khách hàng đã bị hủy');
+      }
+    });
   }
 }

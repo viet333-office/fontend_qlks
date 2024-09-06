@@ -82,7 +82,7 @@
     <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchRoom.size" [totalRecords]="totalItems"  [first]="searchRoom.page * searchRoom.size"  [showFirstLastIcon] ="false"/>
   </div>
 </div>
-
+<p-confirmDialog></p-confirmDialog>
 <app-room-update [visible]="showUpdateModal" [room]="selectedRoom"
   (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-room-update>

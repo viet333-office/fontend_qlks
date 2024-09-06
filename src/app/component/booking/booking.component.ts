@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { BookingServiceService } from '../../Service/logic/booking-service.service'
 import { Booking, BookingSearch } from '../../Interface/booking';
 import { DatePipe } from '@angular/common';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.css',
-  providers: [DatePipe]
+  providers: [DatePipe, ConfirmationService]
 })
 export class BookingComponent {
   sidebarVisible: boolean = true;
@@ -26,7 +27,7 @@ export class BookingComponent {
     start: null,
     end: null,
     id_customer: '',
-    phone_booking:'',
+    phone_booking: '',
     id_room: '',
     page: 0,
     size: 4,
@@ -40,8 +41,8 @@ export class BookingComponent {
     this.searchBooking.phone_booking = '';
     this.searchBooking.id_room = '';
   }
-  
-  constructor(private datePipe: DatePipe,private bookingService: BookingServiceService) { }
+
+  constructor(private datePipe: DatePipe, private bookingService: BookingServiceService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.search();
@@ -71,35 +72,45 @@ export class BookingComponent {
   }
 
   deleteBooking(id: number): void {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa lịch đặt phòng này?');
-    if (confirmed) {
-      this.bookingService.deleteBooking(id).subscribe(
-        () => {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa lịch đặt phòng này?',
+      header: 'Xác nhận xóa lịch đặt phòng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.isLoading = true;
+        this.bookingService.deleteBooking(id).subscribe(
+          () => {
             this.isLoading = false;
             this.search();
-        });
-    }
+          }, error => {
+            this.isLoading = false;
+          });
+      },
+      reject: () => {
+        console.log('Xóa khách hàng đã bị hủy');
+      }
+    });
   }
 
   search() {
     this.isLoading = true;
-    this.id_customerError= false;
+    this.id_customerError = false;
     this.phone_bookingError = false;
-    this.id_roomError= false;
+    this.id_roomError = false;
     this.bookingService.filterBooking(this.searchBooking).subscribe(
       (data) => {
         this.isLoading = false;
         this.bookingList = data.content as Booking[];
         this.totalPages = data.totalPages;
         this.totalItems = data.totalItems;
-        this.noData = this.bookingList.length === 0;
+        this.noData = this.totalItems === 0;
       }, (error) => {
         this.isLoading = false;
         console.error('Error occurred:', error);
       });
   }
 
-  reset(){
+  reset() {
     this.clearInput();
     this.search();
   }

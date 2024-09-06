@@ -11,8 +11,11 @@
     z-index: 10000; 
   }
   .i{
-    margin-left: 12rem;
+    margin-left: 2rem;
   } 
+ .b{
+  margin-left: 60rem;
+ }
   .error-message {
     color: red;
     font-size: 0.875rem;

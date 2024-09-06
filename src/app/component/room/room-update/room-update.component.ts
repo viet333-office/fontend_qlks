@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IStatus, Room } from '../../../Interface/room';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-room-update',
   templateUrl: './room-update.component.html',
   styleUrl: './room-update.component.css',
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class RoomUpdateComponent {
   @Input() visible: boolean = false;
@@ -26,8 +26,13 @@ export class RoomUpdateComponent {
   selectedStatus: string = '';
   statusOption: IStatus = { name: '' }
 
-  constructor(private fbd: FormBuilder, private roomrService: RoomServiceService, private messageService: MessageService) { }
-  
+  constructor(
+    private fbd: FormBuilder,
+    private roomrService: RoomServiceService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
+  ) { }
+
   roomForm = this.fbd.group({
     name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
     room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
@@ -67,26 +72,34 @@ export class RoomUpdateComponent {
   }
 
   updateRooms(room: Room) {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn sửa thông tin khách hàng này?');
-    if (confirmed) {
-      this.loadingChange.emit(true);
-      this.roomrService.putRoom(room).subscribe(
-        (data) => {
-          if (!data.content) {
-            this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
+
+
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn sửa phòng này?',
+      header: 'Xác nhận sửa phòng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.loadingChange.emit(true);
+        this.roomrService.putRoom(room).subscribe(
+          (data) => {
+            if (!data.content) {
+              this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
+              this.loadingChange.emit(false);
+            } else {
+              console.log("run true");
+              this.visibleChange.emit(false);
+              this.loadingChange.emit(false);
+              this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa phòng thành công' });
+            }
+          }, error => {
             this.loadingChange.emit(false);
-          } else {
-            console.log("run true");
-            this.visibleChange.emit(false);
-            this.loadingChange.emit(false);
-            this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa phòng thành công' });
-          }
-        }, error => {
-          this.loadingChange.emit(false);
-          this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-        }
-      )
-    }
+            this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+          });
+      },
+      reject: () => {
+        console.log('Sửa thông tin phòng đã bị hủy');
+      }
+    });
   }
 
 }

@@ -1,18 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service'
-import { MessageService } from 'primeng/api'; import { FormBuilder, Validators } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Customer, CustomerSearch } from '../../../Interface/customer';
 import { Room, RoomSearch } from '../../../Interface/room';
 import { CustomerServiceService } from '../../../Service/logic/customer-service.service';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
-providers: [MessageService]
+
 
 @Component({
   selector: 'app-booking-update',
   templateUrl: './booking-update.component.html',
   styleUrl: './booking-update.component.css',
-  providers: [MessageService]
+  providers: [MessageService ,ConfirmationService]
 })
 export class BookingUpdateComponent {
   @Input() visible: boolean = false;
@@ -33,6 +34,7 @@ export class BookingUpdateComponent {
     private customerService: CustomerServiceService,
     private roomService: RoomServiceService,
     private bookingService: BookingServiceService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) { }
   searchCustomer: CustomerSearch = {
@@ -77,8 +79,11 @@ export class BookingUpdateComponent {
   }
 
   updateBooking(booking: Booking) {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn sửa lịch đặt phòng này?');
-    if (confirmed) {
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn sửa lịch đặt phòng này?',
+      header: 'Xác nhận sửa lịch đặt phòng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
       this.loadingChange.emit(true);
       this.bookingService.putBooking(booking).subscribe((data) => {
         if (!data.content) {
@@ -92,9 +97,13 @@ export class BookingUpdateComponent {
       }, error => {
         this.loadingChange.emit(false);
         this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-      })
+      });
+    },
+    reject: () => {
+      console.log('Sửa lịch đặt phòng đã bị hủy');
     }
-  }
+  });
+}
 
   load() {
   this.customerService.filterCustomer(this.searchCustomer).subscribe((data)=>{
