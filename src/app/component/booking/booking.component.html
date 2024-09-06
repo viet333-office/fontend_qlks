@@ -30,13 +30,13 @@
 
         <div class="col-3 i">
           <span class="p-float-label">
-            <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="yy/mm/dd"
+            <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="dd/mm/yy"
               [(ngModel)]="searchBooking.start"></p-calendar>
           </span>
         </div>
         <div class="col-3 ">
           <span class="p-float-label">
-            <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="yy/mm/dd"
+            <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="dd/mm/yy"
               [(ngModel)]="searchBooking.end"></p-calendar>
           </span>
         </div>
@@ -76,8 +76,8 @@
           <td>{{booking.id_customer}}</td>
           <td>{{booking.phone_booking}}</td>
           <td>{{booking.id_room}}</td>
-          <td>{{booking.start | date:'yyyy-MM-dd'}}</td>
-          <td>{{booking.end | date:'yyyy-MM-dd'}}</td>
+          <td>{{booking.start | date:'dd-MM-yyyy'}}</td>
+          <td>{{booking.end | date:'dd-MM-yyyy'}}</td>
           <td>
             <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
               (onClick)="openUpdateModal(booking)"></p-button>

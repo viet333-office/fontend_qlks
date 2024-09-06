@@ -5,13 +5,14 @@
       <div class="grid">
         <div class="col-1,5 i">
           <span class="p-float-label">
-            <input id="name" type="text" pInputText [(ngModel)]="searchCustomer.name">
+            <input id="name" type="text" pInputText [(ngModel)]="searchCustomer.name" (keydown.enter)="search()">
             <label for="name">Tìm kiếm tên</label>
           </span>
         </div>
         <div class="col-1,5 i">
           <span class="p-float-label">
-            <input id="phone" type="text" pInputText [(ngModel)]="searchCustomer.phone" (ngModelChange)="validatePhone()">
+            <input id="phone" type="text" pInputText [(ngModel)]="searchCustomer.phone"
+              (ngModelChange)="validatePhone()">
             <label for="phone">Tìm kiếm sđt</label>
           </span>
           <div *ngIf="phoneError" class="error-message">Phải nhập số </div>
@@ -30,14 +31,15 @@
           <div *ngIf="cccdError" class="error-message">Phải nhập số</div>
         </div>
         <div class="col-2,5 flex gap-2 i">
-          <p-button  icon="pi  pi-sync" (onClick)="reset()"></p-button>
+          <p-button icon="pi  pi-sync" (onClick)="reset()"></p-button>
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
     </p-card>
   </div>
   <div class="spinner-overlay" *ngIf="isLoading">
-    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
   </div>
   <div class="col-12 mt-3">
     <div class="flex justify-content-between align-items-center mb-3">
@@ -45,7 +47,7 @@
       <p-button label="Thêm mới" icon="pi pi-plus" (click)="openAddModal()"></p-button>
     </div>
     <div *ngIf="noData && !isLoading" class="no-data-message">Không có dữ liệu</div>
-    <p-table  *ngIf="!noData && !isLoading" [value]="customerList">
+    <p-table *ngIf="!noData && !isLoading" [value]="customerList">
       <ng-template pTemplate="header">
         <tr>
           <th>STT</th>
@@ -56,7 +58,7 @@
           <th>Thao tác</th>
         </tr>
       </ng-template>
-     
+
       <ng-template pTemplate="body" let-customer let-i="rowIndex">
         <tr>
           <td>{{(searchCustomer.page) * searchCustomer.size + i + 1}}</td>
@@ -73,13 +75,13 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size" [totalRecords]="totalItems"
-    [showFirstLastIcon]="false" />
+    <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size"
+      [totalRecords]="totalItems" [showFirstLastIcon]="false" />
   </div>
 </div>
 
 <app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"
   (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-customer-update>
-<app-customer-add [visible]="showAddModal"  (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
-(loadingChange)="isLoading = $event"></app-customer-add>
+<app-customer-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
+  (loadingChange)="isLoading = $event"></app-customer-add>

@@ -2,6 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Booking } from '../../../Interface/booking';
 import { BookingServiceService } from '../../../Service/logic/booking-service.service'
 import { MessageService } from 'primeng/api'; import { FormBuilder, Validators } from '@angular/forms';
+import { Customer, CustomerSearch } from '../../../Interface/customer';
+import { Room, RoomSearch } from '../../../Interface/room';
+import { CustomerServiceService } from '../../../Service/logic/customer-service.service';
+import { RoomServiceService } from '../../../Service/logic/room-service.service';
 providers: [MessageService]
 
 @Component({
@@ -22,9 +26,34 @@ export class BookingUpdateComponent {
   };
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
-
-  constructor(private fbb: FormBuilder, private bookingService: BookingServiceService, private messageService: MessageService) { }
-  
+  customerList: Customer[] = [];
+  roomList: Room[] = [];
+  constructor(
+    private fbb: FormBuilder,
+    private customerService: CustomerServiceService,
+    private roomService: RoomServiceService,
+    private bookingService: BookingServiceService,
+    private messageService: MessageService
+  ) { }
+  searchCustomer: CustomerSearch = {
+    name: '',
+    phone: '',
+    address: '',
+    cccd: '',
+    page: 0,
+    size: 4,
+    sortType: 'asc'
+  }
+  searchRoom: RoomSearch = {
+    name: '',
+    room: '',
+    value: 0,
+    status: '',
+    stay: '',
+    page: 0,
+    size: 4,
+    arrange: 'asc'
+  }
   bookingForm = this.fbb.group({
     start: [null, Validators.required],
     end: [null, Validators.required],
@@ -34,9 +63,17 @@ export class BookingUpdateComponent {
 
   });
 
+  ngOnChanges(): void {
+   
+    
+    this.load();
+  }
+
   hideDialog() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
+    console.log(this.booking,'log booking');
+    
   }
 
   updateBooking(booking: Booking) {
@@ -59,4 +96,21 @@ export class BookingUpdateComponent {
     }
   }
 
+  load() {
+  this.customerService.filterCustomer(this.searchCustomer).subscribe((data)=>{
+    this.customerList =data.content
+  })
+   this.roomService.filterRoom(this.searchRoom).subscribe((data)=>{
+    this.roomList=data.content
+   })
+  }
+  onIdChange(event: any) {
+    this.booking.id_customer = event.value;
+  }
+  onPhoneChange(event: any) {
+    this.booking.phone_booking = event.value;
+  }
+  onRoomChange(event: any) {
+    this.booking.id_room = event.value;
+  }
 }

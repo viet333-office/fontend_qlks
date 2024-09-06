@@ -4,34 +4,38 @@
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_customer" class="font-semibold w-7rem">mã khách </label>
-                <input pInputText id="id_customer" class="flex-auto" autocomplete="off"
-                    [(ngModel)]="booking.id_customer" formControlName="id_customer" />
+                <p-dropdown formControlName="id_customer" [options]="customerList" optionLabel="cccd" optionValue="cccd"
+                    placeholder="chọn mã khách" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onIdChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_customer')?.errors?.['required'] && bookingForm.get('id_customer')?.dirty">không
                 được để trống</small>
             <small class="p-error block"
-                *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">
-                Cần cung cấp đúng cccd của khách hàng (12 chữ số) </small>
+                *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">cần
+                nhập đúng cccd có 12 ký tự ở trong bảng customer</small>
         </div>
+
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
-                <input pInputText id="phone_booking" class="flex-auto" autocomplete="off"
-                    [(ngModel)]="booking.phone_booking" formControlName="phone_booking" />
+                <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone" optionValue="phone"
+                    placeholder="chọn phone" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onPhoneChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('phone_booking')?.errors?.['required'] && bookingForm.get('phone_booking')?.dirty">không
                 được để trống</small>
             <small class="p-error block"
-                *ngIf="bookingForm.get('phone_booking')?.errors?.['pattern'] && bookingForm.get('phone_booking')?.dirty">
-                Cần cung cấp đúng số điện thoại của khách hàng</small>
+                *ngIf="bookingForm.get('phone_booking')?.errors?.['pattern'] && bookingForm.get('phone_booking')?.dirty">cần
+                nhập đúng số điện thoại có 10 ký tự ở trong bảng customer</small>
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
-                <input pInputText id="id_room" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_room"
-                    formControlName="id_room" />
+                <p-dropdown formControlName="id_room" [options]="roomList" optionLabel="room" optionValue="room"
+                    placeholder="chọn mã phòng" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onRoomChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được
@@ -39,13 +43,19 @@
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_room')?.errors?.['pattern'] && bookingForm.get('id_room')?.dirty"> Cần cung
                 cấp đúng mã phòng (từ 3 đến 20 chữ số)</small>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_room')?.errors?.['minlength'] && bookingForm.get('id_room')?.dirty"> độ dài
+                tối thiểu là 3 ký tự</small>
+            <small class="p-error block"
+                *ngIf="bookingForm.get('id_room')?.errors?.['maxLength'] && bookingForm.get('id_room')?.dirty"> độ dài
+                tối đa là 20 ký tự</small>
         </div>
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="start" class="font-semibold w-7rem">day start</label>
-                <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="yy/mm/dd"
-                    [style]="{'width':'100%'}" appendTo="body" formControlName="start"> </p-calendar>
+                <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="dd/mm/yy"
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"> </p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('start')?.errors?.['required'] && bookingForm.get('start')?.dirty">không
@@ -55,8 +65,8 @@
         <div class="flex flex-column mb-5">
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
-                <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="yy/mm/dd" [style]="{'width':'100%'}"
-                    appendTo="body" formControlName="end"></p-calendar>
+                <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy"
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end"></p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không

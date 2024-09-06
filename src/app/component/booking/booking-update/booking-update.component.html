@@ -4,34 +4,31 @@
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_customer" class="font-semibold w-7rem">mã khách </label>
-                <input pInputText id="id_customer" class="flex-auto" autocomplete="off"
-                    [(ngModel)]="booking.id_customer" formControlName="id_customer" />
+                    <p-dropdown  [options]="customerList" optionLabel="cccd" optionValue="cccd"
+                    placeholder="chọn mã khách" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onIdChange($event)" [(ngModel)]="booking.id_customer" [editable]="true"/>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_customer')?.errors?.['required'] && bookingForm.get('id_customer')?.dirty">không
                 được để trống</small>
-            <small class="p-error block"
-                *ngIf="bookingForm.get('id_customer')?.errors?.['pattern'] && bookingForm.get('id_customer')?.dirty">
-                chỉ được nhập ký tự là number và cccd phải tồn tại trong table customer </small>
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
-                <input pInputText id="phone_booking" class="flex-auto" autocomplete="off"
-                    [(ngModel)]="booking.phone_booking" formControlName="phone_booking" />
+                    <p-dropdown  formControlName="phone" [options]="customerList" optionLabel="phone" optionValue="phone"
+                    placeholder="chọn phone khách" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onPhoneChange($event)" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('phone_booking')?.errors?.['required'] && bookingForm.get('phone_booking')?.dirty">không
                 được để trống</small>
-            <small class="p-error block"
-                *ngIf="bookingForm.get('phone_booking')?.errors?.['pattern'] && bookingForm.get('phone_booking')?.dirty">
-                Cần cung cấp đúng số điện thoại của khách hàng </small>
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
-                <input pInputText id="id_room" class="flex-auto" autocomplete="off" [(ngModel)]="booking.id_room"
-                    formControlName="id_room" />
+                <p-dropdown  formControlName="room" [options]="roomList" optionLabel="room" optionValue="room"
+                    placeholder="chọn mã phòng" [style]="{ width: '15rem' ,height:'auto'}"
+                    (onChange)="onRoomChange($event)" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được

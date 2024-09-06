@@ -41,7 +41,7 @@ export class BookingComponent {
     this.searchBooking.id_room = '';
   }
   
-  constructor(private datePipe: DatePipe, private bookingService: BookingServiceService) { }
+  constructor(private datePipe: DatePipe,private bookingService: BookingServiceService) { }
 
   ngOnInit(): void {
     this.search();
@@ -80,7 +80,6 @@ export class BookingComponent {
         });
     }
   }
-
 
   search() {
     this.isLoading = true;
