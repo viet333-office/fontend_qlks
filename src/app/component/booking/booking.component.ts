@@ -22,6 +22,8 @@ export class BookingComponent {
   phone_bookingError: boolean = false;
   id_roomError: boolean = false;
   noData: boolean = false;
+  minDate: Date | null = null;
+  maxDate: Date | null = null;
 
   searchBooking: BookingSearch = {
     start: null,
@@ -131,5 +133,11 @@ export class BookingComponent {
   validateId_room() {
     this.id_roomError = !/^\d+$/.test(this.searchBooking.id_room);
   }
+  onStartDate(event: Date) {
+    this.minDate = event;
+  }
 
+onEndDate(event: Date) {
+    this.maxDate = event;
+  }
 }

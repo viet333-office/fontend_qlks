@@ -19,8 +19,8 @@
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
-                <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone" optionValue="phone"
-                    placeholder="chọn phone" [style]="{ width: '15rem' ,height:'auto'}"
+                <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone"
+                    optionValue="phone" placeholder="chọn phone" [style]="{ width: '15rem' ,height:'auto'}"
                     (onChange)="onPhoneChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
@@ -55,7 +55,8 @@
             <div class="flex align-items-center gap-3">
                 <label for="start" class="font-semibold w-7rem">day start</label>
                 <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"> </p-calendar>
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"  (onSelect)="onStartDate($event)"
+                    [maxDate]="maxDate"> </p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('start')?.errors?.['required'] && bookingForm.get('start')?.dirty">không
@@ -66,7 +67,8 @@
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end"></p-calendar>
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end" (onSelect)="onEndDate($event)"
+                    [minDate]="minDate"></p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không

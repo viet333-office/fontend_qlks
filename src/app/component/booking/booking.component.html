@@ -31,13 +31,15 @@
         <div class="col-2 i">
           <span class="p-float-label">
             <p-calendar placeholder="Từ ngày" [showIcon]="true" dateFormat="dd/mm/yy"
-              [(ngModel)]="searchBooking.start"></p-calendar>
+              [(ngModel)]="searchBooking.start" (onSelect)="onStartDate($event)"
+              [maxDate]="maxDate"></p-calendar>
           </span>
         </div>
         <div class="col-2 i">
           <span class="p-float-label">
             <p-calendar placeholder="Đến ngày" [showIcon]="true" dateFormat="dd/mm/yy"
-              [(ngModel)]="searchBooking.end"></p-calendar>
+              [(ngModel)]="searchBooking.end" (onSelect)="onEndDate($event)"
+              [minDate]="minDate"></p-calendar>
           </span>
         </div>
         <div class="col-4 flex gap-4 b" >

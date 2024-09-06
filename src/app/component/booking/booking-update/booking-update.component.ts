@@ -29,6 +29,8 @@ export class BookingUpdateComponent {
   @Output() loadingChange = new EventEmitter<boolean>();
   customerList: Customer[] = [];
   roomList: Room[] = [];
+  minDate: Date | null = null;
+  maxDate: Date | null = null;
   constructor(
     private fbb: FormBuilder,
     private customerService: CustomerServiceService,
@@ -113,13 +115,24 @@ export class BookingUpdateComponent {
     this.roomList=data.content
    })
   }
+
   onIdChange(event: any) {
     this.booking.id_customer = event.value;
   }
+
   onPhoneChange(event: any) {
     this.booking.phone_booking = event.value;
   }
+
   onRoomChange(event: any) {
     this.booking.id_room = event.value;
+  }
+
+  onStartDate(event: Date) {
+    this.minDate = event;
+  }
+
+onEndDate(event: Date) {
+    this.maxDate = event;
   }
 }

@@ -23,6 +23,8 @@ export class BookingAddComponent {
   @Output() loadingChange = new EventEmitter<boolean>();
   customerList: Customer[] = [];
   roomList: Room[] = [];
+  minDate: Date | null = null;
+  maxDate: Date | null = null;
   booking: Booking = {
     start: null,
     end: null,
@@ -30,6 +32,7 @@ export class BookingAddComponent {
     phone_booking: '',
     id_room: '',
   };
+
   searchCustomer: CustomerSearch = {
     name: '',
     phone: '',
@@ -39,6 +42,7 @@ export class BookingAddComponent {
     size: 4,
     sortType: 'asc'
   }
+
   searchRoom: RoomSearch = {
     name: '',
     room: '',
@@ -49,6 +53,7 @@ export class BookingAddComponent {
     size: 4,
     arrange: 'asc'
   }
+  
   resetBooking() {
     this.booking = {
       start: null,
@@ -58,6 +63,7 @@ export class BookingAddComponent {
       id_room: '',
     };
   }
+
   constructor(
     private fbb: FormBuilder,
     private customerService: CustomerServiceService,
@@ -73,16 +79,17 @@ export class BookingAddComponent {
     phone_booking: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
     id_room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]]
   });
+
   ngOnChanges(): void {
     this.load();
   }
+
   hideDialog() {
     this.visible = false;
     this.bookingForm.reset();
     this.visibleChange.emit(this.visible);
     this.resetBooking();
   }
-
 
   saveBooking(booking: Booking) {
     this.loadingChange.emit(true);
@@ -103,21 +110,39 @@ export class BookingAddComponent {
       }
     )
   }
+
   load() {
     this.customerService.filterCustomer(this.searchCustomer).subscribe((data) => {
-      this.customerList = data.content
+     
+        this.customerList = data.content;
+     
     });
     this.roomService.filterRoom(this.searchRoom).subscribe((data) => {
-      this.roomList = data.content
+      
+        this.roomList = data.content;
+      
     });
   }
+
   onIdChange(event: any) {
     this.booking.id_customer = event.value;
   }
+
   onPhoneChange(event: any) {
     this.booking.phone_booking = event.value;
   }
+
   onRoomChange(event: any) {
     this.booking.id_room = event.value;
   }
+ 
+  
+  onStartDate(event: Date) {
+      this.minDate = event;
+    }
+  
+  onEndDate(event: Date) {
+      this.maxDate = event;
+    }
+  
 }
