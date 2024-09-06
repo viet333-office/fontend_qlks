@@ -1,4 +1,4 @@
-<p-dialog *ngIf="booking" header="Update Booking" [(visible)]="visible" [style]="{ width: '26rem' }"
+<p-dialog *ngIf="booking" header="Update Booking" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
     (onHide)="hideDialog()">
     <form [formGroup]="bookingForm" (ngSubmit)="updateBooking(booking)">
         <div class="flex flex-column mb-3">

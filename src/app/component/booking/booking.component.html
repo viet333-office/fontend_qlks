@@ -88,7 +88,7 @@
       </ng-template>
     </p-table>
     <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchBooking.size"
-      [totalRecords]="totalItems" [showFirstLastIcon]="false" />
+      [totalRecords]="totalItems"  [first]="searchBooking.page * searchBooking.size" [showFirstLastIcon]="false" />
   </div>
 </div>
 

@@ -69,17 +69,17 @@ export class RoomAddComponent {
     this.roomrService.createRoom(room).subscribe(
       (data) => {
         if (!data.content) {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: data.message });
+          this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
           this.loadingChange.emit(false);
         } else {
           this.loadingChange.emit(false);
           this.roomForm.reset();
           this.hideDialog();
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Thêm phòng thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm phòng thành công' });
         }
       }, error => {
         this.loadingChange.emit(false);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+        this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
       }
     )
   }

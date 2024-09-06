@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
 import { Customer, CustomerSearch } from '../../Interface/customer';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrl: './customer.component.css'
+  styleUrl: './customer.component.css',
+  providers: [ConfirmationService]
 })
 export class CustomerComponent implements OnInit {
   sidebarVisible: boolean = true;
@@ -38,7 +40,7 @@ export class CustomerComponent implements OnInit {
     this.searchCustomer.cccd = '';
   }
 
-  constructor(private customerService: CustomerServiceService) { }
+  constructor(private customerService: CustomerServiceService , private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.search();
@@ -68,14 +70,26 @@ export class CustomerComponent implements OnInit {
   }
 
   deleteCustomer(id: number): void {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn xóa khách hàng này?');
-    if (confirmed) {
-      this.customerService.deleteCustomer(id).subscribe(
-        () => {
-          this.isLoading = false;
-          this.search();
-        });
-    }
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa khách hàng này?',
+      header: 'Modole xóa khách hàng',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.isLoading = true;
+        this.customerService.deleteCustomer(id).subscribe(
+          () => {
+            this.isLoading = false;
+            this.search();  
+          },
+          error => {
+            this.isLoading = false;
+            console.error('Error deleting customer', error);
+          });
+      },
+      reject: () => {
+        console.log('Xóa khách hàng đã bị hủy');
+      }
+    });
   }
 
   search() {

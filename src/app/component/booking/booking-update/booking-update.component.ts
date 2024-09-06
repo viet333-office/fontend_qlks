@@ -82,16 +82,16 @@ export class BookingUpdateComponent {
       this.loadingChange.emit(true);
       this.bookingService.putBooking(booking).subscribe((data) => {
         if (!data.content) {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: data.message });
+          this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
           this.loadingChange.emit(false);
         } else {
           this.loadingChange.emit(false);
           this.visibleChange.emit(false);
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sửa lịch đặt phòng thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa lịch đặt phòng thành công' });
         }
       }, error => {
         this.loadingChange.emit(false);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+        this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
       })
     }
   }

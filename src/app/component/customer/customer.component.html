@@ -67,6 +67,7 @@
           <td>{{customer.address}}</td>
           <td>{{customer.cccd}}</td>
           <td>
+            
             <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
               (onClick)="openUpdateModal(customer)"></p-button>
             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
@@ -76,10 +77,10 @@
       </ng-template>
     </p-table>
     <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size"
-      [totalRecords]="totalItems" [showFirstLastIcon]="false" />
+      [totalRecords]="totalItems" [first]="searchCustomer.page * searchCustomer.size"  [showFirstLastIcon]="false" />
   </div>
 </div>
-
+<p-confirmDialog></p-confirmDialog>
 <app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"
   (visibleChange)="handleCloseUpdate($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-customer-update>

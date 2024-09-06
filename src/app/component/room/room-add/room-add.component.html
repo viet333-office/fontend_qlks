@@ -1,4 +1,4 @@
-<p-dialog *ngIf="room" header="Add Room" [(visible)]="visible" [style]="{ width: '30rem' }" (onHide)="hideDialog()">
+<p-dialog *ngIf="room" header="Add Room" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }" (onHide)="hideDialog()">
     <form [formGroup]="roomForm" (ngSubmit)="saveRoom(room)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">

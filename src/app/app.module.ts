@@ -88,8 +88,7 @@ import { ToastModule } from 'primeng/toast';
     ConfirmDialogModule,
     ReactiveFormsModule,
     ToastModule,
-    DatePipe,
-
+    DatePipe
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
