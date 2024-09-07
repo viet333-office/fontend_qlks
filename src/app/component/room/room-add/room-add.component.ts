@@ -65,7 +65,7 @@ export class RoomAddComponent {
 
   saveRoom(room: Room) {
     this.loadingChange.emit(true);
-    room.status = 'open';
+    room.status = 'Open';
     this.roomrService.createRoom(room).subscribe(
       (data) => {
         if (!data.content) {

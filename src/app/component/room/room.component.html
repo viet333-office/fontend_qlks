@@ -2,8 +2,8 @@
 <div class="grid">
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
-      <div class="grid g">
-        <div class="col-1,5 i">
+      <div class="grid">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room"
               [formControl]="searchForm.controls['room']">
@@ -13,23 +13,25 @@
             *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">chỉ được nhập giá trị
             là số </small>
         </div>
-        <div class="col-1,5 i">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="name" type="text" pInputText [(ngModel)]="searchRoom.name">
             <label for="name">Tìm loại phòng</label>
           </span>
         </div>
-        <div class="col-1,5 i">
-          <p-dropdown (onChange)="onStatusChange($event)" [options]="roomIStatus" optionLabel="name"
-            placeholder="trạng thái" [(ngModel)]="searchRoom.status" />
+        <div class="col-2 i">
+          <span class="p-float-label">
+            <input id="status" type="text" pInputText [(ngModel)]="searchRoom.status">
+            <label for="status">Trạng thái</label>
+          </span>
         </div>
-        <div class="col-1,5 i">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value">
             <label for="value">Tìm giá</label>
           </span>
         </div>
-        <div class="col-1,5 i">
+        <div class="col-2 i">
           <span class="p-float-label">
             <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay"
               [formControl]="searchForm.controls['stay']">
@@ -37,10 +39,9 @@
           </span>
           <small class="p-error block"
             *ngIf="searchForm.get('stay')?.errors?.['pattern'] && searchForm.get('stay')?.dirty">chỉ được nhập giá trị
-            là
-            số </small>
+            là số </small>
         </div>
-        <div class="col-2,5 flex gap-2 i">
+        <div class=" col -4 flex justify-content-end gap-4 ">
           <p-button icon="pi  pi-sync" (onClick)="reset()"></p-button>
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>

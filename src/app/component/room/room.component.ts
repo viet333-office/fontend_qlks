@@ -62,9 +62,9 @@ export class RoomComponent {
 
   loadStatuses() {
     this.roomIStatus = [
-      { name: 'open' },
-      { name: 'close' },
-      { name: 'using' }
+      { name: 'Open' },
+      { name: 'Close' },
+      { name: 'Using' }
     ];
   }
 
@@ -129,8 +129,6 @@ export class RoomComponent {
   }
 
   reset() {
-    console.log('loading reset');
-
     this.clearInput();
     this.search()
   }
