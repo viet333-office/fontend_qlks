@@ -2,13 +2,16 @@
 <div class="grid">
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
+      <form [formGroup]="searchForm">
       <div class="grid" >
         <div class="col-1,5 i">
           <span class="p-float-label">
-            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room" (ngModelChange)="validateRoom()">
+            <input id="room" type="text" pInputText  (ngModelChange)="validateRoom()"  formControlName="room">
             <label for="room">Tìm kiếm mã phòng</label>
           </span>
-          <div *ngIf="roomError" class="error-message">Phải nhập số </div>
+          <small class="p-error block"
+          *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">không được để
+          trống</small>
         </div>
         <div class="col-1,5 i">
           <span class="p-float-label">
@@ -39,6 +42,7 @@
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
+      </form>
     </p-card>
   </div>
   <div class="spinner-overlay" *ngIf="isLoading">

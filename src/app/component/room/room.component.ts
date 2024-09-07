@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DropdownEvent, IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
 import { ConfirmationService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-room',
@@ -43,7 +44,19 @@ export class RoomComponent {
     this.searchRoom.stay = '';
   }
 
-  constructor(private roomrService: RoomServiceService,  private confirmationService: ConfirmationService) { }
+  constructor(
+    private fbd: FormBuilder ,
+    private roomrService: RoomServiceService,  
+    private confirmationService: ConfirmationService
+  ) { }
+
+  searchForm = this.fbd.group({
+    room: ['', [Validators.pattern(/^\d+$/)]], 
+    name: [''],
+    status: [''],
+    value: ['', [Validators.pattern(/^\d+$/), Validators.min(1)]], 
+    stay: ['', [Validators.pattern(/^\d+$/)]], // Validate số
+  });
 
   ngOnInit(): void {
     this.search();

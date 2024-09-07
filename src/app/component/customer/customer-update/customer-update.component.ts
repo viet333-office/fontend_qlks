@@ -66,12 +66,11 @@ export class CustomerUpdateComponent {
           (data) => {
             if (!data.content) {
               this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
-              this.loadingChange.emit(false);
             } else {
-              this.loadingChange.emit(false);
               this.visibleChange.emit(false);
               this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa khách hàng thành công' });
             }
+            this.loadingChange.emit(false);
           }, error => {
             this.loadingChange.emit(false);
             this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });

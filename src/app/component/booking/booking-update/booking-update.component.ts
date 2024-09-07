@@ -25,6 +25,7 @@ export class BookingUpdateComponent {
     phone_booking: '',
     id_room: ''
   };
+  
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
   customerList: Customer[] = [];
@@ -68,8 +69,13 @@ export class BookingUpdateComponent {
   });
 
   ngOnChanges(): void {
-   
-    
+    if (this.booking) {
+      this.bookingForm.patchValue({
+        id_customer: this.booking.id_customer,
+        phone_booking: this.booking.phone_booking,
+        id_room: this.booking.id_room,
+      });
+    }
     this.load();
   }
 
@@ -79,7 +85,7 @@ export class BookingUpdateComponent {
     console.log(this.booking,'log booking');
     
   }
-
+  
   updateBooking(booking: Booking) {
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn sửa lịch đặt phòng này?',
@@ -90,12 +96,12 @@ export class BookingUpdateComponent {
       this.bookingService.putBooking(booking).subscribe((data) => {
         if (!data.content) {
           this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
-          this.loadingChange.emit(false);
         } else {
-          this.loadingChange.emit(false);
           this.visibleChange.emit(false);
           this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa lịch đặt phòng thành công' });
         }
+        this.bookingForm.reset();
+        this.loadingChange.emit(false);
       }, error => {
         this.loadingChange.emit(false);
         this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });

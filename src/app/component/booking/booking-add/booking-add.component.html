@@ -1,12 +1,11 @@
-<p-dialog *ngIf="booking" header="Add Booking" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
+<p-dialog header="Add Booking" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
     (onHide)="hideDialog()">
     <form [formGroup]="bookingForm" (ngSubmit)="saveBooking(booking)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="id_customer" class="font-semibold w-7rem">mã khách </label>
                 <p-dropdown formControlName="id_customer" [options]="customerList" optionLabel="cccd" optionValue="cccd"
-                    placeholder="chọn mã khách" [style]="{ width: '15rem' ,height:'auto'}"
-                    (onChange)="onIdChange($event)" [editable]="true" />
+                    [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onIdChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_customer')?.errors?.['required'] && bookingForm.get('id_customer')?.dirty">không
@@ -20,8 +19,8 @@
             <div class="flex align-items-center gap-3">
                 <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
                 <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone"
-                    optionValue="phone" placeholder="chọn phone" [style]="{ width: '15rem' ,height:'auto'}"
-                    (onChange)="onPhoneChange($event)" [editable]="true" />
+                    optionValue="phone" [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onPhoneChange($event)"
+                    [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('phone_booking')?.errors?.['required'] && bookingForm.get('phone_booking')?.dirty">không
@@ -34,8 +33,7 @@
             <div class="flex align-items-center gap-3">
                 <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
                 <p-dropdown formControlName="id_room" [options]="roomList" optionLabel="room" optionValue="room"
-                    placeholder="chọn mã phòng" [style]="{ width: '15rem' ,height:'auto'}"
-                    (onChange)="onRoomChange($event)" [editable]="true" />
+                    [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onRoomChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được
@@ -55,8 +53,8 @@
             <div class="flex align-items-center gap-3">
                 <label for="start" class="font-semibold w-7rem">day start</label>
                 <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"  (onSelect)="onStartDate($event)"
-                    [maxDate]="maxDate"> </p-calendar>
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"
+                    (onSelect)="onStartDate($event)" [maxDate]="maxDate"> </p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('start')?.errors?.['required'] && bookingForm.get('start')?.dirty">không
@@ -67,8 +65,8 @@
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end" (onSelect)="onEndDate($event)"
-                    [minDate]="minDate"></p-calendar>
+                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end"
+                    (onSelect)="onEndDate($event)" [minDate]="minDate"></p-calendar>
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('end')?.errors?.['required'] && bookingForm.get('end')?.dirty">không
