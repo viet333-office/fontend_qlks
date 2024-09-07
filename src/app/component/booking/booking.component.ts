@@ -3,6 +3,7 @@ import { BookingServiceService } from '../../Service/logic/booking-service.servi
 import { Booking, BookingSearch } from '../../Interface/booking';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
@@ -18,9 +19,6 @@ export class BookingComponent {
   totalPages: number = 0;
   totalItems: number = 0;
   isLoading: boolean = false;
-  id_customerError: boolean = false;
-  phone_bookingError: boolean = false;
-  id_roomError: boolean = false;
   noData: boolean = false;
   minDate: Date | null = null;
   maxDate: Date | null = null;
@@ -44,7 +42,19 @@ export class BookingComponent {
     this.searchBooking.id_room = '';
   }
 
-  constructor(private datePipe: DatePipe, private bookingService: BookingServiceService, private confirmationService: ConfirmationService) { }
+  constructor(
+    private fbb: FormBuilder,
+    private bookingService: BookingServiceService,
+    private confirmationService: ConfirmationService
+  ) { }
+
+  searchFormBooking = this.fbb.group({
+    start: [null],
+    end: [null],
+    id_customer: ['', [Validators.pattern(/^\d+$/)]],
+    phone_booking: ['', [Validators.pattern(/^\d+$/)]],
+    id_room: ['', [Validators.pattern(/^\d+$/)]]
+  });
 
   ngOnInit(): void {
     this.search();
@@ -96,9 +106,6 @@ export class BookingComponent {
 
   search() {
     this.isLoading = true;
-    this.id_customerError = false;
-    this.phone_bookingError = false;
-    this.id_roomError = false;
     this.bookingService.filterBooking(this.searchBooking).subscribe(
       (data) => {
         this.isLoading = false;
@@ -122,22 +129,11 @@ export class BookingComponent {
     this.search();
   }
 
-  validateId_customer() {
-    this.id_customerError = !/^\d+$/.test(this.searchBooking.id_customer);
-  }
-
-  validatePhone_booking() {
-    this.phone_bookingError = !/^\d+$/.test(this.searchBooking.phone_booking);
-  }
-
-  validateId_room() {
-    this.id_roomError = !/^\d+$/.test(this.searchBooking.id_room);
-  }
   onStartDate(event: Date) {
     this.minDate = event;
   }
 
-onEndDate(event: Date) {
+  onEndDate(event: Date) {
     this.maxDate = event;
   }
 }

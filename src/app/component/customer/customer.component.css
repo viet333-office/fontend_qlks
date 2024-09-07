@@ -11,17 +11,23 @@
     z-index: 10000; 
 }
 
+.g{
+    margin-top: 1rem;
+}
+
 .i{
     margin-right: 2rem;
 } 
 
-.error-message {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
+.p-float-label label {
+    color: #858080; 
+}
+  
+.p-error {
+    color: red; 
 }
 
-  .no-data-message {
+.no-data-message {
     text-align: center;
     font-size: 1.2rem;
     color: var(--text-color);

@@ -2,7 +2,7 @@
 <div class="grid">
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
-      <div class="grid">
+      <div class="grid g">
         <div class="col-1,5 i">
           <span class="p-float-label">
             <input id="name" type="text" pInputText [(ngModel)]="searchCustomer.name" (keydown.enter)="search()">
@@ -12,10 +12,13 @@
         <div class="col-1,5 i">
           <span class="p-float-label">
             <input id="phone" type="text" pInputText [(ngModel)]="searchCustomer.phone"
-              (ngModelChange)="validatePhone()">
+              [formControl]="searchFormCustomer.controls['phone']">
             <label for="phone">Tìm kiếm sđt</label>
           </span>
-          <div *ngIf="phoneError" class="error-message">Phải nhập số </div>
+          <small class="p-error block"
+            *ngIf="searchFormCustomer.get('phone')?.errors?.['pattern'] && searchFormCustomer.get('phone')?.dirty">chỉ
+            được nhập giá trị
+            là số </small>
         </div>
         <div class="col-1,5 i">
           <span class="p-float-label">
@@ -25,10 +28,14 @@
         </div>
         <div class="col-1,5 i">
           <span class="p-float-label">
-            <input id="cccd" type="text" pInputText [(ngModel)]="searchCustomer.cccd" (ngModelChange)="validateCCCD()">
+            <input id="cccd" type="text" pInputText [(ngModel)]="searchCustomer.cccd"
+              [formControl]="searchFormCustomer.controls['cccd']">
             <label for="cccd">Tìm kiếm cccd</label>
           </span>
-          <div *ngIf="cccdError" class="error-message">Phải nhập số</div>
+          <small class="p-error block"
+            *ngIf="searchFormCustomer.get('cccd')?.errors?.['pattern'] && searchFormCustomer.get('cccd')?.dirty">chỉ
+            được nhập giá trị
+            là số </small>
         </div>
         <div class="col-2,5 flex gap-2 i">
           <p-button icon="pi  pi-sync" (onClick)="reset()"></p-button>
@@ -37,10 +44,12 @@
       </div>
     </p-card>
   </div>
+
   <div class="spinner-overlay" *ngIf="isLoading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </div>
+
   <div class="col-12 mt-3">
     <div class="flex justify-content-between align-items-center mb-3">
       <h3>Danh sách khách hàng</h3>
@@ -67,7 +76,7 @@
           <td>{{customer.address}}</td>
           <td>{{customer.cccd}}</td>
           <td>
-            
+
             <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-success mr-2"
               (onClick)="openUpdateModal(customer)"></p-button>
             <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
@@ -77,8 +86,9 @@
       </ng-template>
     </p-table>
     <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size"
-      [totalRecords]="totalItems" [first]="searchCustomer.page * searchCustomer.size"  [showFirstLastIcon]="false" />
+      [totalRecords]="totalItems" [first]="searchCustomer.page * searchCustomer.size" [showFirstLastIcon]="false" />
   </div>
+
 </div>
 <p-confirmDialog></p-confirmDialog>
 <app-customer-update [visible]="showUpdateModal" [customer]="selectedCustomer"

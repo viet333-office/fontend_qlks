@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
 import { Customer, CustomerSearch } from '../../Interface/customer';
 import { ConfirmationService } from 'primeng/api';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
@@ -22,7 +23,7 @@ export class CustomerComponent implements OnInit {
   cccdError: boolean = false;
   phoneError: boolean = false;
   noData: boolean = false;
-  
+
   searchCustomer: CustomerSearch = {
     name: '',
     phone: '',
@@ -40,7 +41,18 @@ export class CustomerComponent implements OnInit {
     this.searchCustomer.cccd = '';
   }
 
-  constructor(private customerService: CustomerServiceService , private confirmationService: ConfirmationService) { }
+  constructor(
+    private fb: FormBuilder,
+    private customerService: CustomerServiceService,
+    private confirmationService: ConfirmationService
+  ) { }
+
+  searchFormCustomer = this.fb.group({
+    name: [''],
+    phone: ['', [Validators.pattern(/^\d+$/)]],
+    address: [''],
+    cccd: ['', [Validators.pattern(/^\d+$/)]]
+  });
 
   ngOnInit(): void {
     this.search();
@@ -79,7 +91,7 @@ export class CustomerComponent implements OnInit {
         this.customerService.deleteCustomer(id).subscribe(
           () => {
             this.isLoading = false;
-            this.search();  
+            this.search();
           },
           error => {
             this.isLoading = false;
@@ -107,9 +119,9 @@ export class CustomerComponent implements OnInit {
         this.isLoading = false;
         console.error('Error occurred:', error);
       });
-    }
+  }
 
-  reset(){
+  reset() {
     this.clearInput();
     this.search();
   }

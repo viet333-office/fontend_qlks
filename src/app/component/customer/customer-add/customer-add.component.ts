@@ -16,7 +16,7 @@ export class CustomerAddComponent {
   @Input() isLoading: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
-  
+
   customer: Customer = {
     name: '',
     phone: '',

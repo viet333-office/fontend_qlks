@@ -23,7 +23,7 @@ export class RoomAddComponent {
     status: '',
     stay: ''
   };
-  
+
   resetRoom() {
     this.room = {
       name: '',

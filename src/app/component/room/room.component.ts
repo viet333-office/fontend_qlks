@@ -20,11 +20,8 @@ export class RoomComponent {
   isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
-  roomError: boolean = false;
-  valueError: boolean = false;
-  stayError: boolean = false;
   noData: boolean = false;
-  
+
   searchRoom: RoomSearch = {
     name: '',
     room: '',
@@ -45,17 +42,17 @@ export class RoomComponent {
   }
 
   constructor(
-    private fbd: FormBuilder ,
-    private roomrService: RoomServiceService,  
+    private fbd: FormBuilder,
+    private roomrService: RoomServiceService,
     private confirmationService: ConfirmationService
   ) { }
 
   searchForm = this.fbd.group({
-    room: ['', [Validators.pattern(/^\d+$/)]], 
+    room: ['', [Validators.pattern(/^\d+$/)]],
     name: [''],
     status: [''],
-    value: ['', [Validators.pattern(/^\d+$/), Validators.min(1)]], 
-    stay: ['', [Validators.pattern(/^\d+$/)]], // Validate số
+    value: [''],
+    stay: ['', [Validators.pattern(/^\d+$/)]],
   });
 
   ngOnInit(): void {
@@ -103,9 +100,9 @@ export class RoomComponent {
         this.isLoading = true;
         this.roomrService.deleteRoom(id).subscribe(
           () => {
-              this.isLoading = false;
-              this.search();
-          },error => {
+            this.isLoading = false;
+            this.search();
+          }, error => {
             this.isLoading = false;
           });
       },
@@ -118,9 +115,6 @@ export class RoomComponent {
   search() {
     console.log(this.searchRoom, "this.searchRoom");
     this.isLoading = true;
-    this.roomError = false;
-    this.valueError= false;
-    this.stayError = false;
     this.roomrService.filterRoom(this.searchRoom).subscribe(
       (data) => {
         this.isLoading = false;
@@ -131,13 +125,14 @@ export class RoomComponent {
       }, (err) => {
         this.isLoading = false;
         console.error('Error occurred:', err);
-        this.clearInput();
       });
   }
 
-  reset(){
+  reset() {
+    console.log('loading reset');
+
     this.clearInput();
-    this.search();
+    this.search()
   }
 
   onPageChange(event: any): void {
@@ -146,19 +141,8 @@ export class RoomComponent {
   }
 
   onStatusChange(event: DropdownEvent) {
-    const selectedStatus = event.value ? event.value.name : ''; 
-    this.searchRoom.status = selectedStatus; 
+    const selectedStatus = event.value ? event.value.name : '';
+    this.searchRoom.status = selectedStatus;
   }
 
-  validateRoom() {
-    this.roomError = !/^\d+$/.test(this.searchRoom.room);
-  }
-
-  validateValue() {
-    this.valueError = this.searchRoom.value < 0 || isNaN(this.searchRoom.value);
-  }
-
-  validateStay() {
-    this.stayError = !/^\d+$/.test(this.searchRoom.stay);
-  }
 }

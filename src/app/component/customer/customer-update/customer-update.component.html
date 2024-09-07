@@ -1,6 +1,6 @@
 <p-dialog header="update Customer" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }"
     (onHide)="hideDialog()">
-    <form [formGroup]="customerForm" (ngSubmit)="updateCustomer(customer)">
+    <form *ngIf="customer" [formGroup]="customerForm" (ngSubmit)="updateCustomer(customer)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="name" class="font-semibold w-9rem">Họ tên</label>
@@ -42,7 +42,7 @@
             <small class="p-error block"
                 *ngIf="customerForm.get('address')?.errors?.['required'] && customerForm.get('address')?.dirty">không
                 được để trống</small>
-                <small class="p-error block"
+            <small class="p-error block"
                 *ngIf="customerForm.get('address')?.errors?.['pattern'] && customerForm.get('address')?.dirty">không
                 được điền ký tự đặc biệt</small>
             <small class="p-error block"
