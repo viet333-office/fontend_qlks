@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IStatus, Room } from '../../../Interface/room';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -23,8 +23,6 @@ export class RoomUpdateComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
   roomList: IStatus[] = [];
-  selectedStatus: string = '';
-  statusOption: IStatus = { name: '' }
 
   constructor(
     private fbd: FormBuilder,
@@ -33,12 +31,7 @@ export class RoomUpdateComponent {
     private confirmationService: ConfirmationService
   ) { }
 
-  roomForm = this.fbd.group({
-    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
-    room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
-    value: [0, [Validators.required, Validators.min(1), Validators.max(9999999999)]],
-    stay: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(1), Validators.maxLength(100)]]
-  });
+
 
   get nameError() {
     const nameControl = this.roomForm.get('name');
@@ -59,10 +52,22 @@ export class RoomUpdateComponent {
       { name: "close" },
       { name: "using" }
     ];
+    if (this.room) {
+      this.roomForm.patchValue(this.room); // chưa nhận gán
+    }
   }
 
-  onChangeStatus(selectedStatus: IStatus) {
-    this.room.status = selectedStatus.name;
+
+  roomForm = this.fbd.group({
+    name: ['', [Validators.required, Validators.pattern(/^[^!@#$%^&*(),.?":{}|<>]*$/), Validators.pattern(/^[^\d]+$/), Validators.minLength(3), Validators.maxLength(20)]],
+    room: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(3), Validators.maxLength(20)]],
+    value: [0, [Validators.required, Validators.min(1), Validators.max(9999999999)]],
+    status: [''],
+    stay: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(1), Validators.maxLength(100)]]
+  });
+
+  onChangeStatus(statusOption: IStatus) {
+    this.room.status = statusOption.name;
   }
 
   hideDialog() {
@@ -72,8 +77,6 @@ export class RoomUpdateComponent {
   }
 
   updateRooms(room: Room) {
-
-
     this.confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn sửa phòng này?',
       header: 'Xác nhận sửa phòng',
@@ -86,9 +89,9 @@ export class RoomUpdateComponent {
               this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
             } else {
               console.log("run true");
-              this.visibleChange.emit(false);
               this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa phòng thành công' });
             }
+            this.visibleChange.emit(false);
             this.loadingChange.emit(false);
           }, error => {
             this.loadingChange.emit(false);

@@ -60,11 +60,9 @@
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
                 <label for="status" class="font-semibold w-7rem">Trạng thái</label>
-                <p-dropdown (onChange)="onChangeStatus(statusOption)" [options]="roomList" optionLabel="name"
-                    [(ngModel)]="statusOption" [ngModelOptions]="{standalone: true}"
-                    [style]="{ width: '19rem' ,height:'auto'}"> </p-dropdown>
+                <p-dropdown formControlName="status" [options]="roomList" (onChange)="onChangeStatus($event.value)"
+                    optionLabel="name" [style]="{ width: '19rem' ,height:'auto'}"> </p-dropdown>
             </div>
-
         </div>
 
         <div class="flex flex-column mb-5">
