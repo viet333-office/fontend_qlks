@@ -66,6 +66,7 @@ export class RoomAddComponent {
   saveRoom(room: Room) {
     this.loadingChange.emit(true);
     room.status = 'Open';
+    room.value = Math.floor(room.value) * 1000;
     this.roomrService.createRoom(room).subscribe(
       (data) => {
         if (!data.content) {

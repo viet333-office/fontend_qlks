@@ -20,6 +20,7 @@ export class RoomUpdateComponent {
     status: '',
     stay: ''
   };
+  originalRoomValue: number = 0;
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() loadingChange = new EventEmitter<boolean>();
   roomList: IStatus[] = [];
@@ -53,6 +54,7 @@ export class RoomUpdateComponent {
       { name: "using" }
     ];
     if (this.room) {
+      this.originalRoomValue = this.room.value;
       this.roomForm.patchValue(this.room); // chưa nhận gán
     }
   }
@@ -83,6 +85,9 @@ export class RoomUpdateComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.loadingChange.emit(true);
+        if (room.value !== this.originalRoomValue) {
+          room.value = Math.floor(room.value) * 1000;
+        }
         this.roomrService.putRoom(room).subscribe(
           (data) => {
             if (!data.content) {

@@ -31,7 +31,7 @@ export class BookingComponent {
     id_room: '',
     page: 0,
     size: 4,
-    arrange: 'asc'
+    arrange: 'desc'
   }
 
   clearInput() {
@@ -73,6 +73,7 @@ export class BookingComponent {
 
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
+   
     this.search();
   }
 
@@ -81,6 +82,8 @@ export class BookingComponent {
     this.clearInput();
     this.selectedBooking = { ...booking };
     this.showUpdateModal = true;
+    console.log("selectedBooking : ", this.selectedBooking);
+    
   }
 
   deleteBooking(id: number): void {

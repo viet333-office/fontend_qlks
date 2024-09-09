@@ -30,7 +30,7 @@ export class RoomComponent {
     stay: '',
     page: 0,
     size: 4,
-    arrange: 'asc'
+    arrange: 'desc'
   }
 
   clearInput() {

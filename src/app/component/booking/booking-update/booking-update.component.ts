@@ -141,4 +141,5 @@ export class BookingUpdateComponent {
 onEndDate(event: Date) {
     this.maxDate = event;
   }
+
 }

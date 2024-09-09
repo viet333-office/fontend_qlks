@@ -31,7 +31,7 @@ export class CustomerComponent implements OnInit {
     cccd: '',
     page: 0,
     size: 4,
-    sortType: 'asc'
+    sortType: 'desc'
   }
 
   clearInput() {

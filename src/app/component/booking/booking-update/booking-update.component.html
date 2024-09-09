@@ -53,7 +53,7 @@
                 <label for="start" class="font-semibold w-7rem">day start</label>
                 <p-calendar [(ngModel)]="booking.start"  [showIcon]="true" dateFormat="dd/mm/yy"
                     [style]="{'width':'100%'}" appendTo="body"  (onSelect)="onStartDate($event)" formControlName="start"
-                    [maxDate]="maxDate"></p-calendar>
+                    [maxDate]="maxDate" placeholder = "{{booking.start | date:'dd/MM/yy'}}"></p-calendar>
             </div>
         </div>
 
@@ -61,8 +61,9 @@
             <div class="flex align-items-center gap-3">
                 <label for="end" class="font-semibold w-7rem">day end</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
-                    appendTo="body" (onSelect)="onEndDate($event)" 
-                    [minDate]="minDate"></p-calendar>
+                    appendTo="body" (onSelect)="onEndDate($event)" formControlName="end"
+                    [minDate]="minDate" placeholder = "{{booking.end | date:'dd/MM/yy'}}"
+                    ></p-calendar>
             </div>
         </div>
 
