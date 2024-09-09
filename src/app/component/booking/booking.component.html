@@ -56,17 +56,17 @@
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
-
-
     </p-card>
   </div>
+
   <div class="spinner-overlay" *ngIf="isLoading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </div>
+
   <div class="col-12 mt-3">
     <div class="flex justify-content-between align-items-center mb-3">
-      <h3>Danh sách khách hàng</h3>
+      <h3>Danh sách đặt phòng</h3>
       <p-button label="Thêm mới" icon="pi pi-plus" (click)="openAddModal()"></p-button>
     </div>
     <div *ngIf="noData && !isLoading" class="no-data-message">Không có dữ liệu</div>
@@ -75,7 +75,7 @@
         <tr>
           <th>STT</th>
           <th>Mã khách</th>
-          <th>Phone khách</th>
+          <th>Số điện thoại</th>
           <th>Mã phòng</th>
           <th>Ngày bắt đầu</th>
           <th>Ngày kết thúc</th>

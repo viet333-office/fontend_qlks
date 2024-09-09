@@ -32,21 +32,6 @@ export class RoomUpdateComponent {
     private confirmationService: ConfirmationService
   ) { }
 
-
-
-  get nameError() {
-    const nameControl = this.roomForm.get('name');
-    if (nameControl?.errors && nameControl.dirty) {
-      const value = (nameControl.value || '');
-      if (!/^[^\d]+$/.test(value)) {
-        return 'Không được chứa số';
-      } else if (/[^a-zA-Z0-9\s]/.test(value)) {
-        return 'Không được chứa ký tự đặc biệt';
-      }
-    }
-    return null;
-  }
-
   ngOnInit(): void {
     this.roomList = [
       { name: "open" },
@@ -68,6 +53,19 @@ export class RoomUpdateComponent {
     stay: ['', [Validators.required, Validators.pattern(/^\d+$/), Validators.minLength(1), Validators.maxLength(100)]]
   });
 
+  get nameError() {
+    const nameControl = this.roomForm.get('name');
+    if (nameControl?.errors && nameControl.dirty) {
+      const value = (nameControl.value || '');
+      if (/^[^!@#$%^&*(),.?":{}|<>]*$/.test(value)) {
+        return 'Không được chứa số';
+      } else if (/^[^\d]+$/.test(value)) {
+        return 'Không được chứa ký tự đặc biệt';
+      }
+    }
+    return null;
+  }
+
   onChangeStatus(statusOption: IStatus) {
     this.room.status = statusOption.name;
   }
@@ -85,26 +83,33 @@ export class RoomUpdateComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.loadingChange.emit(true);
-        if (room.value !== this.originalRoomValue) {
+  
+        // Kiểm tra giá trị `roomForm` và `room`
+        const valueControl = this.roomForm.get('value');
+        if (valueControl && valueControl.dirty && room.value !== this.originalRoomValue) {
           room.value = Math.floor(room.value) * 1000;
         }
+  
+        // Gọi dịch vụ cập nhật phòng
         this.roomrService.putRoom(room).subscribe(
           (data) => {
             if (!data.content) {
-              this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: data.message });
+              this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message || 'Có lỗi xảy ra.' });
             } else {
-              console.log("run true");
+              this.hideDialog();
               this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Sửa phòng thành công' });
             }
-            this.visibleChange.emit(false);
             this.loadingChange.emit(false);
-          }, error => {
+          },
+          error => {
             this.loadingChange.emit(false);
-            this.messageService.add({ severity: 'error', summary: 'cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
-          });
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+          }
+        );
       },
       reject: () => {
         console.log('Sửa thông tin phòng đã bị hủy');
+        this.loadingChange.emit(false); 
       }
     });
   }

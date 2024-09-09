@@ -1,4 +1,4 @@
-<p-dialog header="update Customer" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }"
+<p-dialog header="Chỉnh sửa khách hàng" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }"
     (onHide)="hideDialog()">
     <form *ngIf="customer" [formGroup]="customerForm" (ngSubmit)="updateCustomer(customer)">
         <div class="flex flex-column mb-3">
@@ -30,7 +30,7 @@
                 để trống</small>
             <small class="p-error block"
                 *ngIf="customerForm.get('phone')?.errors?.['pattern'] && customerForm.get('phone')?.dirty">Số điện thoại
-                phải bắt đầu bằng 03, 09, hoặc 02 và có đúng 10 chữ số</small>
+                phải bắt đầu bằng 01,02,03,08 hoặc 09 và có đúng 10 chữ số</small>
         </div>
 
         <div class="flex flex-column mb-3">
@@ -68,8 +68,8 @@
         </div>
 
         <div class="flex justify-content-end gap-2">
-            <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
-            <p-button label="Update" (onClick)="updateCustomer(customer)" />
+            <p-button label="Đóng" severity="secondary" (onClick)="hideDialog()" />
+            <p-button label="Cập nhật" (onClick)="updateCustomer(customer)" />
         </div>
     </form>
 </p-dialog>

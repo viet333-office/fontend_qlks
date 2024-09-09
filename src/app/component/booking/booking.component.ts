@@ -68,12 +68,13 @@ export class BookingComponent {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
+    this.searchBooking.page = 0;
     this.search();
   }
 
   handleCloseUpdate(data: boolean) {
     this.showUpdateModal = false;
-   
+
     this.search();
   }
 
@@ -83,7 +84,7 @@ export class BookingComponent {
     this.selectedBooking = { ...booking };
     this.showUpdateModal = true;
     console.log("selectedBooking : ", this.selectedBooking);
-    
+
   }
 
   deleteBooking(id: number): void {

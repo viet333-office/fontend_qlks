@@ -83,6 +83,7 @@ export class RoomComponent {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
+    this.searchRoom.page = 0;
     this.search();
   }
 

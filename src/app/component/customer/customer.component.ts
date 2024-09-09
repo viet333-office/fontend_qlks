@@ -66,6 +66,7 @@ export class CustomerComponent implements OnInit {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
+    this.searchCustomer.page = 0;
     this.search();
   }
 

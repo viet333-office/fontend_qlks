@@ -1,9 +1,9 @@
-<p-dialog  header="Update Booking" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
+<p-dialog  header="Chỉnh sửa lịch đặt phòng" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
     (onHide)="hideDialog()">
     <form *ngIf="booking" [formGroup]="bookingForm" (ngSubmit)="updateBooking(booking)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_customer" class="font-semibold w-7rem">mã khách </label>
+                <label for="id_customer" class="font-semibold w-7rem">Mã khách </label>
                 <p-dropdown formControlName="id_customer" [options]="customerList" optionLabel="cccd" optionValue="cccd"
                     placeholder="chọn mã khách" [style]="{ width: '15rem' ,height:'auto'}"
                     (onChange)="onIdChange($event)" [editable]="true" />
@@ -17,7 +17,7 @@
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="phone_booking" class="font-semibold w-7rem">phone khách </label>
+                <label for="phone_booking" class="font-semibold w-7rem">Số điện thoại</label>
                 <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone"
                     optionValue="phone" placeholder="chọn phone khách" [style]="{ width: '15rem' ,height:'auto'}"
                     (onChange)="onPhoneChange($event)" [editable]="true" />
@@ -31,7 +31,7 @@
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_room" class="font-semibold w-7rem">mã phòng</label>
+                <label for="id_room" class="font-semibold w-7rem">Mã phòng</label>
                 <p-dropdown formControlName="id_room" [options]="roomList" optionLabel="room" optionValue="room"
                     placeholder="chọn mã phòng" [style]="{ width: '15rem' ,height:'auto'}"
                     (onChange)="onRoomChange($event)" [editable]="true"/>
@@ -50,7 +50,7 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="start" class="font-semibold w-7rem">day start</label>
+                <label for="start" class="font-semibold w-7rem">Ngày bắt đầu</label>
                 <p-calendar [(ngModel)]="booking.start"  [showIcon]="true" dateFormat="dd/mm/yy"
                     [style]="{'width':'100%'}" appendTo="body"  (onSelect)="onStartDate($event)" formControlName="start"
                     [maxDate]="maxDate" placeholder = "{{booking.start | date:'dd/MM/yy'}}"></p-calendar>
@@ -59,7 +59,7 @@
 
         <div class="flex flex-column mb-5">
             <div class="flex align-items-center gap-3">
-                <label for="end" class="font-semibold w-7rem">day end</label>
+                <label for="end" class="font-semibold w-7rem">Ngày kết thúc</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
                     appendTo="body" (onSelect)="onEndDate($event)" formControlName="end"
                     [minDate]="minDate" placeholder = "{{booking.end | date:'dd/MM/yy'}}"
@@ -68,8 +68,8 @@
         </div>
 
         <div class="flex justify-content-end gap-2">
-            <p-button label="Cancel" severity="secondary" (onClick)="hideDialog()" />
-            <p-button label="Update" (onClick)="updateBooking(booking)" />
+            <p-button label="Đóng" severity="secondary" (onClick)="hideDialog()" />
+            <p-button label="Cập nhật" (onClick)="updateBooking(booking)" />
         </div>
     </form>
 </p-dialog>

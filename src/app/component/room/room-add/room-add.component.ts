@@ -23,7 +23,7 @@ export class RoomAddComponent {
     status: '',
     stay: ''
   };
-
+  originalRoomValue: number = 0;
   resetRoom() {
     this.room = {
       name: '',
@@ -66,7 +66,10 @@ export class RoomAddComponent {
   saveRoom(room: Room) {
     this.loadingChange.emit(true);
     room.status = 'Open';
-    room.value = Math.floor(room.value) * 1000;
+    this.loadingChange.emit(true);
+    if (this.roomForm.get('value')?.dirty && room.value !== this.originalRoomValue) {
+      room.value = Math.floor(room.value) * 1000;
+    }
     this.roomrService.createRoom(room).subscribe(
       (data) => {
         if (!data.content) {
@@ -74,7 +77,7 @@ export class RoomAddComponent {
         } else {
           this.roomForm.reset();
           this.hideDialog();
-          this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm phòng thành công' });
+          this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Thêm khách hàng thành công' });
         }
         this.loadingChange.emit(false);
       }, error => {
