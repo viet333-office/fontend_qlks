@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IStatus, Room } from '../../../Interface/room';
 import { RoomServiceService } from '../../../Service/logic/room-service.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -83,14 +83,10 @@ export class RoomUpdateComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.loadingChange.emit(true);
-  
-        // Kiểm tra giá trị `roomForm` và `room`
         const valueControl = this.roomForm.get('value');
         if (valueControl && valueControl.dirty && room.value !== this.originalRoomValue) {
           room.value = Math.floor(room.value) * 1000;
         }
-  
-        // Gọi dịch vụ cập nhật phòng
         this.roomrService.putRoom(room).subscribe(
           (data) => {
             if (!data.content) {

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerServiceService } from '../../Service/logic/customer-service.service'
 import { Customer, CustomerSearch } from '../../Interface/customer';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrl: './customer.component.css',
-  providers: [ConfirmationService]
+  providers: [MessageService,ConfirmationService]
 })
 export class CustomerComponent implements OnInit {
   sidebarVisible: boolean = true;
@@ -43,6 +43,7 @@ export class CustomerComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private messageService: MessageService,
     private customerService: CustomerServiceService,
     private confirmationService: ConfirmationService
   ) { }
@@ -90,7 +91,9 @@ export class CustomerComponent implements OnInit {
       accept: () => {
         this.isLoading = true;
         this.customerService.deleteCustomer(id).subscribe(
-          () => {
+          (data) => {
+            console.log('Data from server:', data.message); 
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message }); // không nhận message
             this.isLoading = false;
             this.search();
           },

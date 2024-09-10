@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { DropdownEvent, IStatus, ResponseApi, Room, RoomSearch } from '../../Interface/room';
 import { RoomServiceService } from '../../Service/logic/room-service.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrl: './room.component.css',
-  providers: [ConfirmationService]
+  providers: [MessageService,ConfirmationService]
 })
 export class RoomComponent {
   sidebarVisible: boolean = true;
@@ -43,6 +43,7 @@ export class RoomComponent {
 
   constructor(
     private fbd: FormBuilder,
+    private messageService: MessageService,
     private roomrService: RoomServiceService,
     private confirmationService: ConfirmationService
   ) { }
@@ -100,15 +101,19 @@ export class RoomComponent {
       accept: () => {
         this.isLoading = true;
         this.roomrService.deleteRoom(id).subscribe(
-          () => {
+          (data) => {
+            console.log('Data from server:', data.message); 
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
+            this.search(); 
             this.isLoading = false;
-            this.search();
-          }, error => {
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
             this.isLoading = false;
           });
-      },
+        },
       reject: () => {
-        console.log('Xóa khách hàng đã bị hủy');
+        console.log('Xóa phòng đã bị hủy');
       }
     });
   }
