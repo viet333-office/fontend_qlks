@@ -1,11 +1,11 @@
-<p-dialog  header="Chỉnh sửa lịch đặt phòng" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
+<p-dialog  header="Chỉnh sửa lịch đặt phòng" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }"
     (onHide)="hideDialog()">
     <form *ngIf="booking" [formGroup]="bookingForm" (ngSubmit)="updateBooking(booking)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_customer" class="font-semibold w-7rem">Mã khách </label>
+                <label for="id_customer" class="font-semibold w-9rem">Mã khách </label>
                 <p-dropdown formControlName="id_customer" [options]="customerList" optionLabel="cccd" optionValue="cccd"
-                    placeholder="chọn mã khách" [style]="{ width: '15rem' ,height:'auto'}"
+                    placeholder="chọn mã khách" [style]="{ width: '16rem' ,height:'auto'}"
                     (onChange)="onIdChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
@@ -17,9 +17,9 @@
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="phone_booking" class="font-semibold w-7rem">Số điện thoại</label>
+                <label for="phone_booking" class="font-semibold w-9rem">Số điện thoại</label>
                 <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone"
-                    optionValue="phone" placeholder="chọn phone khách" [style]="{ width: '15rem' ,height:'auto'}"
+                    optionValue="phone" placeholder="chọn phone khách" [style]="{ width: '16rem' ,height:'auto'}"
                     (onChange)="onPhoneChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
@@ -31,9 +31,9 @@
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_room" class="font-semibold w-7rem">Mã phòng</label>
+                <label for="id_room" class="font-semibold w-9rem">Mã phòng</label>
                 <p-dropdown formControlName="id_room" [options]="roomList" optionLabel="room" optionValue="room"
-                    placeholder="chọn mã phòng" [style]="{ width: '15rem' ,height:'auto'}"
+                    placeholder="chọn mã phòng" [style]="{ width: '16rem' ,height:'auto'}"
                     (onChange)="onRoomChange($event)" [editable]="true"/>
             </div>
             <small class="p-error block"
@@ -50,17 +50,17 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="start" class="font-semibold w-7rem">Ngày bắt đầu</label>
+                <label for="start" class="font-semibold w-9rem">Ngày bắt đầu</label>
                 <p-calendar [(ngModel)]="booking.start"  [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{'width':'100%'}" appendTo="body"  (onSelect)="onStartDate($event)" formControlName="start"
+                    [style]="{width: '16rem' ,height:'auto'}" appendTo="body"  (onSelect)="onStartDate($event)" formControlName="start"
                     [maxDate]="maxDate" placeholder = "{{booking.start | date:'dd/MM/yy'}}"></p-calendar>
             </div>
         </div>
 
         <div class="flex flex-column mb-5">
             <div class="flex align-items-center gap-3">
-                <label for="end" class="font-semibold w-7rem">Ngày kết thúc</label>
-                <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
+                <label for="end" class="font-semibold w-9rem">Ngày kết thúc</label>
+                <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy" [style]="{width: '16rem' ,height:'auto'}"
                     appendTo="body" (onSelect)="onEndDate($event)" formControlName="end"
                     [minDate]="minDate" placeholder = "{{booking.end | date:'dd/MM/yy'}}"
                     ></p-calendar>

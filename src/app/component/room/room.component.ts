@@ -103,9 +103,9 @@ export class RoomComponent {
         this.roomrService.deleteRoom(id).subscribe(
           (data) => {
             console.log('Data from server:', data.message); 
-            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
-            this.search(); 
             this.isLoading = false;
+            this.search(); 
+            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
           },
           error => {
             this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });

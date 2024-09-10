@@ -2,47 +2,29 @@
 <div class="grid">
   <div class="col-12">
     <p-card header="Bộ lọc tìm kiếm">
-      <div class="grid">
-        <div class="col-2 i">
-          <span class="p-float-label">
-            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room"
-              [formControl]="searchForm.controls['room']">
-            <label for="room">Tìm kiếm mã phòng</label>
-          </span>
-          <small class="p-error block"
-            *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">chỉ được nhập giá trị
-            là số </small>
+      <div class="filter-container">
+        <div class="input-group">
+          <div class="input-item">
+            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room" placeholder="Tìm kiếm mã phòng" (keydown.enter)="search()">
+            <small class="p-error block" *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">Chỉ được nhập giá trị là số</small>
+          </div>
+          <div class="input-item">
+            <input id="name" type="text" pInputText [(ngModel)]="searchRoom.name" placeholder="Tìm loại phòng" (keydown.enter)="search()">
+          </div>
+          <div class="input-item">
+            <input id="status" type="text" pInputText [(ngModel)]="searchRoom.status" placeholder="Trạng thái" (keydown.enter)="search()">
+          </div>
+          <div class="input-item">
+            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value" placeholder="Tìm giá" (keydown.enter)="search()">
+          </div>
+          <div class="input-item">
+            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay" placeholder="Tìm thời hạn" (keydown.enter)="search()" [formControl]="searchForm.controls['stay']">
+            <small class="p-error block" *ngIf="searchForm.get('stay')?.errors?.['pattern'] && searchForm.get('stay')?.dirty">Chỉ được nhập giá trị là số</small>
+          </div>
         </div>
-        <div class="col-2 i">
-          <span class="p-float-label">
-            <input id="name" type="text" pInputText [(ngModel)]="searchRoom.name">
-            <label for="name">Tìm loại phòng</label>
-          </span>
-        </div>
-        <div class="col-2 i">
-          <span class="p-float-label">
-            <input id="status" type="text" pInputText [(ngModel)]="searchRoom.status">
-            <label for="status">Trạng thái</label>
-          </span>
-        </div>
-        <div class="col-2 i">
-          <span class="p-float-label">
-            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value">
-            <label for="value">Tìm giá</label>
-          </span>
-        </div>
-        <div class="col-2 i">
-          <span class="p-float-label">
-            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay"
-              [formControl]="searchForm.controls['stay']">
-            <label for="stay">Tìm thời hạn</label>
-          </span>
-          <small class="p-error block"
-            *ngIf="searchForm.get('stay')?.errors?.['pattern'] && searchForm.get('stay')?.dirty">chỉ được nhập giá trị
-            là số </small>
-        </div>
-        <div class=" col -4 flex justify-content-end gap-4 ">
-          <p-button icon="pi  pi-sync" (onClick)="reset()"></p-button>
+        
+        <div class="button-group gap-4">
+          <p-button icon="pi pi-sync" (onClick)="reset()"></p-button>
           <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
         </div>
       </div>
@@ -98,3 +80,4 @@
   [isLoading]="isLoading" (loadingChange)="isLoading = $event"></app-room-update>
 <app-room-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-room-add>
+<p-toast></p-toast>

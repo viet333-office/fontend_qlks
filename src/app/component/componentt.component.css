@@ -1,6 +1,29 @@
 * {
     box-sizing: border-box;
 }
+
 .grid{
     height: 98vh;
+    /* background-color: #007bff; */
+    /* width: 100%; */
+    background-image: url("../image/background.jpg");
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+.menu-item.active {
+    font-weight: bold;
+    color: #007bff; 
+    background-color: #e0e0e0; 
+    border-radius: 4px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    color: #333;
+    text-decoration: none;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
 }

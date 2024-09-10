@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrl: './customer.component.css',
-  providers: [MessageService,ConfirmationService]
+  providers: [MessageService, ConfirmationService]
 })
 export class CustomerComponent implements OnInit {
   sidebarVisible: boolean = true;
@@ -93,13 +93,13 @@ export class CustomerComponent implements OnInit {
         this.customerService.deleteCustomer(id).subscribe(
           (data) => {
             console.log('Data from server:', data.message); 
-            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message }); // không nhận message
             this.isLoading = false;
-            this.search();
+            this.search(); 
+            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });
           },
           error => {
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: error.message });
             this.isLoading = false;
-            console.error('Error deleting customer', error);
           });
       },
       reject: () => {
@@ -124,14 +124,17 @@ export class CustomerComponent implements OnInit {
         console.error('Error occurred:', error);
       });
   }
-
+first:number = 0;
   reset() {
     this.clearInput();
+    this.searchCustomer.page = 0;
     this.search();
+
   }
 
   onPageChange(event: any): void {
-    console.log("event : ", event);
+    console.log(event ,"event.page ");
+    this.first = event.first;
     this.searchCustomer.page = event.page;
     this.search();
   }

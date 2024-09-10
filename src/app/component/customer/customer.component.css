@@ -11,25 +11,50 @@
     z-index: 10000; 
 }
 
-.g{
-    margin-top: 1rem;
-}
-
-.i{
-    margin-right: 2rem;
-} 
-
-.p-float-label label {
-    color: #858080; 
-}
-  
-.p-error {
-    color: red; 
-}
-
 .no-data-message {
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    padding: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  padding: 1rem;
 }
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex: 1 1 auto;
+}
+
+
+.input-item {
+  flex: 1 1 calc(20% - 1rem);
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem; 
+  flex: 1 1 100%; 
+  margin-top: 1rem;
+}
+
+
+.input-item input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.p-error {
+  color: #dc3545;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+.button-group{
+  display: flex;
+  justify-content: flex-end;
+}
+
+  

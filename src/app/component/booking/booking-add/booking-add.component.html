@@ -1,11 +1,11 @@
-<p-dialog header="Thêm lịch đặt phòng" [modal]="true" [(visible)]="visible" [style]="{ width: '26rem' }"
+<p-dialog header="Thêm lịch đặt phòng" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }"
     (onHide)="hideDialog()">
     <form [formGroup]="bookingForm" (ngSubmit)="saveBooking(booking)">
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_customer" class="font-semibold w-7rem">Mã khách </label>
+                <label for="id_customer" class="font-semibold w-9rem">Mã khách </label>
                 <p-dropdown formControlName="id_customer" [options]="customerList" optionLabel="cccd" optionValue="cccd"
-                    [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onIdChange($event)" [editable]="true" />
+                    [style]="{ width: '16rem' ,height:'auto'}" (onChange)="onIdChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_customer')?.errors?.['required'] && bookingForm.get('id_customer')?.dirty">không
@@ -17,9 +17,9 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="phone_booking" class="font-semibold w-7rem">Số điện thoại </label>
+                <label for="phone_booking" class="font-semibold w-9rem">Số điện thoại </label>
                 <p-dropdown formControlName="phone_booking" [options]="customerList" optionLabel="phone"
-                    optionValue="phone" [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onPhoneChange($event)"
+                    optionValue="phone" [style]="{ width: '16rem' ,height:'auto'}" (onChange)="onPhoneChange($event)"
                     [editable]="true" />
             </div>
             <small class="p-error block"
@@ -31,9 +31,9 @@
         </div>
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="id_room" class="font-semibold w-7rem">Mã phòng</label>
+                <label for="id_room" class="font-semibold w-9rem">Mã phòng</label>
                 <p-dropdown formControlName="id_room" [options]="roomList" optionLabel="room" optionValue="room"
-                    [style]="{ width: '15rem' ,height:'auto'}" (onChange)="onRoomChange($event)" [editable]="true" />
+                    [style]="{ width: '16rem' ,height:'auto'}" (onChange)="onRoomChange($event)" [editable]="true" />
             </div>
             <small class="p-error block"
                 *ngIf="bookingForm.get('id_room')?.errors?.['required'] && bookingForm.get('id_room')?.dirty">không được
@@ -51,9 +51,9 @@
 
         <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="start" class="font-semibold w-7rem">Ngày bắt đầu</label>
+                <label for="start" class="font-semibold w-9rem">Ngày bắt đầu</label>
                 <p-calendar [(ngModel)]="booking.start" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="start"
+                    [style]="{ width: '16rem' ,height:'auto'}" appendTo="body" formControlName="start"
                     (onSelect)="onStartDate($event)" [maxDate]="maxDate"> </p-calendar>
             </div>
             <small class="p-error block"
@@ -61,11 +61,11 @@
                 được để trống</small>
         </div>
 
-        <div class="flex flex-column mb-5">
+        <div class="flex flex-column mb-3">
             <div class="flex align-items-center gap-3">
-                <label for="end" class="font-semibold w-7rem">Ngày kết thúc</label>
+                <label for="end" class="font-semibold w-9rem">Ngày kết thúc</label>
                 <p-calendar [(ngModel)]="booking.end" [showIcon]="true" dateFormat="dd/mm/yy"
-                    [style]="{ width: '15rem' ,height:'auto'}" appendTo="body" formControlName="end"
+                    [style]="{ width: '16rem' ,height:'auto'}" appendTo="body" formControlName="end"
                     (onSelect)="onEndDate($event)" [minDate]="minDate"></p-calendar>
             </div>
             <small class="p-error block"

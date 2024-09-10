@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { BookingServiceService } from '../../Service/logic/booking-service.service'
 import { Booking, BookingSearch } from '../../Interface/booking';
 import { DatePipe } from '@angular/common';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.css',
-  providers: [DatePipe, ConfirmationService]
+  providers: [MessageService,DatePipe, ConfirmationService]
 })
 export class BookingComponent {
   sidebarVisible: boolean = true;
@@ -44,6 +44,7 @@ export class BookingComponent {
 
   constructor(
     private fbb: FormBuilder,
+    private messageService: MessageService,
     private bookingService: BookingServiceService,
     private confirmationService: ConfirmationService
   ) { }
@@ -95,10 +96,14 @@ export class BookingComponent {
       accept: () => {
         this.isLoading = true;
         this.bookingService.deleteBooking(id).subscribe(
-          () => {
+          (data) => {
+            console.log('Data from server:', data.message); 
             this.isLoading = false;
-            this.search();
-          }, error => {
+            this.search(); 
+            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
             this.isLoading = false;
           });
       },

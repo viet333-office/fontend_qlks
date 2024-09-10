@@ -50,8 +50,8 @@ export class CustomerUpdateComponent {
 
 
   hideDialog() {
-    this.visible = false;
     this.customerForm.reset();
+    this.visible = false;
     this.visibleChange.emit(this.visible);
   }
 
