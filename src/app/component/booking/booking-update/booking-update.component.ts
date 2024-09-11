@@ -46,7 +46,7 @@ export class BookingUpdateComponent {
     address: '',
     cccd: '',
     page: 0,
-    size: 4,
+    size: 100000,
     sortType: 'asc'
   }
   searchRoom: RoomSearch = {
@@ -56,7 +56,7 @@ export class BookingUpdateComponent {
     status: '',
     stay: '',
     page: 0,
-    size: 4,
+    size: 100000,
     arrange: 'asc'
   }
   bookingForm = this.fbb.group({

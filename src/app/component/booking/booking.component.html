@@ -70,6 +70,7 @@
           <th>Mã khách</th>
           <th>Số điện thoại</th>
           <th>Mã phòng</th>
+          <th>Tổng tiền</th>
           <th>Ngày bắt đầu</th>
           <th>Ngày kết thúc</th>
           <th>Thao tác</th>
@@ -81,6 +82,7 @@
           <td>{{booking.id_customer}}</td>
           <td>{{booking.phone_booking}}</td>
           <td>{{booking.id_room}}</td>
+          <td>{{booking.total | number}}₫</td>
           <td>{{booking.start | date:'dd-MM-yyyy'}}</td>
           <td>{{booking.end | date:'dd-MM-yyyy'}}</td>
           <td>

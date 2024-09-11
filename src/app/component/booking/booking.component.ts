@@ -29,6 +29,7 @@ export class BookingComponent {
     id_customer: '',
     phone_booking: '',
     id_room: '',
+    total:0,
     page: 0,
     size: 4,
     arrange: 'desc'

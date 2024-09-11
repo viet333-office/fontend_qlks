@@ -13,6 +13,7 @@ export interface BookingSearch {
     id_customer: string;
     phone_booking:string;
     id_room:string;
+    total:number;
     page: number,
     size: number
     arrange:string

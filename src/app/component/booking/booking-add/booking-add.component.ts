@@ -39,7 +39,7 @@ export class BookingAddComponent {
     address: '',
     cccd: '',
     page: 0,
-    size: 4,
+    size: 100000,
     sortType: 'asc'
   }
 
@@ -50,7 +50,7 @@ export class BookingAddComponent {
     status: '',
     stay: '',
     page: 0,
-    size: 4,
+    size: 100000,
     arrange: 'asc'
   }
   
@@ -82,6 +82,10 @@ export class BookingAddComponent {
 
   ngOnChanges(): void {
     this.load();
+    console.log(this.customerList ,"customerlis");
+    console.log(this.roomList ,"roomList");
+    console.log(this.booking,"booking");
+    
   }
 
   hideDialog() {
