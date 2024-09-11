@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrl: './booking.component.css',
-  providers: [MessageService,DatePipe, ConfirmationService]
+  providers: [MessageService, DatePipe, ConfirmationService]
 })
 export class BookingComponent {
   sidebarVisible: boolean = true;
@@ -61,6 +61,11 @@ export class BookingComponent {
     this.search();
   }
 
+  reset() {
+    this.clearInput();
+    this.search();
+  }
+
   openAddModal() {
     this.showUpdateModal = false;
     this.clearInput();
@@ -97,18 +102,21 @@ export class BookingComponent {
         this.isLoading = true;
         this.bookingService.deleteBooking(id).subscribe(
           (data) => {
-            console.log('Data from server:', data.message); 
+            if (!data.status) {
+              this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message });
+            } else {
+              this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'xoá lịch đặt phòng thành công' });
+            }
             this.isLoading = false;
-            this.search(); 
-            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
+            this.search();
           },
           error => {
-            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: error.message });
             this.isLoading = false;
           });
       },
       reject: () => {
-        console.log('Xóa khách hàng đã bị hủy');
+        console.log('Xóa lịch đặt phòng đã bị hủy');
       }
     });
   }
@@ -128,8 +136,8 @@ export class BookingComponent {
       });
   }
 
-  reset() {
-    this.clearInput();
+  searchReset() {
+    this.searchBooking.page = 0;
     this.search();
   }
 

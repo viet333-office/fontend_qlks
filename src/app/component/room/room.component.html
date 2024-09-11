@@ -5,27 +5,32 @@
       <div class="filter-container">
         <div class="input-group">
           <div class="input-item">
-            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room" placeholder="Tìm kiếm mã phòng" (keydown.enter)="search()">
-            <small class="p-error block" *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">Chỉ được nhập giá trị là số</small>
+            <input id="room" type="text" pInputText [(ngModel)]="searchRoom.room" placeholder="Tìm kiếm mã phòng">
+            <small class="p-error block"
+              *ngIf="searchForm.get('room')?.errors?.['pattern'] && searchForm.get('room')?.dirty">Chỉ được nhập giá trị
+              là số</small>
           </div>
           <div class="input-item">
-            <input id="name" type="text" pInputText [(ngModel)]="searchRoom.name" placeholder="Tìm loại phòng" (keydown.enter)="search()">
+            <input id="name" type="text" pInputText [(ngModel)]="searchRoom.name" placeholder="Tìm loại phòng">
           </div>
           <div class="input-item">
-            <input id="status" type="text" pInputText [(ngModel)]="searchRoom.status" placeholder="Trạng thái" (keydown.enter)="search()">
+            <input id="status" type="text" pInputText [(ngModel)]="searchRoom.status" placeholder="Trạng thái">
           </div>
           <div class="input-item">
-            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value" placeholder="Tìm giá" (keydown.enter)="search()">
+            <input id="value" type="text" pInputText [(ngModel)]="searchRoom.value" placeholder="Tìm giá">
           </div>
           <div class="input-item">
-            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay" placeholder="Tìm thời hạn" (keydown.enter)="search()" [formControl]="searchForm.controls['stay']">
-            <small class="p-error block" *ngIf="searchForm.get('stay')?.errors?.['pattern'] && searchForm.get('stay')?.dirty">Chỉ được nhập giá trị là số</small>
+            <input id="stay" type="text" pInputText [(ngModel)]="searchRoom.stay" placeholder="Tìm thời hạn"
+              [formControl]="searchForm.controls['stay']">
+            <small class="p-error block"
+              *ngIf="searchForm.get('stay')?.errors?.['pattern'] && searchForm.get('stay')?.dirty">Chỉ được nhập giá trị
+              là số</small>
           </div>
         </div>
-        
+
         <div class="button-group gap-4">
           <p-button icon="pi pi-sync" (onClick)="reset()"></p-button>
-          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
+          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="searchReset()"></p-button>
         </div>
       </div>
     </p-card>

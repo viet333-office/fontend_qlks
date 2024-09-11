@@ -5,24 +5,31 @@
       <div class="filter-container">
         <div class="input-group">
           <div class="input-item">
-            <input id="name" type="text" pInputText [(ngModel)]="searchCustomer.name" (keydown.enter)="search()" placeholder="Tìm kiếm tên">
+            <input id="name" type="text" pInputText [(ngModel)]="searchCustomer.name" placeholder="Tìm kiếm tên">
           </div>
           <div class="input-item">
-            <input id="phone" type="text" pInputText [(ngModel)]="searchCustomer.phone"  (keydown.enter)="search()" [formControl]="searchFormCustomer.controls['phone']" placeholder="Tìm kiếm sđt">
-            <small class="p-error block" *ngIf="searchFormCustomer.get('phone')?.errors?.['pattern'] && searchFormCustomer.get('phone')?.dirty">Chỉ được nhập giá trị là số</small>
+            <input id="phone" type="text" pInputText [(ngModel)]="searchCustomer.phone"
+              [formControl]="searchFormCustomer.controls['phone']" placeholder="Tìm kiếm sđt">
+            <small class="p-error block"
+              *ngIf="searchFormCustomer.get('phone')?.errors?.['pattern'] && searchFormCustomer.get('phone')?.dirty">Chỉ
+              được nhập giá trị là số</small>
           </div>
           <div class="input-item">
-            <input id="address" type="text" pInputText [(ngModel)]="searchCustomer.address"  (keydown.enter)="search()" placeholder="Tìm kiếm địa chỉ">
+            <input id="address" type="text" pInputText [(ngModel)]="searchCustomer.address"
+              placeholder="Tìm kiếm địa chỉ">
           </div>
           <div class="input-item">
-            <input id="cccd" type="text" pInputText [(ngModel)]="searchCustomer.cccd"  (keydown.enter)="search()" [formControl]="searchFormCustomer.controls['cccd']" placeholder="Tìm kiếm cccd">
-            <small class="p-error block" *ngIf="searchFormCustomer.get('cccd')?.errors?.['pattern'] && searchFormCustomer.get('cccd')?.dirty">Chỉ được nhập giá trị là số</small>
+            <input id="cccd" type="text" pInputText [(ngModel)]="searchCustomer.cccd"
+              [formControl]="searchFormCustomer.controls['cccd']" placeholder="Tìm kiếm cccd">
+            <small class="p-error block"
+              *ngIf="searchFormCustomer.get('cccd')?.errors?.['pattern'] && searchFormCustomer.get('cccd')?.dirty">Chỉ
+              được nhập giá trị là số</small>
           </div>
         </div>
-        
+
         <div class="button-group gap-4">
           <p-button icon="pi pi-sync" (onClick)="reset()"></p-button>
-          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
+          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="searchReset()"></p-button>
         </div>
       </div>
     </p-card>
@@ -69,7 +76,7 @@
       </ng-template>
     </p-table>
     <p-paginator *ngIf="!noData && !isLoading" (onPageChange)="onPageChange($event)" [rows]="searchCustomer.size"
-      [totalRecords]="totalItems" [first]="first" [showFirstLastIcon]="false" />
+      [totalRecords]="totalItems" [first]="searchCustomer.page * searchCustomer.size" [showFirstLastIcon]="false" />
   </div>
 
 </div>
@@ -79,4 +86,4 @@
   (loadingChange)="isLoading = $event"></app-customer-update>
 <app-customer-add [visible]="showAddModal" (visibleChange)="handleDialogClose($event)" [isLoading]="isLoading"
   (loadingChange)="isLoading = $event"></app-customer-add>
-  <p-toast></p-toast>
+<p-toast></p-toast>

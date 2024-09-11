@@ -6,7 +6,7 @@
         <div class="input-group">
           <div class="input-item">
             <input id="id_customer" type="text" pInputText [(ngModel)]="searchBooking.id_customer"
-              placeholder="Tìm mã khách" (keydown.enter)="search()">
+              placeholder="Tìm mã khách">
             <small class="p-error block"
               *ngIf="searchFormBooking.get('id_customer')?.errors?.['pattern'] && searchFormBooking.get('id_customer')?.dirty">
               Chỉ được nhập giá trị là số
@@ -15,8 +15,7 @@
 
           <div class="input-item">
             <input id="phone_booking" type="text" pInputText [(ngModel)]="searchBooking.phone_booking"
-              placeholder="Tìm phone khách" (keydown.enter)="search()"
-              [formControl]="searchFormBooking.controls['phone_booking']">
+              placeholder="Tìm phone khách" [formControl]="searchFormBooking.controls['phone_booking']">
             <small class="p-error block"
               *ngIf="searchFormBooking.get('phone_booking')?.errors?.['pattern'] && searchFormBooking.get('phone_booking')?.dirty">
               Chỉ được nhập giá trị là số
@@ -25,7 +24,7 @@
 
           <div class="input-item">
             <input id="id_room" type="text" pInputText [(ngModel)]="searchBooking.id_room" placeholder="Tìm mã phòng"
-              (keydown.enter)="search()" [formControl]="searchFormBooking.controls['id_room']">
+              [formControl]="searchFormBooking.controls['id_room']">
             <small class="p-error block"
               *ngIf="searchFormBooking.get('id_room')?.errors?.['pattern'] && searchFormBooking.get('id_room')?.dirty">
               Chỉ được nhập giá trị là số
@@ -34,18 +33,20 @@
 
           <div class="input-item">
             <p-calendar id="start" [showIcon]="true" dateFormat="dd/mm/yy" [(ngModel)]="searchBooking.start"
-              (onSelect)="onStartDate($event)" [maxDate]="maxDate" placeholder="Ngày bắt đầu" [style]="{height:'3rem'}"></p-calendar>
+              (onSelect)="onStartDate($event)" [maxDate]="maxDate" placeholder="Ngày bắt đầu"
+              [style]="{height:'3rem'}"></p-calendar>
           </div>
 
           <div class="input-item">
             <p-calendar id="end" [showIcon]="true" dateFormat="dd/mm/yy" [(ngModel)]="searchBooking.end"
-              (onSelect)="onEndDate($event)" [minDate]="minDate" placeholder="Ngày kết thúc" [style]="{height:'3rem'}"></p-calendar>
+              (onSelect)="onEndDate($event)" [minDate]="minDate" placeholder="Ngày kết thúc"
+              [style]="{height:'3rem'}"></p-calendar>
           </div>
         </div>
 
         <div class="button-group gap-4">
           <p-button icon="pi pi-sync" (onClick)="reset()"></p-button>
-          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="search()"></p-button>
+          <p-button label="Tìm kiếm" icon="pi pi-search" (onClick)="searchReset()"></p-button>
         </div>
       </div>
     </p-card>
@@ -101,4 +102,4 @@
   (loadingChange)="isLoading = $event"></app-booking-add>
 <app-booking-update [visible]="showUpdateModal" [booking]="selectedBooking" (visibleChange)="handleCloseUpdate($event)"
   [isLoading]="isLoading" (loadingChange)="isLoading = $event"></app-booking-update>
-  <p-toast></p-toast>
+<p-toast></p-toast>

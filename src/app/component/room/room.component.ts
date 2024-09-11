@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   selector: 'app-room',
   templateUrl: './room.component.html',
   styleUrl: './room.component.css',
-  providers: [MessageService,ConfirmationService]
+  providers: [MessageService, ConfirmationService]
 })
 export class RoomComponent {
   sidebarVisible: boolean = true;
@@ -61,6 +61,11 @@ export class RoomComponent {
     this.loadStatuses();
   }
 
+  reset() {
+    this.clearInput();
+    this.search()
+  }
+
   loadStatuses() {
     this.roomIStatus = [
       { name: 'Open' },
@@ -84,7 +89,6 @@ export class RoomComponent {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    this.searchRoom.page = 0;
     this.search();
   }
 
@@ -102,16 +106,19 @@ export class RoomComponent {
         this.isLoading = true;
         this.roomrService.deleteRoom(id).subscribe(
           (data) => {
-            console.log('Data from server:', data.message); 
+            if (!data.status) {
+              this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message });
+            } else {
+              this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'xoá phòng thành công' });
+            }
             this.isLoading = false;
-            this.search(); 
-            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });// không nhận message
+            this.search();
           },
           error => {
-            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: 'Có lỗi xảy ra, vui lòng thử lại.' });
+            this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: error.message });
             this.isLoading = false;
           });
-        },
+      },
       reject: () => {
         console.log('Xóa phòng đã bị hủy');
       }
@@ -134,9 +141,9 @@ export class RoomComponent {
       });
   }
 
-  reset() {
-    this.clearInput();
-    this.search()
+  searchReset() {
+    this.searchRoom.page = 0;
+    this.search();
   }
 
   onPageChange(event: any): void {

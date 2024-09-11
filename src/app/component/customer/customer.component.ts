@@ -11,8 +11,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class CustomerComponent implements OnInit {
   sidebarVisible: boolean = true;
-
-
   showAddModal: boolean = false;
   showUpdateModal: boolean = false;
   selectedCustomer!: Customer;
@@ -20,8 +18,6 @@ export class CustomerComponent implements OnInit {
   isLoading: boolean = false;
   totalPages: number = 0;
   totalItems: number = 0;
-  cccdError: boolean = false;
-  phoneError: boolean = false;
   noData: boolean = false;
 
   searchCustomer: CustomerSearch = {
@@ -59,6 +55,11 @@ export class CustomerComponent implements OnInit {
     this.search();
   }
 
+  reset() {
+    this.clearInput();
+    this.search();
+  }
+
   openAddModal() {
     this.showUpdateModal = false;
     this.clearInput();
@@ -67,7 +68,6 @@ export class CustomerComponent implements OnInit {
 
   handleDialogClose(data: boolean) {
     this.showAddModal = false;
-    this.searchCustomer.page = 0;
     this.search();
   }
 
@@ -92,10 +92,13 @@ export class CustomerComponent implements OnInit {
         this.isLoading = true;
         this.customerService.deleteCustomer(id).subscribe(
           (data) => {
-            console.log('Data from server:', data.message); 
+            if (!data.status) {
+              this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: data.message });
+            } else {
+              this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'xoá khách hàng thành công' });
+            }
             this.isLoading = false;
-            this.search(); 
-            this.messageService.add({ severity: 'success', summary: 'Cảnh báo lỗi', detail: data.message });
+            this.search();
           },
           error => {
             this.messageService.add({ severity: 'error', summary: 'Cảnh báo lỗi', detail: error.message });
@@ -110,8 +113,6 @@ export class CustomerComponent implements OnInit {
 
   search() {
     this.isLoading = true;
-    this.phoneError = false;
-    this.cccdError = false;
     this.customerService.filterCustomer(this.searchCustomer).subscribe(
       (data) => {
         this.isLoading = false;
@@ -124,28 +125,17 @@ export class CustomerComponent implements OnInit {
         console.error('Error occurred:', error);
       });
   }
-first:number = 0;
-  reset() {
-    this.clearInput();
+
+  searchReset() {
     this.searchCustomer.page = 0;
     this.search();
-
   }
 
   onPageChange(event: any): void {
-    console.log(event ,"event.page ");
-    this.first = event.first;
     this.searchCustomer.page = event.page;
     this.search();
   }
 
-  validatePhone() {
-    this.phoneError = !/^\d+$/.test(this.searchCustomer.phone);
-  }
-
-  validateCCCD() {
-    this.cccdError = !/^\d+$/.test(this.searchCustomer.cccd);
-  }
 
 }
 
