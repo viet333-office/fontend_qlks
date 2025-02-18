@@ -40,7 +40,10 @@ import { BookingAddComponent } from './component/booking/booking-add/booking-add
 import { BookingUpdateComponent } from './component/booking/booking-update/booking-update.component';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-
+import { DividerModule } from 'primeng/divider';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -57,8 +60,9 @@ import { ToastModule } from 'primeng/toast';
     RoomAddComponent,
     RoomUpdateComponent,
     BookingAddComponent,
-    BookingUpdateComponent
-
+    BookingUpdateComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +92,9 @@ import { ToastModule } from 'primeng/toast';
     ConfirmDialogModule,
     ReactiveFormsModule,
     ToastModule,
-    DatePipe
+    DatePipe,
+    DividerModule,
+    RouterModule 
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

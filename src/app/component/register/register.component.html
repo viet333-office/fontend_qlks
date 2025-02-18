@@ -1,0 +1,41 @@
+<div class="login-container">
+    <div class="card">
+        <!-- Left Section -->
+        <div class="welcome-section">
+            <div class="logo">
+                <img src="#" alt="Logo" />
+            </div>
+            <h2> Chào mừng bạn đến!</h2>
+            <p>Để kết nối với chúng tôi,vui lòng đăng ký thông tin cá nhân của bạn.</p>
+        </div>
+
+        <!-- Right Section -->
+        <div class="login-section">
+            <h2>Đăng ký tài khoản</h2>
+            <div class="input-group">
+                <label for="email">Tên</label>
+                <input id="email" [(ngModel)]="user.firstname" type="email" placeholder="Enter your firstname" />
+            </div>
+            <div class="input-group">
+                <label for="password">Họ</label>
+                <input id="password" [(ngModel)]="user.lastname" type="password" placeholder="Enter your lastname" />
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input id="email" [(ngModel)]="user.email" type="email" placeholder="Enter your email" />
+            </div>
+            <div class="input-group">
+                <label for="password">Mật khẩu</label>
+                <input id="password" [(ngModel)]="user.password" type="password" placeholder="Enter your password" />
+            </div>
+            <div class="input-group">
+                <label for="password">Quyền tài khoản</label>
+                <input id="password" [(ngModel)]="user.role" type="password" placeholder="Enter your role" />
+            </div>
+            <button class="btn-register" (click)="register(user)">Đăng Ký</button>
+            <p class="signup-prompt">Bạn đã có tài khoản
+                <a routerLink="/login">Đăng Nhập</a>
+            </p>
+        </div>
+    </div>
+</div>

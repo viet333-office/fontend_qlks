@@ -84,9 +84,9 @@ export class RoomUpdateComponent {
       accept: () => {
         this.loadingChange.emit(true);
         const valueControl = this.roomForm.get('value');
-        if (valueControl && valueControl.dirty && room.value !== this.originalRoomValue) {
-          room.value = Math.floor(room.value) * 1000;
-        }
+        // if (valueControl && valueControl.dirty && room.value !== this.originalRoomValue) {
+        //   room.value = Math.floor(room.value) * 1000;
+        // }
         this.roomrService.putRoom(room).subscribe(
           (data) => {
             if (!data.content) {

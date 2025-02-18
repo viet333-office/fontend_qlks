@@ -1,0 +1,32 @@
+<div class="login-container">
+    <div class="card">
+        <!-- Left Section -->
+        <div class="welcome-section">
+            <div class="logo">
+                <img src="#" alt="Logo" />
+            </div>
+            <h2> Chào mừng trở lại!</h2>
+            <p>Để kết nối với chúng tôi,vui lòng đăng nhập bằng thông tin cá nhân của bạn.</p>
+           
+        </div>
+
+        <!-- Right Section -->
+        <div class="login-section">
+            <h2>Chào mừng</h2>
+            <p>Đăng nhập vào tài khoản của bạn để tiếp tục</p>
+            <div class="input-group">
+                <label for="email" >Tài khoản</label>
+                <input id="email"  [(ngModel)]="user.email"  type="email" placeholder="Enter your email" />
+            </div>
+            <div class="input-group">
+                <label for="password">Mật khẩu</label>
+                <input id="password"  [(ngModel)]="user.password" type="password" placeholder="Enter your password" />
+            </div>
+            <a href="#" class="forgot-password">Quên mật khẩu?</a>
+            <button class="btn-login" (click)="login(user)">Đăng Nhập</button>
+            <p class="signup-prompt">Bạn chưa có tài khoản? 
+                <a routerLink="register">Đăng Ký</a>
+            </p>
+        </div>
+    </div>
+</div>
